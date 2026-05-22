@@ -1,37 +1,104 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
-export const appRoutes: Routes = [
+export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'operations/bookings',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
+    path: 'login',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  },
+  // 🔓 Public routes (no guard)
+  {
+    path: 'auth',
+    loadComponent: () => import('./layouts/auth-layout/auth-layout.component').then(m => m.AuthLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+      }
+    ]
+  },
+  // 🔒 Protected routes (require authentication)
+  {
     path: 'operations',
-    loadChildren: () => import('./features/operations/operations.module').then(m => m.OperationsModule)
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/operations/operations.module').then(m => m.OperationsModule)
+      }
+    ]
   },
   {
     path: 'crm',
-    loadChildren: () => import('./features/crm/crm.module').then(m => m.CrmModule)
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/crm/crm.module').then(m => m.CrmModule)
+      }
+    ]
   },
   {
     path: 'fleet',
-    loadChildren: () => import('./features/fleet/fleet.module').then(m => m.FleetModule)
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/fleet/fleet.module').then(m => m.FleetModule)
+      }
+    ]
   },
   {
     path: 'pricing',
-    loadChildren: () => import('./features/pricing/pricing.module').then(m => m.PricingModule)
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/pricing/pricing.module').then(m => m.PricingModule)
+      }
+    ]
   },
   {
     path: 'support',
-    loadChildren: () => import('./features/support/support.module').then(m => m.SupportModule)
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/support/support.module').then(m => m.SupportModule)
+      }
+    ]
   },
   {
     path: 'analytics',
-    loadChildren: () => import('./features/analytics/analytics.module').then(m => m.AnalyticsModule)
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/analytics/analytics.module').then(m => m.AnalyticsModule)
+      }
+    ]
   },
   {
     path: 'system',
-    loadChildren: () => import('./features/system/system.module').then(m => m.SystemModule)
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/system/system.module').then(m => m.SystemModule)
+      }
+    ]
   }
 ];

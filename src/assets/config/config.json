@@ -1,0 +1,7 @@
+{
+  "appName": "Network Movers",
+  "apiBaseUrl": "http://localhost:8080/api",
+  "authBaseUrl": "http://localhost:8080/auth",
+  "enableLogs": true,
+  "version": "1.0.0"
+}
