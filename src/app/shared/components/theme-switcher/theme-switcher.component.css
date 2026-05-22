@@ -1,0 +1,50 @@
+.theme-switcher-modern {
+  position: fixed;
+  right: 1.5rem;
+  top: 1.5rem;
+  z-index: 1000;
+  background: var(--surface-color, #ffffff);
+  padding: 0.35rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-color, #e5e7eb);
+  transition: all 0.3s ease;
+}
+
+.ts-segmented-control {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.ts-segment {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--muted-color, #6b7280);
+  border-radius: 9999px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ts-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.ts-segment:hover {
+  color: var(--text-color, #1f2937);
+  background: var(--bg-hover, #f3f4f6);
+}
+
+.ts-segment.active {
+  background: var(--primary-color, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+}
