@@ -1,0 +1,12 @@
+<section class="page-heading">
+  <h1>Support Tickets</h1>
+  <p>Manage open tickets, complaints, and refunds.</p>
+</section>
+
+<div class="ticket-grid">
+  <div class="ticket-card" *ngFor="let ticket of tickets">
+    <h3>{{ ticket.subject }}</h3>
+    <p>{{ ticket.customer }}</p>
+    <small>Status: {{ ticket.status }}</small>
+  </div>
+</div>

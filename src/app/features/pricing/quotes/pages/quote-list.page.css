@@ -1,0 +1,2 @@
+.quote-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.quote-card { padding: 18px; border: 1px solid #e5e7eb; border-radius: 12px; background: white; }

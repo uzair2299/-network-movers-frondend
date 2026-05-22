@@ -1,0 +1,12 @@
+<section class="page-heading">
+  <h1>Customers</h1>
+  <p>View and manage customer profiles and engagement.</p>
+</section>
+
+<div class="customer-cards">
+  <div class="customer-card" *ngFor="let customer of customers">
+    <h3>{{ customer.name }}</h3>
+    <p>{{ customer.email }}</p>
+    <small>Joined {{ customer.joinDate | dateFormat }}</small>
+  </div>
+</div>

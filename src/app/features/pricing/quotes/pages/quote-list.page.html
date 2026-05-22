@@ -1,0 +1,12 @@
+<section class="page-heading">
+  <h1>Quotes</h1>
+  <p>Review pricing estimates and quote details.</p>
+</section>
+
+<div class="quote-grid">
+  <div class="quote-card" *ngFor="let quote of quotes">
+    <h3>{{ quote.reference }}</h3>
+    <p>{{ quote.customer }}</p>
+    <small>{{ quote.total | currency }}</small>
+  </div>
+</div>

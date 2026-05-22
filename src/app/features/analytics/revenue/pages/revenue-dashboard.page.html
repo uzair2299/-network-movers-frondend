@@ -1,0 +1,12 @@
+<section class="page-heading">
+  <h1>Revenue Analytics</h1>
+  <p>Monitor revenue trends and business KPIs.</p>
+</section>
+
+<div class="metric-grid">
+  <article class="metric-card" *ngFor="let metric of metrics">
+    <h3>{{ metric.label }}</h3>
+    <p>{{ metric.value }}</p>
+    <small>{{ metric.change }} vs last month</small>
+  </article>
+</div>

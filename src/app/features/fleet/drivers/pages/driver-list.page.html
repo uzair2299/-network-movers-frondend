@@ -1,0 +1,12 @@
+<section class="page-heading">
+  <h1>Drivers</h1>
+  <p>Track driver availability, credentials and performance.</p>
+</section>
+
+<div class="driver-grid">
+  <article class="driver-card" *ngFor="let driver of drivers">
+    <h3>{{ driver.name }}</h3>
+    <p>{{ driver.status }}</p>
+    <small>Rating {{ driver.rating }}/5</small>
+  </article>
+</div>

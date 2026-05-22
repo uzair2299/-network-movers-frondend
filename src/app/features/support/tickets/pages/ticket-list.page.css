@@ -1,0 +1,2 @@
+.ticket-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.ticket-card { padding: 18px; background: white; border: 1px solid #e5e7eb; border-radius: 12px; }

@@ -1,0 +1,12 @@
+<section class="page-heading">
+  <h1>Users</h1>
+  <p>Manage system users and roles.</p>
+</section>
+
+<div class="users-grid">
+  <div class="user-card" *ngFor="let user of users">
+    <h3>{{ user.username }}</h3>
+    <p>{{ user.email }}</p>
+    <small>Roles: {{ user.roles.join(', ') }}</small>
+  </div>
+</div>

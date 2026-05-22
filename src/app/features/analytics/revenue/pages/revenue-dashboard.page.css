@@ -1,0 +1,2 @@
+.metric-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.metric-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 18px; }

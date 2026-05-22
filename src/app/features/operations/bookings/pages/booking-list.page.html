@@ -1,0 +1,12 @@
+<section class="page-heading">
+  <h1>Bookings</h1>
+  <p>Manage the booking lifecycle for network operations.</p>
+</section>
+
+<div class="booking-grid">
+  <div class="booking-card" *ngFor="let booking of bookings">
+    <h3>{{ booking.reference }}</h3>
+    <p>{{ booking.customerName }}</p>
+    <small>{{ booking.requestedDate | dateFormat }}</small>
+  </div>
+</div>
