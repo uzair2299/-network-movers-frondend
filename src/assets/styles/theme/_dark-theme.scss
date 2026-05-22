@@ -1,12 +1,28 @@
 .theme-dark {
-  --bg-color: #0f172a;
-  --surface-color: #111827;
-  --text-color: #e2e8f0;
-  --muted-color: #94a3b8;
-  --border-color: #334155;
-  --primary-color: #60a5fa;
-  --primary-strong-color: #3b82f6;
-  --success-color: #22c55e;
-  --warning-color: #facc15;
-  --danger-color: #f87171;
+  --bg-color: #141414;
+  --bg-page: #1a1a1a;
+  --surface-color: #222222;
+  --surface-muted: #1e1e1e;
+  --surface-strong: #2a2a2a;
+  --text-color: #f5f5f5;
+  --text-white: #ffffff;
+  --muted-color: #a3a3a3;
+  --border-color: #333333;
+  --primary-color: #8b5cf6;
+  --primary-strong-color: #7c3aed;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --info-color: #3b82f6;
+  --sidebar-bg: #141414;
+  --sidebar-text: #f5f5f5;
+  --sidebar-hover: rgba(255,255,255,0.05);
+  --sidebar-active-bg: rgba(139, 92, 246, 0.15);
+  --sidebar-active-color: #8b5cf6;
+  --bg-hover: #2a2a2a;
+  --table-header-bg: rgba(255, 255, 255, 0.03);
+  --table-row-bg: rgba(255, 255, 255, 0.02);
+  --shadow-sm: 0 2px 18px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 10px 42px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 18px 70px rgba(0, 0, 0, 0.6);
 }

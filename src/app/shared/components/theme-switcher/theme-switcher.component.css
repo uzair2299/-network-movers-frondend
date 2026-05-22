@@ -8,12 +8,12 @@
 }
 
 :host-context(.theme-dark) {
-  --local-surface: var(--surface-color, #131c37);
-  --local-border: var(--border-color, #334155);
-  --local-muted: var(--muted-color, #94a3b8);
-  --local-text: var(--text-color, #e2e8f0);
-  --local-bg-hover: var(--bg-hover, #1d2939);
-  --local-primary: var(--primary-color, #60a5fa);
+  --local-surface: var(--surface-color, #222222);
+  --local-border: var(--border-color, #333333);
+  --local-muted: var(--muted-color, #a3a3a3);
+  --local-text: var(--text-color, #f5f5f5);
+  --local-bg-hover: var(--bg-hover, #2a2a2a);
+  --local-primary: var(--primary-color, #8b5cf6);
 }
 
 .theme-switcher-modern {

@@ -13,24 +13,28 @@
   --local-muted: var(--muted-color, #6b7280);
   --local-danger: var(--danger-color, #dc2626);
   --local-border: var(--border-color, #d1d5db);
+  --local-bg-gradient-start: var(--local-primary-strong);
+  --local-bg-gradient-end: var(--local-primary);
 }
 
 :host-context(.theme-dark) {
-  --local-surface-color: var(--surface-color, #131c37);
-  --local-bg-color: var(--bg-color, #0b1120);
-  --local-text-color: var(--text-color, #e2e8f0);
-  --local-primary: var(--primary-color, #60a5fa);
-  --local-primary-strong: var(--primary-strong-color, #3b82f6);
-  --local-muted: var(--muted-color, #94a3b8);
-  --local-danger: var(--danger-color, #f87171);
-  --local-border: var(--border-color, #334155);
+  --local-surface-color: var(--surface-color, #222222);
+  --local-bg-color: var(--bg-color, #141414);
+  --local-text-color: var(--text-color, #f5f5f5);
+  --local-primary: var(--primary-color, #8b5cf6);
+  --local-primary-strong: var(--primary-strong-color, #7c3aed);
+  --local-muted: var(--muted-color, #a3a3a3);
+  --local-danger: var(--danger-color, #ef4444);
+  --local-border: var(--border-color, #333333);
+  --local-bg-gradient-start: #1e1e1e;
+  --local-bg-gradient-end: #141414;
 }
 
 .login-wrapper {
   display: flex;
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, var(--local-primary-strong), var(--local-primary));
+  background: linear-gradient(135deg, var(--local-bg-gradient-start), var(--local-bg-gradient-end));
 }
 
 .login-left {
