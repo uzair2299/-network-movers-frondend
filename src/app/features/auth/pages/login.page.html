@@ -1,23 +1,51 @@
-<div class="login-page">
-  <div class="login-card">
-    <h1>Sign in</h1>
+<div class="login-wrapper">
+  <div class="login-left">
+    <div class="brand-container">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 6C5 4.89543 5.89543 4 7 4H15.5C16.8807 4 18 5.11929 18 6.5C18 7.88071 16.8807 9 15.5 9H12M5 6V18C5 19.1046 5.89543 20 7 20H17C18.1046 20 19 19.1046 19 18V10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 13L13 16L20 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Pagedone</span>
+      </div>
+    </div>
+    
+    <div class="welcome-text">
+      <h1>Hey, Hello!</h1>
+      <h2>Join The Waitlist For The Design System!</h2>
+      <p>We provide all the advantages that can simplify all your financial transactions without any further requirements</p>
+    </div>
+  </div>
 
-    <form (ngSubmit)="login()">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input id="username" name="username" [(ngModel)]="username" required />
+  <div class="login-right">
+    <div class="login-card">
+      <div class="card-header">
+        <h1>Welcome Back</h1>
       </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password" [(ngModel)]="password" required />
-      </div>
+      <form (ngSubmit)="login()">
+        <div class="form-group">
+          <input id="username" name="username" placeholder="Username" [(ngModel)]="username" required />
+        </div>
 
-      <div class="actions">
-        <button type="submit" [disabled]="loading">{{ loading ? 'Signing in...' : 'Sign in' }}</button>
-      </div>
+        <div class="form-group">
+          <input id="password" type="password" placeholder="Password" name="password" [(ngModel)]="password" required />
+        </div>
 
-      <div class="error-message" *ngIf="error">{{ error }}</div>
-    </form>
+        <div class="forgot-password">
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <div class="actions">
+          <button type="submit" [disabled]="loading">{{ loading ? 'Logging in...' : 'Login' }}</button>
+        </div>
+        
+        <div class="signup-link">
+          Don't have an account? <a href="#">Sign Up</a>
+        </div>
+
+        <div class="error-message" *ngIf="error">{{ error }}</div>
+      </form>
+    </div>
   </div>
 </div>

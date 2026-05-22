@@ -1,0 +1,14 @@
+@import '../theme/variables';
+
+.card {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $radius-base;
+  box-shadow: $shadow-sm;
+  padding: $spacing-lg;
+}
+
+.card-heading {
+  font-size: 1.25rem;
+  margin-bottom: $spacing-sm;
+}

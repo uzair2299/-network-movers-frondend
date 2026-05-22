@@ -1,0 +1,31 @@
+@import '../theme/variables';
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: #{$spacing-sm} #{$spacing-md};
+  border: 1px solid transparent;
+  border-radius: $radius-base;
+  background: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background: var(--primary-strong-color);
+}
+
+.button-secondary {
+  background: transparent;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.button-outline {
+  background: transparent;
+  color: var(--text-color);
+  border-color: var(--border-color);
+}

@@ -1,0 +1,40 @@
+@import 'theme/variables';
+@import 'theme/light-theme';
+
+@import 'utilities/spacing';
+@import 'utilities/typography';
+@import 'utilities/flex';
+@import 'utilities/grid';
+@import 'utilities/colors';
+@import 'utilities/borders';
+@import 'utilities/shadows';
+
+@import 'components/buttons';
+@import 'components/cards';
+@import 'components/tables';
+@import 'components/forms';
+
+html {
+  box-sizing: border-box;
+  font-family: $font-family-base;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}

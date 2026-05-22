@@ -1,0 +1,13 @@
+@import '../theme/variables';
+
+.shadow-sm {
+  box-shadow: $shadow-sm;
+}
+
+.shadow-md {
+  box-shadow: $shadow-md;
+}
+
+.shadow-lg {
+  box-shadow: $shadow-lg;
+}

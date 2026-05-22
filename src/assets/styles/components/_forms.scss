@@ -1,0 +1,24 @@
+@import '../theme/variables';
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-md;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: $spacing-sm;
+  border: 1px solid var(--border-color);
+  border-radius: $radius-base;
+  background: var(--surface-color);
+  color: var(--text-color);
+}
+
+button,
+input[type='submit'] {
+  @extend .button;
+}

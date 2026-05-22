@@ -1,0 +1,34 @@
+@import '../theme/variables';
+
+html {
+  font-family: $font-family-base;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+  color: var(--text-color);
+  margin: 0 0 1rem;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin: 0 0 1rem;
+  color: var(--text-color);
+}
+
+small, .text-small { font-size: 0.875rem; }
+
+.text-muted { color: var(--muted-color); }
+.text-primary { color: var(--primary-color); }
+.text-success { color: var(--success-color); }
+.text-warning { color: var(--warning-color); }
+.text-danger { color: var(--danger-color); }

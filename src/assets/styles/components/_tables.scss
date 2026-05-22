@@ -1,0 +1,22 @@
+@import '../theme/variables';
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface-color);
+}
+
+.table th,
+.table td {
+  padding: $spacing-sm;
+  border: 1px solid var(--border-color);
+}
+
+.table th {
+  background: lighten(var(--surface-color), 4%);
+  text-align: left;
+}
+
+.table tr:nth-child(even) {
+  background: rgba(15, 23, 42, 0.03);
+}
