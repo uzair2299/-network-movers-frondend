@@ -7,20 +7,9 @@
 }
 
 .login-wrapper {
-  /* Defining the theme variables locally in case they aren't globally loaded */
-  --bg-color: #f4f6f8;
-  --surface-color: #ffffff;
-  --text-color: #1f2937;
-  --muted-color: #6b7280;
-  --border-color: #d1d5db;
-  --primary-color: #2563eb;
-  --primary-strong-color: #1d4ed8;
-  --danger-color: #dc2626;
-
   display: flex;
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #6366f1, var(--primary-color));
 }
 
 .login-left {
@@ -29,6 +18,7 @@
   flex-direction: column;
   padding: 4rem 10%;
   color: #ffffff;
+  background: linear-gradient(135deg, var(--primary-strong-color, #1d4ed8), var(--primary-color, #2563eb));
 }
 
 .brand-container {
@@ -82,6 +72,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 5%;
+  background-color: var(--bg-color, #f4f6f8);
 }
 
 .login-card {
@@ -125,7 +116,7 @@
   transition: all 0.2s ease;
   box-sizing: border-box;
   color: var(--text-color);
-  background-color: var(--surface-color);
+  background-color: var(--bg-color);
 }
 
 .form-group input::placeholder {
