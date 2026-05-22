@@ -1,0 +1,18 @@
+@import '../theme/variables';
+
+.zindex-dropdown { z-index: var(--zindex-dropdown); }
+.zindex-sticky { z-index: var(--zindex-sticky); }
+.zindex-modal { z-index: var(--zindex-modal); }
+.zindex-tooltip { z-index: var(--zindex-tooltip); }
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: var(--zindex-sticky);
+}
+
+.sticky-bottom {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--zindex-sticky);
+}

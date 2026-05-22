@@ -23,7 +23,7 @@ export class LoginPage {
       .login(this.username, this.password)
       .then(() => {
         this.loading = false;
-        this.router.navigate(['/']);
+        this.router.navigate(['/operations']);
       })
       .catch(() => {
         this.loading = false;

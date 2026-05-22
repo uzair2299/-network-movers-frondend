@@ -1,0 +1,48 @@
+@import '../theme/variables';
+
+.page {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-page);
+  color: var(--text-color);
+}
+
+.page-header {
+  width: 100%;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.page-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.app-shell {
+  min-height: 100vh;
+  background: var(--bg-page);
+}
+
+.content-wrapper {
+  padding: var(--spacing-xl);
+}
+
+.ui-panel {
+  @include surface-card;
+  padding: var(--spacing-lg);
+}
+
+.section-card {
+  background: var(--surface-color);
+  border-radius: var(--radius-base);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-lg);
+}

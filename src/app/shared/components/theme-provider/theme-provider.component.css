@@ -1,0 +1,4 @@
+/* Global theme provider wrapper. No visual styling needed. */
+:host {
+  display: contents;
+}

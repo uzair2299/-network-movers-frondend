@@ -1,0 +1,7 @@
+{
+  "appName": "Network Movers",
+  "apiBaseUrl": "${API_BASE_URL}",
+  "authBaseUrl": "${AUTH_BASE_URL}",
+  "enableLogs": ${ENABLE_LOGS},
+  "version": "1.0.0"
+}
