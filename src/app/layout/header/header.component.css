@@ -1,19 +1,108 @@
 .app-header {
+  height: 70px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
-  background: var(--surface-color);
-  color: var(--text-color);
-  border-bottom: 1px solid var(--border-color);
+  justify-content: space-between;
+  padding: 0 2rem;
+  background-color: var(--bg-page, #141414);
+  border-bottom: 1px solid #282f3a;
 }
-button {
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #1b2028;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  width: 300px;
+  border: 1px solid #282f3a;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+  color: #6b7280;
+  margin-right: 0.5rem;
+}
+
+.search-bar input {
+  background: transparent;
   border: none;
-  background: rgba(255,255,255, 0.12);
-  color: var(--text-color);
-  padding: 8px 12px;
-  cursor: pointer;
+  color: #ffffff;
+  width: 100%;
+  outline: none;
+  font-size: 0.85rem;
+  font-family: 'Inter', sans-serif;
 }
-button:hover {
-  background: rgba(255,255,255, 0.2);
+
+.search-bar input::placeholder {
+  color: #6b7280;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #8c96a3;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  padding: 0;
+}
+
+.icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.notification-dot {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  border: 2px solid var(--bg-page, #141414);
+}
+
+.profile-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.profile-avatar:hover {
+  border-color: #0ea5e9;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
