@@ -9,8 +9,7 @@ import { ThemeMode, ThemeService } from '../../../core/services/theme.service';
 export class ThemeSwitcherComponent {
   readonly themes: { label: string; value: ThemeMode }[] = [
     { label: 'Light', value: 'light' },
-    { label: 'Dark', value: 'dark' },
-    { label: 'Black', value: 'black' }
+    { label: 'Dark', value: 'dark' }
   ];
 
   constructor(public themeService: ThemeService) {}
