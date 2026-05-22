@@ -10,6 +10,7 @@
   display: flex;
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--primary-strong-color, #1d4ed8), var(--primary-color, #2563eb));
 }
 
 .login-left {
@@ -18,7 +19,6 @@
   flex-direction: column;
   padding: 4rem 10%;
   color: #ffffff;
-  background: linear-gradient(135deg, var(--primary-strong-color, #1d4ed8), var(--primary-color, #2563eb));
 }
 
 .brand-container {
@@ -72,17 +72,16 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 5%;
-  background-color: var(--bg-color, #f4f6f8);
 }
 
 .login-card {
-  background: var(--surface-color);
+  background-color: var(--surface-color, #ffffff);
   width: 100%;
   max-width: 440px;
   padding: 3.5rem 3rem;
   border-radius: 24px;
   box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-  color: var(--text-color);
+  color: var(--text-color, #1f2937);
 }
 
 .card-header {
@@ -94,11 +93,11 @@
   font-size: 1.75rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: var(--text-color);
+  color: var(--text-color, #1f2937);
 }
 
 .card-header p {
-  color: var(--muted-color);
+  color: var(--muted-color, #6b7280);
   font-size: 0.95rem;
 }
 
@@ -115,8 +114,8 @@
   outline: none;
   transition: all 0.2s ease;
   box-sizing: border-box;
-  color: var(--text-color);
-  background-color: var(--bg-color);
+  color: var(--text-color, #1f2937);
+  background-color: var(--bg-color, #f4f6f8);
 }
 
 .form-group input::placeholder {
@@ -145,7 +144,7 @@
 }
 
 .forgot-password a {
-  color: var(--muted-color);
+  color: var(--muted-color, #6b7280);
   font-size: 0.875rem;
   text-decoration: none;
   font-weight: 500;
@@ -185,7 +184,7 @@
 .signup-link {
   text-align: center;
   font-size: 0.95rem;
-  color: var(--text-color);
+  color: var(--text-color, #1f2937);
 }
 
 .signup-link a {
