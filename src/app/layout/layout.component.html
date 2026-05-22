@@ -1,10 +1,13 @@
-<div class="app-shell">
-  <app-sidebar></app-sidebar>
+<div class="app-shell" [class.plain-shell]="!showShell">
+  <app-sidebar *ngIf="showShell"></app-sidebar>
+
   <div class="main-content">
-    <app-header></app-header>
-    <main>
+    <app-header *ngIf="showShell"></app-header>
+
+    <main [class.full-width]="!showShell">
       <router-outlet></router-outlet>
     </main>
-    <app-footer></app-footer>
+
+    <app-footer *ngIf="showShell"></app-footer>
   </div>
 </div>
