@@ -1,4 +1,11 @@
-<div class="app-shell">
+<div class="app-shell" 
+     [class.sidebar-collapsed]="isSidebarCollapsed$ | async" 
+     [class.mobile-sidebar-open]="isMobileSidebarOpen$ | async">
+  
+  <div class="mobile-overlay" 
+       *ngIf="isMobileSidebarOpen$ | async" 
+       (click)="closeMobileSidebar()"></div>
+
   <app-sidebar></app-sidebar>
 
   <div class="main-content">

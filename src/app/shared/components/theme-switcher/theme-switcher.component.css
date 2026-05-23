@@ -17,10 +17,6 @@
 }
 
 .theme-switcher-modern {
-  position: fixed;
-  right: 1.5rem;
-  top: 1.5rem;
-  z-index: 1000;
   background: var(--local-surface);
   padding: 0.35rem;
   border-radius: 9999px;

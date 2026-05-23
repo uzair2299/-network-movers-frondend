@@ -4,6 +4,7 @@
   background: var(--bg-page, #141414);
   font-family: 'Inter', sans-serif;
   overflow: hidden;
+  position: relative;
 }
 
 .main-content {
@@ -13,6 +14,7 @@
   background: var(--bg-page, #141414);
   height: 100vh;
   overflow: hidden;
+  transition: margin-left 0.3s ease;
 }
 
 main {
@@ -30,4 +32,25 @@ main::-webkit-scrollbar-track {
 main::-webkit-scrollbar-thumb {
   background-color: #282f3a;
   border-radius: 6px;
+}
+
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+  backdrop-filter: blur(2px);
+}
+
+@media (max-width: 992px) {
+  .app-shell {
+    display: block;
+  }
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
 }

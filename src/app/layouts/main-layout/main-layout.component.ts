@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LayoutModule } from '../../layout/layout.module';
+import { LayoutService } from '../../core/services/layout.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -14,4 +15,13 @@ import { LayoutModule } from '../../layout/layout.module';
     LayoutModule
   ]
 })
-export class MainLayoutComponent {}
+export class MainLayoutComponent {
+  isSidebarCollapsed$ = this.layoutService.isSidebarCollapsed$;
+  isMobileSidebarOpen$ = this.layoutService.isMobileSidebarOpen$;
+
+  constructor(private layoutService: LayoutService) {}
+
+  closeMobileSidebar() {
+    this.layoutService.setMobileSidebarOpen(false);
+  }
+}

@@ -1,6 +1,6 @@
 .app-sidebar {
   width: 260px;
-  background-color: #1b2028; /* Matches Rasket exact dark theme */
+  background-color: #1b2028;
   color: #8c96a3;
   display: flex;
   flex-direction: column;
@@ -9,6 +9,46 @@
   font-family: 'Inter', sans-serif;
   overflow: hidden;
   z-index: 50;
+  transition: width 0.3s ease, transform 0.3s ease;
+}
+
+/* Parent Context Overrides */
+:host-context(.sidebar-collapsed) .app-sidebar {
+  width: 80px;
+}
+
+:host-context(.sidebar-collapsed) .brand span,
+:host-context(.sidebar-collapsed) .menu-label,
+:host-context(.sidebar-collapsed) .menu-item-text,
+:host-context(.sidebar-collapsed) .menu-item-badge,
+:host-context(.sidebar-collapsed) .menu-item-arrow {
+  display: none;
+}
+
+:host-context(.sidebar-collapsed) .menu-item {
+  justify-content: center;
+  padding: 0.65rem 0;
+}
+
+:host-context(.sidebar-collapsed) .menu-item-icon {
+  margin-right: 0;
+}
+
+:host-context(.sidebar-collapsed) .brand {
+  justify-content: center;
+}
+
+@media (max-width: 992px) {
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+  }
+
+  :host-context(.mobile-sidebar-open) .app-sidebar {
+    transform: translateX(0);
+  }
 }
 
 .sidebar-header {
