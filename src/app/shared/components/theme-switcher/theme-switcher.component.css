@@ -62,3 +62,15 @@
   color: #ffffff;
   box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
 }
+
+@media (max-width: 576px) {
+  .ts-segment {
+    padding: 0.4rem 0.6rem;
+  }
+  .ts-label {
+    display: none;
+  }
+  .ts-icon {
+    margin: 0;
+  }
+}

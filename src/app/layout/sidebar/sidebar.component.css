@@ -131,7 +131,23 @@
 
 .menu-item:hover {
   background-color: rgba(255, 255, 255, 0.03);
-  color: #d1d5db;
+  color: #f5a623;
+  padding-left: 1.8rem;
+}
+
+.menu-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background-color: #f5a623;
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.menu-item:hover::before {
+  width: 4px;
 }
 
 .menu-item.active {
@@ -139,13 +155,8 @@
 }
 
 .menu-item.active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: #0ea5e9;
+  width: 4px;
+  background-color: #f5a623;
 }
 
 .menu-item-icon {
@@ -155,8 +166,9 @@
   opacity: 0.8;
 }
 
+.menu-item:hover .menu-item-icon,
 .menu-item.active .menu-item-icon {
-  color: #0ea5e9;
+  color: #f5a623;
   opacity: 1;
 }
 
@@ -165,26 +177,77 @@
 }
 
 .menu-item-badge {
-  font-size: 0.65rem;
-  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.7rem;
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
-  margin-left: 0.5rem;
+  margin-left: auto;
+  font-weight: 500;
 }
 
-.badge-success {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: #10b981;
+.menu-item-badge.badge-success {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
 }
 
-.badge-danger {
+.menu-item-badge.badge-danger {
   background-color: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
+  color: #f87171;
 }
 
 .menu-item-arrow {
-  width: 14px;
-  height: 14px;
-  opacity: 0.4;
-  margin-left: 0.5rem;
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.menu-item.expanded .menu-item-arrow {
+  transform: rotate(90deg);
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-left: 2px solid #282f3a;
+  margin-left: 1.5rem;
+}
+
+.submenu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
+  color: #8c96a3;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.submenu-item:hover,
+.submenu-item.active {
+  color: #f5a623;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.submenu-item:hover {
+  padding-left: 1.8rem;
+}
+
+.submenu-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid #6b7280;
+  margin-right: 0.75rem;
+  transition: background-color 0.2s ease;
+}
+
+.submenu-item:hover .submenu-dot,
+.submenu-item.active .submenu-dot {
+  background-color: #f5a623;
+  border-color: #f5a623;
 }

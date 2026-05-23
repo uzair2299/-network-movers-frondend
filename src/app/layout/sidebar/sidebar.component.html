@@ -6,7 +6,7 @@
           <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
         </svg>
       </div>
-      <span *ngIf="!(isSidebarCollapsed$ | async)">Rasket</span>
+      <span *ngIf="!(isSidebarCollapsed$ | async)">Network Movers</span>
     </div>
     <button class="menu-toggle" (click)="layoutService.toggleSidebar()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -21,8 +21,16 @@
         <!-- Section Label -->
         <div *ngIf="item.isLabel && !(isSidebarCollapsed$ | async)" class="menu-label">{{ item.name }}</div>
         
-        <!-- Nav Item -->
-        <a *ngIf="!item.isLabel" [routerLink]="item.route" routerLinkActive="active" class="menu-item" [title]="item.name">
+        <!-- Parent Nav Item (Link or Toggle) -->
+        <a *ngIf="!item.isLabel" 
+           [routerLink]="item.route ? item.route : null" 
+           [routerLinkActive]="item.route ? 'active' : ''" 
+           (click)="toggleSubmenu(item, $event)"
+           class="menu-item" 
+           [class.has-children]="item.children"
+           [class.expanded]="item.expanded"
+           [title]="item.name">
+           
           <div class="menu-item-icon" *ngIf="item.icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="item.icon" />
@@ -36,12 +44,23 @@
               {{ item.badge.text }}
             </span>
             
-            <!-- Dropdown arrow icon (mocked for visual accuracy) -->
-            <svg class="menu-item-arrow" *ngIf="item.name === 'Pages' || item.name === 'Authentication'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <!-- Dropdown arrow icon -->
+            <svg class="menu-item-arrow" *ngIf="item.children" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </ng-container>
         </a>
+
+        <!-- Submenu Items -->
+        <div class="submenu" *ngIf="item.children && item.expanded && !(isSidebarCollapsed$ | async)">
+          <a *ngFor="let child of item.children" 
+             [routerLink]="child.route" 
+             routerLinkActive="active" 
+             class="submenu-item">
+            <span class="submenu-dot"></span>
+            <span class="submenu-text">{{ child.name }}</span>
+          </a>
+        </div>
       </ng-container>
     </nav>
   </div>
