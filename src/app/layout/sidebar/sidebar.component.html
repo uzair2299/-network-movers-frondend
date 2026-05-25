@@ -16,12 +16,10 @@
   </div>
 
   <div class="sidebar-scrollable">
-    <nav>
+    <nav *ngIf="menuItems$ | async as menuItems">
       <ng-container *ngFor="let item of menuItems">
-        <!-- Section Label -->
         <div *ngIf="item.isLabel && !(isSidebarCollapsed$ | async)" class="menu-label">{{ item.name }}</div>
-        
-        <!-- Parent Nav Item (Link or Toggle) -->
+
         <a *ngIf="!item.isLabel" 
            [routerLink]="item.route ? item.route : null" 
            [routerLinkActive]="item.route ? 'active' : ''" 
@@ -32,9 +30,14 @@
            [title]="item.name">
            
           <div class="menu-item-icon" *ngIf="item.icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="item.icon" />
-            </svg>
+            <ng-container *ngIf="isSvgIcon(item.icon); else iconLabel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="item.icon" />
+              </svg>
+            </ng-container>
+            <ng-template #iconLabel>
+              <span class="menu-item-icon-text">{{ item.icon }}</span>
+            </ng-template>
           </div>
           
           <ng-container *ngIf="!(isSidebarCollapsed$ | async)">
@@ -44,14 +47,12 @@
               {{ item.badge.text }}
             </span>
             
-            <!-- Dropdown arrow icon -->
             <svg class="menu-item-arrow" *ngIf="item.children" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </ng-container>
         </a>
 
-        <!-- Submenu Items -->
         <div class="submenu" *ngIf="item.children && item.expanded && !(isSidebarCollapsed$ | async)">
           <a *ngFor="let child of item.children" 
              [routerLink]="child.route" 
