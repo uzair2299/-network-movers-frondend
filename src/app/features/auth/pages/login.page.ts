@@ -23,11 +23,14 @@ export class LoginPage {
       .login(this.username, this.password)
       .then(() => {
         this.loading = false;
-        this.router.navigate(['/operations']);
+        this.router.navigate(['/dashboard']);
       })
-      .catch(() => {
+      .catch((err: unknown) => {
         this.loading = false;
-        this.error = 'Unable to sign in. Please try again.';
+        this.error =
+          err instanceof Error
+            ? err.message || 'Unable to sign in. Please try again.'
+            : 'Unable to sign in. Please try again.';
       });
   }
 }
