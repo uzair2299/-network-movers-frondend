@@ -2,12 +2,11 @@
 FROM node:18-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-# Install dependencies with proper permissions handling for Alpine
-RUN npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
-# Explicitly rebuild modules and set executable permissions
-RUN chmod +x ./node_modules/.bin/* 2>/dev/null || true
+# Install dependencies in a clean image; do not let host node_modules override this install
+RUN npm ci --prefer-offline --no-audit --unsafe-perm || npm install --prefer-offline --no-audit --unsafe-perm
+# Copy app sources after dependencies are installed
 COPY . .
-# Final permission check before build
+# Ensure Angular CLI binary is executable before build
 RUN chmod +x ./node_modules/.bin/* 2>/dev/null || true
 RUN ls -la ./node_modules/.bin/ng || echo "ng not found"
 # Build with base-href so the app expects to be served under /network-movers-portal/
