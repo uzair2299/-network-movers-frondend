@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiService } from './api.service';
@@ -34,7 +35,10 @@ export class NavigationService {
 
   getSidebarMenu(): Observable<SidebarMenuItem[]> {
     return this.api.get<NavigationResponse>('/v1/navigation').pipe(
-      map(response => this.buildSidebarMenu(response?.SIDEBAR ?? [])),
+      map(response => {
+        const data = response as NavigationResponse;
+        return this.buildSidebarMenu(data?.SIDEBAR ?? []);
+      }),
       catchError(() => of([]))
     );
   }
