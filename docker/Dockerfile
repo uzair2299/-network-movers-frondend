@@ -2,10 +2,14 @@
 FROM node:18-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci || npm install
-# Fix executable permissions for node modules (important in Alpine/Docker)
-RUN chmod +x node_modules/.bin/* 2>/dev/null || true
+# Install dependencies with proper permissions handling for Alpine
+RUN npm ci --prefer-offline --no-audit || npm install --prefer-offline --no-audit
+# Explicitly rebuild modules and set executable permissions
+RUN chmod +x ./node_modules/.bin/* 2>/dev/null || true
 COPY . .
+# Final permission check before build
+RUN chmod +x ./node_modules/.bin/* 2>/dev/null || true
+RUN ls -la ./node_modules/.bin/ng || echo "ng not found"
 # Build with base-href so the app expects to be served under /network-movers-portal/
 # Disable font inlining to prevent fetching Google Fonts from internet during build (fails in isolated Docker)
 RUN NG_BUILD_SKIP_FETCH_GOOGLE_FONTS=true npm run build -- \
