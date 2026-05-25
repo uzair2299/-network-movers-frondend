@@ -3,6 +3,8 @@ FROM node:18-alpine AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci || npm install
+# Fix executable permissions for node modules (important in Alpine/Docker)
+RUN chmod +x node_modules/.bin/* 2>/dev/null || true
 COPY . .
 # Build with base-href so the app expects to be served under /network-movers-portal/
 # Disable font inlining to prevent fetching Google Fonts from internet during build (fails in isolated Docker)
