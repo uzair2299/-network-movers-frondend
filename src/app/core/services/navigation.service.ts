@@ -34,7 +34,7 @@ export class NavigationService {
   constructor(private api: ApiService) {}
 
   getSidebarMenu(): Observable<SidebarMenuItem[]> {
-    return this.api.get<NavigationResponse>('/v1/navigation').pipe(
+    return this.api.get<NavigationResponse>('/navigation').pipe(
       map(response => {
         const data = response as NavigationResponse;
         return this.buildSidebarMenu(data?.SIDEBAR ?? []);
