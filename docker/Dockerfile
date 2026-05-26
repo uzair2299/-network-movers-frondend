@@ -9,29 +9,29 @@ COPY . .
 # Ensure Angular CLI binary is executable before build
 RUN chmod +x ./node_modules/.bin/* 2>/dev/null || true
 RUN ls -la ./node_modules/.bin/ng || echo "ng not found"
-# Build with base-href so the app expects to be served under /network-movers-portal/
+# Build with base-href so the app expects to be served from root
 # Disable font inlining to prevent fetching Google Fonts from internet during build (fails in isolated Docker)
 RUN NG_BUILD_SKIP_FETCH_GOOGLE_FONTS=true npm run build -- \
     --output-path=dist/network-movers-portal \
-    --base-href=/network-movers-portal/ \
+    --base-href=/ \
     --configuration=production
 
 # Stage 2: Serve with NGINX
 FROM nginx:alpine
 
-COPY --from=build /app/dist/network-movers-portal /usr/share/nginx/html/network-movers-portal
+COPY --from=build /app/dist/network-movers-portal /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Ensure the config directory exists inside the network-movers-portal folder
-RUN mkdir -p /usr/share/nginx/html/network-movers-portal/assets/config
+# Ensure the config directory exists
+RUN mkdir -p /usr/share/nginx/html/assets/config
 
 # Copy default config.json (for local/dev use)
-COPY ./src/assets/config/config.json /usr/share/nginx/html/network-movers-portal/assets/config/config.json
+COPY ./src/assets/config/config.json /usr/share/nginx/html/assets/config/config.json
 
 # Copy the config template for runtime env substitution
-COPY ./src/assets/config/config.template.json /usr/share/nginx/html/network-movers-portal/assets/config/config.template.json
+COPY ./src/assets/config/config.template.json /usr/share/nginx/html/assets/config/config.template.json
 
 # Copy and set up the entrypoint script
 COPY docker/docker-entrypoint.sh /docker-entrypoint.sh

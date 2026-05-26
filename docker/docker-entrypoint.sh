@@ -9,8 +9,8 @@ echo "Replacing environment variables in config.json..."
 
 # Use envsubst to replace placeholders in the template and write to the actual config.json
 # Using the template as source avoids overwriting placeholders on subsequent restarts
-envsubst < /usr/share/nginx/html/network-movers-portal/assets/config/config.template.json \
-         > /usr/share/nginx/html/network-movers-portal/assets/config/config.json
+envsubst < /usr/share/nginx/html/assets/config/config.template.json \
+         > /usr/share/nginx/html/assets/config/config.json
 
 echo "Configuration updated. Starting Nginx..."
 
