@@ -40,7 +40,7 @@ export class NavigationService {
    * Level 3: Detailed items (All Leads, New Leads, etc.)
    */
   getSidebarMenu(maxDepth: number = 3): Observable<SidebarMenuItem[]> {
-    return this.api.get<NavigationResponse>('/v1/navigation').pipe(
+    return this.api.get<NavigationResponse>('/navigation').pipe(
       map(response => {
         const data = response instanceof HttpResponse ? response.body : response;
         return this.buildSidebarMenu(data?.SIDEBAR ?? [], maxDepth);
@@ -64,7 +64,7 @@ export class NavigationService {
   }
 
   getProfileMenu(): Observable<NavigationItem[]> {
-    return this.api.get<NavigationResponse>('/v1/navigation').pipe(
+    return this.api.get<NavigationResponse>('/navigation').pipe(
       map(response => {
         const data = response instanceof HttpResponse ? response.body : response;
         return (data?.PROFILE ?? []).sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
