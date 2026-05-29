@@ -1,7 +1,7 @@
 {
   "appName": "Network Movers",
-  "apiBaseUrl": "http://localhost:8080/api",
-  "authBaseUrl": "http://localhost:8080/auth",
-  "enableLogs": true,
+  "apiBaseUrl": "https://network-movers-backend-production.up.railway.app/api/v1",
+  "authBaseUrl": "https://network-movers-backend-production.up.railway.app/api/v1/auth",
+  "enableLogs": false,
   "version": "1.0.0"
 }
