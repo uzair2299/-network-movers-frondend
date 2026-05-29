@@ -17,52 +17,50 @@
 
   <div class="sidebar-scrollable">
     <nav *ngIf="menuItems$ | async as menuItems">
-      <ng-container *ngFor="let item of menuItems">
-        <div *ngIf="item.isLabel && !(isSidebarCollapsed$ | async)" class="menu-label">{{ item.name }}</div>
+      <ng-template #renderMenuItems let-items let-level="level">
+        <ng-container *ngFor="let item of items">
+          <div *ngIf="item.isLabel && !(isSidebarCollapsed$ | async)" class="menu-label">{{ item.name }}</div>
 
-        <a *ngIf="!item.isLabel" 
-           [routerLink]="item.route ? item.route : null" 
-           [routerLinkActive]="item.route ? 'active' : ''" 
-           (click)="toggleSubmenu(item, $event)"
-           class="menu-item" 
-           [class.has-children]="item.children"
-           [class.expanded]="item.expanded"
-           [title]="item.name">
-           
-          <div class="menu-item-icon" *ngIf="item.icon">
-            <ng-container *ngIf="isSvgIcon(item.icon); else iconLabel">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="item.icon" />
+          <a *ngIf="!item.isLabel"
+             [routerLink]="item.route ? item.route : null"
+             [routerLinkActive]="item.route ? 'active' : ''"
+             (click)="item.children ? toggleSubmenu(item, $event) : null"
+             [ngClass]="{ 'menu-item': level === 1, 'submenu-item': level > 1 }"
+             [class.has-children]="item.children"
+             [class.expanded]="item.expanded"
+             [title]="item.name">
+
+            <div class="menu-item-icon" *ngIf="level === 1 && item.icon">
+              <ng-container *ngIf="isSvgIcon(item.icon); else iconLabel">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="item.icon" />
+                </svg>
+              </ng-container>
+              <ng-template #iconLabel>
+                <span class="menu-item-icon-text">{{ getIconText(item.icon) }}</span>
+              </ng-template>
+            </div>
+
+            <ng-container *ngIf="!(isSidebarCollapsed$ | async)">
+              <span [class.menu-item-text]="level === 1" [class.submenu-text]="level > 1">{{ item.name }}</span>
+
+              <span *ngIf="item.badge" class="menu-item-badge" [ngClass]="item.badge.colorClass">
+                {{ item.badge.text }}
+              </span>
+
+              <svg class="menu-item-arrow" *ngIf="item.children" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </ng-container>
-            <ng-template #iconLabel>
-              <span class="menu-item-icon-text">{{ getIconText(item.icon) }}</span>
-            </ng-template>
-          </div>
-          
-          <ng-container *ngIf="!(isSidebarCollapsed$ | async)">
-            <span class="menu-item-text">{{ item.name }}</span>
-            
-            <span *ngIf="item.badge" class="menu-item-badge" [ngClass]="item.badge.colorClass">
-              {{ item.badge.text }}
-            </span>
-            
-            <svg class="menu-item-arrow" *ngIf="item.children" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </ng-container>
-        </a>
-
-        <div class="submenu" *ngIf="item.children && item.expanded && !(isSidebarCollapsed$ | async)">
-          <a *ngFor="let child of item.children" 
-             [routerLink]="child.route" 
-             routerLinkActive="active" 
-             class="submenu-item">
-            <span class="submenu-dot"></span>
-            <span class="submenu-text">{{ child.name }}</span>
           </a>
-        </div>
-      </ng-container>
+
+          <div class="submenu" *ngIf="item.children && item.expanded && !(isSidebarCollapsed$ | async)">
+            <ng-container *ngTemplateOutlet="renderMenuItems; context: { $implicit: item.children, level: level + 1 }"></ng-container>
+          </div>
+        </ng-container>
+      </ng-template>
+
+      <ng-container *ngTemplateOutlet="renderMenuItems; context: { $implicit: menuItems, level: 1 }"></ng-container>
     </nav>
   </div>
 </aside>
