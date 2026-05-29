@@ -48,13 +48,13 @@
                 {{ item.badge.text }}
               </span>
 
-              <svg class="menu-item-arrow" *ngIf="item.children" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="menu-item-arrow" *ngIf="item.children?.length" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </ng-container>
           </a>
 
-          <div class="submenu" *ngIf="item.children && item.expanded && !(isSidebarCollapsed$ | async)">
+          <div class="submenu" *ngIf="item.children?.length && item.expanded && !(isSidebarCollapsed$ | async)">
             <ng-container *ngTemplateOutlet="renderMenuItems; context: { $implicit: item.children, level: level + 1 }"></ng-container>
           </div>
         </ng-container>

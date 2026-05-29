@@ -62,6 +62,7 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+    this.navigationService.clearCache();
     this.isProfileOpen = false;
     this.router.navigate(['/auth']);
   }

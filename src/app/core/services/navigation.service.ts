@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { ApiService } from './api.service';
 
 export interface NavigationItem {
@@ -31,7 +31,27 @@ export interface SidebarMenuItem {
   providedIn: 'root'
 })
 export class NavigationService {
+  private navigationCache$?: Observable<NavigationResponse>;
+
   constructor(private api: ApiService) {}
+
+  private getNavigationData(forceReload: boolean = false): Observable<NavigationResponse> {
+    if (!this.navigationCache$ || forceReload) {
+      this.navigationCache$ = this.api.get<NavigationResponse>('/navigation').pipe(
+        map(response => {
+          const data = response instanceof HttpResponse ? response.body : response;
+          return data ?? { PROFILE: [], SIDEBAR: [], TOPBAR: [] };
+        }),
+        shareReplay({ bufferSize: 1, refCount: false }),
+        catchError(error => {
+          this.navigationCache$ = undefined;
+          return of({ PROFILE: [], SIDEBAR: [], TOPBAR: [] });
+        })
+      );
+    }
+
+    return this.navigationCache$;
+  }
 
   /**
    * Get sidebar menu - supports up to 3 levels of nesting
@@ -40,12 +60,8 @@ export class NavigationService {
    * Level 3: Detailed items (All Leads, New Leads, etc.)
    */
   getSidebarMenu(maxDepth: number = 3): Observable<SidebarMenuItem[]> {
-    return this.api.get<NavigationResponse>('/navigation').pipe(
-      map(response => {
-        const data = response instanceof HttpResponse ? response.body : response;
-        return this.buildSidebarMenu(data?.SIDEBAR ?? [], maxDepth);
-      }),
-      catchError(() => of([]))
+    return this.getNavigationData().pipe(
+      map(data => this.buildSidebarMenu(data?.SIDEBAR ?? [], maxDepth))
     );
   }
 
@@ -64,13 +80,13 @@ export class NavigationService {
   }
 
   getProfileMenu(): Observable<NavigationItem[]> {
-    return this.api.get<NavigationResponse>('/navigation').pipe(
-      map(response => {
-        const data = response instanceof HttpResponse ? response.body : response;
-        return (data?.PROFILE ?? []).sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-      }),
-      catchError(() => of([]))
+    return this.getNavigationData().pipe(
+      map(data => (data?.PROFILE ?? []).sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)))
     );
+  }
+
+  clearCache(): void {
+    this.navigationCache$ = undefined;
   }
 
   private buildSidebarMenu(items: NavigationItem[], maxDepth: number = 3): SidebarMenuItem[] {
