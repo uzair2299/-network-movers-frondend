@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoaderService } from './core/services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Network Movers Portal';
+
+  constructor(public loaderService: LoaderService) {}
 }

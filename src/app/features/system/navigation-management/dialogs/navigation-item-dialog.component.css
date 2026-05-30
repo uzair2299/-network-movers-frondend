@@ -1,43 +1,55 @@
+::ng-deep .premium-dark-dialog .mat-mdc-dialog-surface,
+::ng-deep .premium-dark-dialog .mdc-dialog__surface,
+::ng-deep .premium-dark-dialog .mat-mdc-dialog-container {
+  background-color: #1b2028 !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0) 100%) !important;
+  border-radius: 12px !important;
+  padding: 0 !important;
+}
+
 .dialog-container {
   display: flex;
   flex-direction: column;
-  min-width: 400px;
-  max-width: 600px;
+  background-color: transparent;
+  color: #c9d1d9;
+  font-family: var(--font-family-base, 'Inter', sans-serif);
 }
 
 .dialog-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .dialog-header h2 {
   margin: 0;
-  font-size: 1.5rem;
-  color: #1b2028;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ffffff;
 }
 
 .close-button {
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   cursor: pointer;
-  color: #6b7280;
-  padding: 0;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 0.5rem;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s;
 }
-
 .close-button:hover {
-  color: #1b2028;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .dialog-content {
-  padding: 1.5rem 0;
+  padding: 1.5rem;
   max-height: 60vh;
   overflow-y: auto;
 }
@@ -45,184 +57,227 @@
 /* Alert */
 .alert {
   padding: 1rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
 }
-
 .alert-danger {
   background-color: rgba(239, 68, 68, 0.1);
   border-left: 4px solid #ef4444;
-  color: #991b1b;
+  color: #fca5a5;
 }
 
 /* Form Groups */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
+.form-group { margin-bottom: 1.5rem; }
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #1b2028;
-  font-size: 0.95rem;
+  font-weight: 500;
+  color: #c9d1d9;
+  font-size: 0.9rem;
 }
-
 .form-group small {
   display: block;
-  margin-top: 0.25rem;
-  color: #6b7280;
-  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  color: #8b949e;
+  font-size: 0.8rem;
 }
 
 /* Form Controls */
 .form-control {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: #ffffff;
   font-size: 0.95rem;
   font-family: inherit;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
-
 .form-control:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  border-color: #f5a623;
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.15), inset 0 2px 4px rgba(0,0,0,0.1);
 }
-
-.form-control[type='number'] {
-  width: 100%;
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.2);
 }
 
 /* Icon Picker */
-.icon-picker {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
+.icon-picker { display: flex; flex-direction: column; gap: 0.75rem; }
 .icon-suggestions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.75rem;
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 4px;
-  max-height: 150px;
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  max-height: 120px;
   overflow-y: auto;
 }
-
 .icon-suggestion {
-  padding: 0.5rem 0.75rem;
-  background-color: #ffffff;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   transition: all 0.2s ease;
 }
-
 .icon-suggestion:hover {
-  background-color: #f3f4f6;
-  border-color: #6366f1;
+  background-color: rgba(245, 166, 35, 0.1);
+  border-color: #f5a623;
 }
-
 .icon-suggestion.selected {
-  background-color: #6366f1;
-  color: #ffffff;
-  border-color: #6366f1;
+  background-color: #f5a623;
+  color: #1b2028;
+  border-color: #f5a623;
 }
 
-/* Checkbox Group */
+/* Checkbox */
 .checkbox-group label {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
-  margin-bottom: 0;
 }
-
 .checkbox-group input[type='checkbox'] {
-  width: auto;
-  margin: 0;
-  cursor: pointer;
+  accent-color: #f5a623;
+  width: 18px;
+  height: 18px;
 }
 
-.checkbox-group span {
-  font-weight: 500;
-}
-
-/* Form Error */
 .form-error {
-  color: #dc2626;
+  color: #fca5a5;
   font-size: 0.85rem;
-  margin-top: 0.25rem;
+  margin-top: 0.4rem;
 }
 
 /* Dialog Actions */
 .dialog-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e5e7eb;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0 0 12px 12px;
 }
 
-.btn-cancel,
-.btn-submit {
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+.btn-cancel, .btn-submit {
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
   font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
 }
 
 .btn-cancel {
-  background-color: #e5e7eb;
-  color: #374151;
-  border: none;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #c9d1d9;
 }
-
 .btn-cancel:hover {
-  background-color: #d1d5db;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
 }
 
 .btn-submit {
-  background-color: #6366f1;
-  color: #ffffff;
+  background-color: #f5a623;
+  color: #1b2028;
   border: none;
+  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.2);
 }
-
 .btn-submit:hover:not(:disabled) {
-  background-color: #4f46e5;
+  background-color: #e59a1f;
+  transform: translateY(-1px);
 }
-
 .btn-submit:disabled {
-  background-color: #d1d5db;
-  color: #9ca3af;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+  box-shadow: none;
   cursor: not-allowed;
+  transform: none;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .dialog-container {
-    min-width: 90vw;
-    max-width: 90vw;
-  }
+/* Custom Dropdown (Select override) */
+.custom-dropdown-container {
+  position: relative;
+}
 
-  .dialog-content {
-    max-height: 70vh;
-  }
+.custom-select-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  user-select: none;
+}
 
-  .dialog-actions {
-    flex-direction: column-reverse;
-  }
+.custom-select-trigger:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+}
 
-  .btn-cancel,
-  .btn-submit {
-    width: 100%;
-  }
+.custom-select-trigger.open {
+  border-color: #3b82f6; /* Figma Blue */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2), inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.custom-select-trigger .caret {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.custom-select-trigger.open .caret {
+  transform: rotate(180deg);
+}
+
+.custom-options-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background-color: #2a2d35; /* Dark gray floating menu */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 0.4rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.custom-option {
+  padding: 0.6rem 1rem;
+  color: #c9d1d9;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.custom-option:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.custom-option.selected {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 500;
 }

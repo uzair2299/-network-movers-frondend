@@ -1,4 +1,7 @@
 <app-theme-provider>
+	<!-- Global Loading Overlay -->
+	<app-loading-spinner *ngIf="loaderService.isLoading$ | async"></app-loading-spinner>
+	
 	<router-outlet></router-outlet>
 	<app-toast></app-toast>
 </app-theme-provider>

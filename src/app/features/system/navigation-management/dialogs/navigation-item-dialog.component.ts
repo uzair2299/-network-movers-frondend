@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NavigationItemModel, NavigationCreateRequest } from '../models/navigation-item.model';
@@ -19,6 +19,7 @@ export class NavigationItemDialogComponent implements OnInit {
   form: FormGroup;
   isSubmitting = false;
   error: string | null = null;
+  isSectionDropdownOpen = false;
 
   sections = [
     { value: 'PROFILE', label: 'Profile Menu' },
@@ -39,6 +40,28 @@ export class NavigationItemDialogComponent implements OnInit {
 
   get isEditMode(): boolean {
     return this.data.isEdit;
+  }
+
+  getSectionLabel(value: string): string {
+    const section = this.sections.find(s => s.value === value);
+    return section ? section.label : 'Select Section';
+  }
+
+  toggleSectionDropdown(): void {
+    this.isSectionDropdownOpen = !this.isSectionDropdownOpen;
+  }
+
+  selectSection(value: string): void {
+    this.form.patchValue({ section: value });
+    this.isSectionDropdownOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.custom-dropdown-container')) {
+      this.isSectionDropdownOpen = false;
+    }
   }
 
   constructor(

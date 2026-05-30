@@ -1,0 +1,13 @@
+<div class="modern-page-header">
+  <div class="header-content">
+    <div *ngIf="icon" class="header-icon">{{ icon }}</div>
+    <div class="header-text">
+      <h1 class="title">{{ title }}</h1>
+      <p *ngIf="description" class="description">{{ description }}</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <!-- Optional slot for buttons aligned to the right of the header -->
+    <ng-content></ng-content>
+  </div>
+</div>

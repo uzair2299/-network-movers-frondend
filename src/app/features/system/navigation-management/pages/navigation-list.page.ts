@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationManagementService } from '../services/navigation-management.service';
@@ -24,6 +24,16 @@ export class NavigationListPage implements OnInit {
   selectedItems: Set<number> = new Set();
   expandedItems: Set<number> = new Set();
   isDragging = false;
+  searchQuery: string = '';
+  isMoreActionsOpen = false;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.custom-dropdown-container')) {
+      this.isMoreActionsOpen = false;
+    }
+  }
 
   sections = [
     { value: 'SIDEBAR', label: 'Sidebar Menu' },
@@ -90,6 +100,39 @@ export class NavigationListPage implements OnInit {
     return this.navigationData[this.selectedSection] || [];
   }
 
+  getFilteredItems(): NavigationItemModel[] {
+    const items = this.getCurrentSectionItems();
+    if (!this.searchQuery || this.searchQuery.trim() === '') {
+      return items;
+    }
+    const query = this.searchQuery.toLowerCase().trim();
+    return this.filterTree(items, query);
+  }
+
+  private filterTree(items: NavigationItemModel[], query: string): NavigationItemModel[] {
+    const result: NavigationItemModel[] = [];
+    for (const item of items) {
+      const match = (item.name && item.name.toLowerCase().includes(query)) || 
+                    (item.path && item.path.toLowerCase().includes(query));
+      
+      let childrenMatches: NavigationItemModel[] = [];
+      if (item.children && item.children.length > 0) {
+        childrenMatches = this.filterTree(item.children, query);
+      }
+
+      if (match || childrenMatches.length > 0) {
+        if (this.searchQuery) {
+          this.expandedItems.add(item.id);
+        }
+        result.push({
+          ...item,
+          children: childrenMatches.length > 0 ? childrenMatches : item.children
+        });
+      }
+    }
+    return result;
+  }
+
   toggleItemActive(item: NavigationItemModel): void {
     const newStatus = !item.active;
     this.navigationService.toggleNavigationItemActive(item.id, newStatus).subscribe({
@@ -148,7 +191,8 @@ export class NavigationListPage implements OnInit {
     const dialogRef = this.dialog.open(NavigationItemDialogComponent, {
       width: '500px',
       disableClose: false,
-      data: dialogData
+      data: dialogData,
+      panelClass: 'premium-dark-dialog'
     });
 
     dialogRef.afterClosed().subscribe((result: NavigationCreateRequest | null) => {
@@ -180,7 +224,8 @@ export class NavigationListPage implements OnInit {
     const dialogRef = this.dialog.open(NavigationItemDialogComponent, {
       width: '500px',
       disableClose: false,
-      data: dialogData
+      data: dialogData,
+      panelClass: 'premium-dark-dialog'
     });
 
     dialogRef.afterClosed().subscribe((result: NavigationCreateRequest | null) => {

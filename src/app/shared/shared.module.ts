@@ -8,6 +8,8 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
 import { HasRoleDirective } from './directives/has-role.directive';
 import { ToastComponent } from './components/toast/toast.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
@@ -19,7 +21,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     DateFormatPipe, 
     HasRoleDirective,
     ToastComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    PageHeaderComponent,
+    SearchBarComponent
   ],
   imports: [CommonModule, MatDialogModule],
   exports: [
@@ -32,7 +36,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     DateFormatPipe, 
     HasRoleDirective,
     ToastComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    PageHeaderComponent,
+    SearchBarComponent
   ]
 })
 export class SharedModule {}

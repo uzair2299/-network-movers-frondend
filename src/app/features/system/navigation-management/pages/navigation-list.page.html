@@ -1,8 +1,8 @@
-<div class="navigation-management-container">
-  <div class="page-header">
-    <h1>Navigation Management</h1>
-    <p>Manage and organize your application menus and navigation items</p>
-  </div>
+<div class="page-container">
+  <app-page-header 
+    title="Navigation Management" 
+    description="Manage and organize your application menus and navigation items">
+  </app-page-header>
 
   <!-- Status Messages -->
   <div *ngIf="error" class="alert alert-danger">
@@ -13,96 +13,138 @@
   </div>
 
   <!-- Loading State -->
-  <div *ngIf="isLoading" class="loading-overlay">
-    <div class="spinner"></div>
-    <p>Loading...</p>
-  </div>
-
-  <!-- Section Tabs -->
-  <div class="section-tabs">
-    <button 
-      *ngFor="let section of sections"
-      (click)="selectedSection = section.value; clearSelection()"
-      [class.active]="selectedSection === section.value"
-      class="tab-button">
-      {{ section.label }}
-    </button>
-  </div>
-
-  <!-- Bulk Actions Toolbar -->
-  <div *ngIf="hasSelectedItems" class="bulk-actions-toolbar">
-    <div class="selection-info">
-      <span>{{ selectedCount }} item(s) selected</span>
-      <button (click)="clearSelection()" class="link-button">Clear</button>
-    </div>
-    
-    <div class="bulk-action-buttons">
-      <button 
-        *ngIf="permissions.canBulkUpdate"
-        (click)="bulkActivate()" 
-        class="btn btn-success btn-sm"
-        title="Activate selected items">
-        <span>✓</span> Activate
-      </button>
-      
-      <button 
-        *ngIf="permissions.canBulkUpdate"
-        (click)="bulkDeactivate()" 
-        class="btn btn-warning btn-sm"
-        title="Deactivate selected items">
-        <span>✗</span> Deactivate
-      </button>
-      
-      <button 
-        *ngIf="permissions.canDelete"
-        (click)="bulkDelete()" 
-        class="btn btn-danger btn-sm"
-        title="Delete selected items">
-        <span>🗑</span> Delete
-      </button>
-    </div>
-  </div>
-
-  <!-- Actions Bar -->
-  <div class="actions-bar">
-    <button 
-      *ngIf="permissions.canCreate"
-      (click)="createNewItem()" 
-      class="btn btn-primary">
-      <span class="icon">+</span> Add Menu Item
-    </button>
-    
-    <div class="import-export-buttons">
-      <button 
-        *ngIf="permissions.canExport"
-        (click)="exportNavigation()" 
-        class="btn btn-secondary">
-        <span class="icon">📥</span> Export
-      </button>
-      
-      <label 
-        *ngIf="permissions.canImport"
-        class="btn btn-secondary">
-        <span class="icon">📤</span> Import
-        <input 
-          type="file" 
-          accept=".json" 
-          (change)="importNavigation($event)" 
-          style="display: none;">
-      </label>
-    </div>
-  </div>
+  <app-loading-spinner *ngIf="isLoading" message="Loading Navigation..."></app-loading-spinner>
 
   <!-- Navigation Items List -->
-  <div class="navigation-list">
-    <div *ngIf="getCurrentSectionItems().length === 0" class="empty-state">
-      <p>No navigation items in this section</p>
-      <button 
-        *ngIf="permissions.canCreate"
-        (click)="createNewItem()" 
-        class="btn btn-primary">
-        Create First Item
-      </button>
+  <div class="modern-list-card">
+    <!-- Section Tabs -->
+
+    <!-- Bulk Actions Toolbar -->
+    <div *ngIf="hasSelectedItems" class="bulk-actions-toolbar">
+      <div class="selection-info">
+        <span>{{ selectedCount }} item(s) selected</span>
+        <button (click)="clearSelection()" class="link-button">Clear</button>
+      </div>
+      
+      <div class="bulk-action-buttons">
+        <button 
+          *ngIf="permissions.canBulkUpdate"
+          (click)="bulkActivate()" 
+          class="btn btn-success btn-sm"
+          title="Activate selected items">
+          <span>✓</span> Activate
+        </button>
+        
+        <button 
+          *ngIf="permissions.canBulkUpdate"
+          (click)="bulkDeactivate()" 
+          class="btn btn-warning btn-sm"
+          title="Deactivate selected items">
+          <span>✗</span> Deactivate
+        </button>
+        
+        <button 
+          *ngIf="permissions.canDelete"
+          (click)="bulkDelete()" 
+          class="btn btn-danger btn-sm"
+          title="Delete selected items">
+          <span>🗑</span> Delete
+        </button>
+      </div>
+    </div>
+
+    <!-- Actions Bar -->
+    <div class="actions-bar">
+      <!-- Empty space on left to push items right -->
+      <div class="spacer"></div>
+      
+      <div class="actions-right">
+        <!-- Primary Action -->
+        <button 
+          *ngIf="permissions.canCreate"
+          (click)="createNewItem()" 
+          class="btn btn-primary">
+          <span class="icon">+</span> Add Menu Item
+        </button>
+
+        <!-- More Actions Dropdown (Custom Figma Style) -->
+        <div class="custom-dropdown-container">
+          <div class="custom-select-trigger" 
+               [class.open]="isMoreActionsOpen"
+               (click)="isMoreActionsOpen = !isMoreActionsOpen">
+            <span>More Actions</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          
+          <div class="custom-options-menu" *ngIf="isMoreActionsOpen">
+            <div class="custom-option" 
+                 *ngIf="permissions.canExport"
+                 (click)="exportNavigation(); isMoreActionsOpen = false">
+              <span class="icon">📥</span> Export Configuration
+            </div>
+            
+            <div class="custom-option" 
+                 *ngIf="permissions.canImport"
+                 (click)="fileInput.click(); isMoreActionsOpen = false">
+              <span class="icon">📤</span> Import Configuration
+            </div>
+          </div>
+          
+          <!-- Hidden file input for import -->
+          <input 
+            #fileInput
+            type="file" 
+            accept=".json" 
+            (change)="importNavigation($event)" 
+            style="display: none;">
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <div class="tabs-and-search-row">
+      <div class="section-tabs">
+        <button 
+          *ngFor="let section of sections"
+          (click)="selectedSection = section.value; clearSelection()"
+          [class.active]="selectedSection === section.value"
+          class="tab-button">
+          {{ section.label }}
+        </button>
+      </div>
+
+      <app-search-bar 
+        placeholder="Search items..." 
+        [(value)]="searchQuery">
+      </app-search-bar>
+    </div>
+
+    <div class="navigation-list">
+    <div *ngIf="getFilteredItems().length === 0" class="empty-state">
+      <ng-container *ngIf="searchQuery; else noItemsTemplate">
+        <svg class="empty-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 48px; height: 48px; margin-bottom: 1rem; color: var(--muted-color); opacity: 0.5;">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <line x1="8" y1="8" x2="14" y2="14"></line>
+          <line x1="14" y1="8" x2="8" y2="14"></line>
+        </svg>
+        <p>No results found for "<strong>{{ searchQuery }}</strong>"</p>
+        <button class="btn btn-secondary" style="margin-top: 1rem;" (click)="searchQuery = ''">
+          Clear Search
+        </button>
+      </ng-container>
+      <ng-template #noItemsTemplate>
+        <p>No navigation items in this section</p>
+        <button 
+          *ngIf="permissions.canCreate"
+          (click)="createNewItem()" 
+          class="btn btn-primary">
+          Create First Item
+        </button>
+      </ng-template>
     </div>
 
     <!-- Recursive Tree Template -->
@@ -170,7 +212,8 @@
     </ng-template>
 
     <!-- Render Root Level -->
-    <ng-container *ngTemplateOutlet="treeNodeTemplate; context: { items: getCurrentSectionItems(), depth: 0 }"></ng-container>
+    <ng-container *ngTemplateOutlet="treeNodeTemplate; context: { items: getFilteredItems(), depth: 0 }"></ng-container>
+  </div>
   </div>
 </div>
 

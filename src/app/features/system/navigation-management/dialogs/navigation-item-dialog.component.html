@@ -1,12 +1,12 @@
 <div class="dialog-container">
   <div class="dialog-header">
-    <h2 mat-dialog-title>{{ dialogTitle }}</h2>
-    <button mat-icon-button (click)="onCancel()" class="close-button">
+    <h2>{{ dialogTitle }}</h2>
+    <button (click)="onCancel()" class="close-button">
       <span>✕</span>
     </button>
   </div>
 
-  <div mat-dialog-content class="dialog-content">
+  <div class="dialog-content">
     <!-- Error Message -->
     <div *ngIf="error" class="alert alert-danger">
       {{ error }}
@@ -60,16 +60,25 @@
       </div>
 
       <!-- Section Field -->
-      <div class="form-group">
-        <label for="section">Section *</label>
-        <select
-          id="section"
-          formControlName="section"
-          class="form-control">
-          <option *ngFor="let section of sections" [value]="section.value">
+      <div class="form-group custom-dropdown-container">
+        <label>Section *</label>
+        <div class="custom-select-trigger" 
+             [class.open]="isSectionDropdownOpen"
+             (click)="toggleSectionDropdown()">
+          <span>{{ getSectionLabel(form.get('section')?.value) }}</span>
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        
+        <div class="custom-options-menu" *ngIf="isSectionDropdownOpen">
+          <div class="custom-option" 
+               *ngFor="let section of sections" 
+               [class.selected]="form.get('section')?.value === section.value"
+               (click)="selectSection(section.value)">
             {{ section.label }}
-          </option>
-        </select>
+          </div>
+        </div>
       </div>
 
       <!-- Sort Order Field -->
@@ -98,16 +107,15 @@
     </form>
   </div>
 
-  <div mat-dialog-actions class="dialog-actions">
+  <div class="dialog-actions">
     <button
-      mat-stroked-button
+      type="button"
       (click)="onCancel()"
       class="btn-cancel">
       Cancel
     </button>
     <button
-      mat-raised-button
-      color="primary"
+      type="button"
       (click)="onSubmit()"
       [disabled]="!form.valid || isSubmitting"
       class="btn-submit">

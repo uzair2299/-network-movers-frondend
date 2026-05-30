@@ -1,6 +1,7 @@
 import { NgModule, Optional, SkipSelf, APP_INITIALIZER } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { AuthService } from './auth/auth.service';
 import { JwtService } from './auth/jwt.service';
 import { ApiService } from './services/api.service';
@@ -27,6 +28,11 @@ export function initializeApp(configService: ConfigService) {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true
     }
   ]
