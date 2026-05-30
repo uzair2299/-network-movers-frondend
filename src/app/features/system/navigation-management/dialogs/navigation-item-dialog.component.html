@@ -12,7 +12,7 @@
       {{ error }}
     </div>
 
-    <form [formGroup]="form">
+    <form [formGroup]="form" class="form-grid">
       <!-- Name Field -->
       <div class="form-group">
         <label for="name">Name *</label>
@@ -28,23 +28,12 @@
       <!-- Icon Field -->
       <div class="form-group">
         <label for="icon">Icon</label>
-        <div class="icon-picker">
-          <input
-            id="icon"
-            type="text"
-            formControlName="icon"
-            placeholder="Enter icon name or SVG path"
-            class="form-control">
-          <div class="icon-suggestions">
-            <span
-              *ngFor="let iconName of commonIcons"
-              (click)="form.patchValue({icon: iconName})"
-              [class.selected]="form.get('icon')?.value === iconName"
-              class="icon-suggestion">
-              {{ iconName }}
-            </span>
-          </div>
-        </div>
+        <input
+          id="icon"
+          type="text"
+          formControlName="icon"
+          placeholder="Enter icon name or SVG path"
+          class="form-control">
       </div>
 
       <!-- Path Field -->
@@ -56,7 +45,6 @@
           formControlName="path"
           placeholder="e.g., /dashboard, /settings"
           class="form-control">
-        <small>Leave empty if this is a parent menu item</small>
       </div>
 
       <!-- Section Field -->
@@ -91,11 +79,32 @@
           min="0"
           class="form-control">
         <div *ngIf="sortOrderError" class="form-error">{{ sortOrderError }}</div>
-        <small>Lower values appear first</small>
+      </div>
+
+      <!-- Parent ID Field -->
+      <div class="form-group">
+        <label for="parentId">Parent ID</label>
+        <input 
+          type="number" 
+          id="parentId" 
+          formControlName="parentId"
+          class="form-control"
+          placeholder="e.g. 11">
+      </div>
+
+      <!-- Permission ID Field -->
+      <div class="form-group">
+        <label for="permissionId">Permission ID</label>
+        <input 
+          type="number" 
+          id="permissionId" 
+          formControlName="permissionId"
+          class="form-control"
+          placeholder="e.g. 5">
       </div>
 
       <!-- Active Checkbox -->
-      <div class="form-group checkbox-group">
+      <div class="form-group checkbox-group full-width">
         <label>
           <input
             type="checkbox"

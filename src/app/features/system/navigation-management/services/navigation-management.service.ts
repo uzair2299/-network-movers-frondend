@@ -43,14 +43,14 @@ export class NavigationManagementService {
    * Create new navigation item
    */
   createNavigationItem(request: NavigationCreateRequest): Observable<NavigationItemModel> {
-    return this.api.post<NavigationItemModel>(`${this.baseEndpoint}`, request) as Observable<NavigationItemModel>;
+    return this.api.post<NavigationItemModel>(`${this.baseEndpoint}/items`, request) as Observable<NavigationItemModel>;
   }
 
   /**
    * Update existing navigation item
    */
   updateNavigationItem(id: number, request: NavigationCreateRequest): Observable<NavigationItemModel> {
-    return this.api.put<NavigationItemModel>(`${this.baseEndpoint}/${id}`, request) as Observable<NavigationItemModel>;
+    return this.api.put<NavigationItemModel>(`${this.baseEndpoint}/items/${id}`, request) as Observable<NavigationItemModel>;
   }
 
   /**

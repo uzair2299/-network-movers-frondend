@@ -189,10 +189,13 @@ export class NavigationListPage implements OnInit {
     };
 
     const dialogRef = this.dialog.open(NavigationItemDialogComponent, {
-      width: '500px',
+      width: '800px',
+      maxWidth: '95vw',
       disableClose: false,
+      hasBackdrop: true,
       data: dialogData,
-      panelClass: 'premium-dark-dialog'
+      panelClass: 'premium-dark-dialog',
+      backdropClass: 'premium-backdrop'
     });
 
     dialogRef.afterClosed().subscribe((result: NavigationCreateRequest | null) => {
@@ -222,10 +225,13 @@ export class NavigationListPage implements OnInit {
     };
 
     const dialogRef = this.dialog.open(NavigationItemDialogComponent, {
-      width: '500px',
+      width: '800px',
+      maxWidth: '95vw',
       disableClose: false,
+      hasBackdrop: true,
       data: dialogData,
-      panelClass: 'premium-dark-dialog'
+      panelClass: 'premium-dark-dialog',
+      backdropClass: 'premium-backdrop'
     });
 
     dialogRef.afterClosed().subscribe((result: NavigationCreateRequest | null) => {

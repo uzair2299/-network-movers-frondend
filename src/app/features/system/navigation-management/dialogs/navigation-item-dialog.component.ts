@@ -27,12 +27,7 @@ export class NavigationItemDialogComponent implements OnInit {
     { value: 'TOPBAR', label: 'Top Bar Menu' }
   ];
 
-  commonIcons = [
-    'dashboard', 'users', 'settings', 'file-text', 'bar-chart',
-    'check-square', 'calendar', 'mail', 'bell', 'lock',
-    'user', 'home', 'search', 'trash', 'edit',
-    'plus', 'minus', 'arrow-right', 'arrow-left', 'menu'
-  ];
+
 
   get dialogTitle(): string {
     return this.data.isEdit ? 'Edit Navigation Item' : 'Create Navigation Item';
@@ -75,6 +70,8 @@ export class NavigationItemDialogComponent implements OnInit {
       path: [''],
       section: [this.data.section, Validators.required],
       sortOrder: [0, [Validators.required, Validators.min(0)]],
+      parentId: [this.data.parentId || null, [Validators.min(1)]],
+      permissionId: [null, [Validators.min(1)]],
       active: [true]
     });
   }
@@ -87,6 +84,8 @@ export class NavigationItemDialogComponent implements OnInit {
         path: this.data.item.path || '',
         section: this.data.item.section || this.data.section,
         sortOrder: this.data.item.sortOrder ?? 0,
+        parentId: this.data.parentId ?? null,
+        permissionId: this.data.item.permissionId ?? null,
         active: this.data.item.active !== false
       });
     }
@@ -108,8 +107,9 @@ export class NavigationItemDialogComponent implements OnInit {
       path: formValue.path || undefined,
       section: formValue.section,
       sortOrder: formValue.sortOrder,
-      active: formValue.active,
-      parentId: this.data.parentId
+      parentId: formValue.parentId ? Number(formValue.parentId) : undefined,
+      permissionId: formValue.permissionId ? Number(formValue.permissionId) : undefined,
+      active: formValue.active
     };
 
     this.dialogRef.close(request);
@@ -121,22 +121,26 @@ export class NavigationItemDialogComponent implements OnInit {
 
   get nameError(): string {
     const control = this.form.get('name');
-    if (control?.hasError('required')) {
-      return 'Name is required';
-    }
-    if (control?.hasError('minlength')) {
-      return 'Name must be at least 2 characters';
+    if (control && (control.touched || control.dirty)) {
+      if (control.hasError('required')) {
+        return 'Name is required';
+      }
+      if (control.hasError('minlength')) {
+        return 'Name must be at least 2 characters';
+      }
     }
     return '';
   }
 
   get sortOrderError(): string {
     const control = this.form.get('sortOrder');
-    if (control?.hasError('required')) {
-      return 'Sort order is required';
-    }
-    if (control?.hasError('min')) {
-      return 'Sort order must be 0 or greater';
+    if (control && (control.touched || control.dirty)) {
+      if (control.hasError('required')) {
+        return 'Sort order is required';
+      }
+      if (control.hasError('min')) {
+        return 'Sort order must be 0 or greater';
+      }
     }
     return '';
   }

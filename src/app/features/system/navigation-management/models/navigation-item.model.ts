@@ -7,6 +7,7 @@ export interface NavigationItemModel {
   sortOrder: number;
   active: boolean;
   children?: NavigationItemModel[];
+  permissionId?: number;
 }
 
 export interface NavigationMenuResponse {
@@ -23,6 +24,7 @@ export interface NavigationCreateRequest {
   sortOrder: number;
   active: boolean;
   parentId?: number;
+  permissionId?: number;
 }
 
 export interface NavigationUpdateRequest extends NavigationCreateRequest {
