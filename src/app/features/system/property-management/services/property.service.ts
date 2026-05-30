@@ -18,7 +18,9 @@ export class PropertyService {
   constructor(private http: HttpClient) {}
 
   private getList<T>(endpoint: string): Observable<T[]> {
-    return this.http.get<PaginatedResponse<T>>(`${this.baseUrl}/${endpoint}`).pipe(
+    const separator = endpoint.includes('?') ? '&' : '?';
+    const url = `${this.baseUrl}/${endpoint}${separator}page=0&size=1000&sort=name,asc`;
+    return this.http.get<PaginatedResponse<T>>(url).pipe(
       map(res => res.content || [])
     );
   }
@@ -55,24 +57,28 @@ export class PropertyService {
 
   // 4. Floor Types
   getFloorTypes(): Observable<FloorType[]> { return this.getList('floor-type'); }
+  getActiveFloorTypes(): Observable<FloorType[]> { return this.http.get<FloorType[]>(`${this.baseUrl}/floor-type/active`); }
   createFloorType(req: BaseLookupRequest): Observable<FloorType> { return this.createItem('floor-type', req); }
   updateFloorType(id: string, req: BaseLookupRequest): Observable<FloorType> { return this.updateItem('floor-type', id, req); }
   deleteFloorType(id: string): Observable<void> { return this.deleteItem('floor-type', id); }
 
   // 5. Building Access
   getBuildingAccessTypes(): Observable<BuildingAccessType[]> { return this.getList('building-access-type'); }
+  getActiveBuildingAccessTypes(): Observable<BuildingAccessType[]> { return this.http.get<BuildingAccessType[]>(`${this.baseUrl}/building-access-type/active`); }
   createBuildingAccessType(req: BaseLookupRequest): Observable<BuildingAccessType> { return this.createItem('building-access-type', req); }
   updateBuildingAccessType(id: string, req: BaseLookupRequest): Observable<BuildingAccessType> { return this.updateItem('building-access-type', id, req); }
   deleteBuildingAccessType(id: string): Observable<void> { return this.deleteItem('building-access-type', id); }
 
   // 6. Parking Access
   getParkingAccessTypes(): Observable<ParkingAccessType[]> { return this.getList('parking-access-type'); }
+  getActiveParkingAccessTypes(): Observable<ParkingAccessType[]> { return this.http.get<ParkingAccessType[]>(`${this.baseUrl}/parking-access-type/active`); }
   createParkingAccessType(req: BaseLookupRequest): Observable<ParkingAccessType> { return this.createItem('parking-access-type', req); }
   updateParkingAccessType(id: string, req: BaseLookupRequest): Observable<ParkingAccessType> { return this.updateItem('parking-access-type', id, req); }
   deleteParkingAccessType(id: string): Observable<void> { return this.deleteItem('parking-access-type', id); }
 
   // 7. Access Restrictions
   getAccessRestrictions(): Observable<AccessRestrictionType[]> { return this.getList('access-restriction-type'); }
+  getActiveAccessRestrictions(): Observable<AccessRestrictionType[]> { return this.http.get<AccessRestrictionType[]>(`${this.baseUrl}/access-restriction-type/active`); }
   createAccessRestriction(req: BaseLookupRequest): Observable<AccessRestrictionType> { return this.createItem('access-restriction-type', req); }
   updateAccessRestriction(id: string, req: BaseLookupRequest): Observable<AccessRestrictionType> { return this.updateItem('access-restriction-type', id, req); }
   deleteAccessRestriction(id: string): Observable<void> { return this.deleteItem('access-restriction-type', id); }

@@ -1,0 +1,223 @@
+<div class="map-dashboard-container">
+  <!-- Background Map Layer -->
+  <div class="map-layer">
+    <div #mapElement class="google-map"></div>
+    <div class="map-overlay-info" *ngIf="!pickupPlace && !dropoffPlace">
+      <p>Enter pickup and dropoff locations to preview the route.</p>
+    </div>
+  </div>
+
+  <!-- UI Overlay Layer -->
+  <div class="ui-layer">
+    
+    <!-- Top Header Overlay -->
+    <div class="top-header">
+      <button class="app-btn app-btn-icon back-btn" (click)="onCancel()" title="Back to Dashboard">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <div class="header-card" *ngIf="distanceText">
+        <div class="route-badge">
+          <span class="dot"></span> Route: {{ distanceText }} ({{ durationText }})
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Data Panel (Takes up lower ~35% of screen) -->
+    <div class="bottom-panel">
+      <!-- Tabs / Header area -->
+      <div class="panel-header">
+        <h2>Quick Booking</h2>
+        <div class="panel-actions">
+          <button class="icon-btn" title="Expand">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a3b3cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: auto;"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>
+          </button>
+          <button class="icon-btn" (click)="onCancel()" title="Close">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a3b3cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: auto;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <form [formGroup]="form" class="panel-content page-layout-grid">
+        
+        <!-- Continuous Vertical Divider -->
+        <app-divider [vertical]="true" margin="0 2rem" class="form-vertical-divider"></app-divider>
+
+        <!-- Section 1: Client Details (Left) -->
+        <div class="row-section" style="grid-column: 1; grid-row: 1;">
+          <h3 class="row-section-header">Client Details</h3>
+          <div class="form-group">
+            <label>Client Name <span class="required">*</span></label>
+            <input type="text" formControlName="clientName" class="form-control" placeholder="e.g. John Doe">
+          </div>
+          <div class="form-grid-2col">
+            <div class="form-group">
+              <label>Email Address <span class="required">*</span></label>
+              <input type="email" formControlName="clientEmail" class="form-control" placeholder="john@example.com">
+            </div>
+            <div class="form-group">
+              <label>Phone Number <span class="required">*</span></label>
+              <input type="tel" formControlName="clientPhone" class="form-control" placeholder="+971 50 123 4567">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Move Specifications (Right) -->
+        <div class="row-section" style="grid-column: 3; grid-row: 1;">
+          <h3 class="row-section-header">Move Specifications</h3>
+          <div class="form-grid-2col">
+            <div class="form-group">
+              <label>Move Date <span class="required">*</span></label>
+              <input type="date" formControlName="moveDate" class="form-control" style="width: 100%;">
+            </div>
+            <div class="form-group">
+              <label>Time <span class="required">*</span></label>
+              <input type="time" formControlName="moveTime" class="form-control" style="width: 100%;">
+            </div>
+          </div>
+          <app-form-select
+            label="Property Size *"
+            placeholder="Select Size"
+            [options]="sizeOptions"
+            [control]="$any(form.get('size'))">
+          </app-form-select>
+        </div>
+
+        <!-- Section 3: Pickup Location (Left) -->
+        <div class="row-section" style="grid-column: 1; grid-row: 2;">
+          <h3 class="row-section-header">Pickup Location</h3>
+          
+          <div class="form-group">
+            <label>Pickup Address <span class="required">*</span></label>
+            <input type="text" #pickupInput formControlName="pickup" class="form-control" placeholder="Search pickup address...">
+          </div>
+          
+          <div class="form-group" style="margin-top: 1rem;">
+            <label>Unit / Flat / Villa No. <span style="font-size: 0.75rem; color: #8c96a3; font-weight: normal;">(Optional)</span></label>
+            <input type="text" formControlName="pickupUnit" class="form-control" placeholder="e.g. Flat 4B, Villa 12">
+          </div>
+
+          <div class="form-grid-2col">
+            <app-form-select
+              label="Floor Type"
+              placeholder="Select Floor"
+              [options]="floorTypes"
+              [control]="$any(form.get('pickupFloorTypeId'))">
+            </app-form-select>
+            <app-form-select
+              label="Building Access Type *"
+              placeholder="Select Building Access"
+              [options]="buildingAccessTypes"
+              [control]="$any(form.get('pickupBuildingAccessTypeId'))">
+            </app-form-select>
+          </div>
+
+          <app-form-select
+            label="Parking Access Type *"
+            placeholder="Select Parking Access"
+            [options]="parkingAccessTypes"
+            [control]="$any(form.get('pickupParkingAccessTypeId'))">
+          </app-form-select>
+
+          <div class="form-group">
+            <label>Access Restrictions</label>
+            <div class="checkbox-wrap-list">
+              <label *ngFor="let restriction of accessRestrictionTypes" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" 
+                       [value]="restriction.value" 
+                       (change)="toggleRestriction('pickup', restriction.value, $event)" 
+                       [checked]="isRestrictionSelected('pickup', restriction.value)" 
+                       style="width: 16px; height: 16px; accent-color: #f5a623;">
+                <span style="font-size: 0.9rem; color: #c9d1d9;">{{ restriction.label }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Dropoff Location (Right) -->
+        <div class="row-section" style="grid-column: 3; grid-row: 2;">
+          <h3 class="row-section-header">Dropoff Location</h3>
+          
+          <div class="form-group">
+            <label>Dropoff Address <span class="required">*</span></label>
+            <input type="text" #dropoffInput formControlName="dropoff" class="form-control" placeholder="Search dropoff address...">
+          </div>
+          
+          <div class="form-group" style="margin-top: 1rem;">
+            <label>Unit / Flat / Villa No. <span style="font-size: 0.75rem; color: #8c96a3; font-weight: normal;">(Optional)</span></label>
+            <input type="text" formControlName="dropoffUnit" class="form-control" placeholder="e.g. Flat 4B, Villa 12">
+          </div>
+
+          <div class="form-grid-2col">
+            <app-form-select
+              label="Floor Type"
+              placeholder="Select Floor"
+              [options]="floorTypes"
+              [control]="$any(form.get('dropoffFloorTypeId'))">
+            </app-form-select>
+            <app-form-select
+              label="Building Access Type *"
+              placeholder="Select Building Access"
+              [options]="buildingAccessTypes"
+              [control]="$any(form.get('dropoffBuildingAccessTypeId'))">
+            </app-form-select>
+          </div>
+
+          <app-form-select
+            label="Parking Access Type *"
+            placeholder="Select Parking Access"
+            [options]="parkingAccessTypes"
+            [control]="$any(form.get('dropoffParkingAccessTypeId'))">
+          </app-form-select>
+
+          <div class="form-group">
+            <label>Access Restrictions</label>
+            <div class="checkbox-wrap-list">
+              <label *ngFor="let restriction of accessRestrictionTypes" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" 
+                       [value]="restriction.value" 
+                       (change)="toggleRestriction('dropoff', restriction.value, $event)" 
+                       [checked]="isRestrictionSelected('dropoff', restriction.value)" 
+                       style="width: 16px; height: 16px; accent-color: #f5a623;">
+                <span style="font-size: 0.9rem; color: #c9d1d9;">{{ restriction.label }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Notes & Summary (Full Width Bottom) -->
+        <div class="row-section section-full">
+          <h3 class="row-section-header">Final Details</h3>
+          
+          <div class="form-group">
+            <label>Additional Notes</label>
+            <textarea formControlName="notes" class="form-control" rows="3" placeholder="Special requirements, fragile items..."></textarea>
+          </div>
+          
+          <div class="form-grid-2col" style="align-items: flex-end; margin-top: 0.5rem;">
+            <!-- Left Side of Footer: Route Estimation -->
+            <div>
+              <div *ngIf="distanceText && durationText" style="background: rgba(245, 166, 35, 0.1); border: 1px solid rgba(245, 166, 35, 0.3); border-radius: 8px; padding: 1rem;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #f5a623; font-size: 0.95rem;">Route Estimation</h4>
+                <div style="display: flex; gap: 2rem; font-size: 0.9rem; color: #fff;">
+                  <div><span>Distance:</span> <strong>{{ distanceText }}</strong></div>
+                  <div><span>Est. Time:</span> <strong>{{ durationText }}</strong></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Side of Footer: Buttons -->
+            <div style="display: flex; gap: 1rem;">
+              <button type="button" (click)="onCancel()" class="form-control" style="flex: 1; background: transparent; cursor: pointer; color: #a3b3cc; border: 1px solid rgba(255,255,255,0.1);">
+                Cancel
+              </button>
+              <button type="submit" class="form-control" style="flex: 2; background: #f5a623; border-color: #f5a623; color: white; cursor: pointer; font-weight: 600;" [disabled]="isSubmitting">
+                {{ isSubmitting ? 'Processing...' : 'Confirm Booking' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

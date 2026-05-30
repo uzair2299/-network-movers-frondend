@@ -1,19 +1,21 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { PropertyService } from '../../../system/property-management/services/property.service';
+import { SharedModule } from '../../../../shared/shared.module';
 
 declare var google: any;
 
 @Component({
-  selector: 'app-quick-move-book-dialog',
-  templateUrl: './quick-move-book-dialog.component.html',
-  styleUrls: ['./quick-move-book-dialog.component.css'],
+  selector: 'app-quick-book-page',
+  templateUrl: './quick-book.page.html',
+  styleUrls: ['./quick-book.page.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, SharedModule]
 })
-export class QuickMoveBookDialogComponent implements OnInit, AfterViewInit {
+export class QuickBookPageComponent implements OnInit, AfterViewInit {
   form: FormGroup;
   isSubmitting = false;
 
@@ -30,27 +32,105 @@ export class QuickMoveBookDialogComponent implements OnInit, AfterViewInit {
   
   distanceText: string = '';
   durationText: string = '';
+  
+  buildingAccessTypes: any[] = [];
+  parkingAccessTypes: any[] = [];
+  floorTypes: any[] = [];
+  accessRestrictionTypes: any[] = [];
+  
+  sizeOptions = [
+    { label: 'Studio', value: 'Studio' },
+    { label: '1 Bedroom', value: '1 BR' },
+    { label: '2 Bedroom', value: '2 BR' },
+    { label: '3 Bedroom', value: '3 BR' },
+    { label: 'Villa / Townhouse', value: 'Villa' }
+  ];
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<QuickMoveBookDialogComponent>,
+    private router: Router,
+    private route: ActivatedRoute,
     private toastService: ToastService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private propertyService: PropertyService
   ) {
     this.form = this.fb.group({
+      // Basic info
       clientName: ['', Validators.required],
+      clientEmail: ['', [Validators.required, Validators.email]],
+      clientPhone: ['', Validators.required],
+      
+      // Location
       pickup: ['', Validators.required],
+      pickupUnit: [''],
       dropoff: ['', Validators.required],
+      dropoffUnit: [''],
+      
+      // Move Details
       moveDate: ['', Validators.required],
-      size: ['', Validators.required]
+      moveTime: ['', Validators.required],
+      size: ['', Validators.required],
+      
+      // Pickup Specs
+      pickupFloorTypeId: [''],
+      pickupBuildingAccessTypeId: [''],
+      pickupParkingAccessTypeId: [''],
+      pickupAccessRestrictionTypeIds: [[]],
+      
+      // Dropoff Specs
+      dropoffFloorTypeId: [''],
+      dropoffBuildingAccessTypeId: [''],
+      dropoffParkingAccessTypeId: [''],
+      dropoffAccessRestrictionTypeIds: [[]],
+      
+      // Extra
+      notes: ['']
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.propertyService.getActiveBuildingAccessTypes().subscribe({
+      next: (types) => this.buildingAccessTypes = types.map((t: any) => ({ label: t.name, value: t.id })),
+      error: () => console.error('Failed to load building access types')
+    });
+
+    this.propertyService.getActiveParkingAccessTypes().subscribe({
+      next: (types) => this.parkingAccessTypes = types.map((t: any) => ({ label: t.name, value: t.id })),
+      error: () => console.error('Failed to load parking access types')
+    });
+
+    this.propertyService.getActiveFloorTypes().subscribe({
+      next: (types) => this.floorTypes = types.map((t: any) => ({ label: t.name, value: t.id })),
+      error: () => console.error('Failed to load floor types')
+    });
+
+    this.propertyService.getActiveAccessRestrictions().subscribe({
+      next: (types) => this.accessRestrictionTypes = types.map((t: any) => ({ label: t.name, value: t.id })),
+      error: () => console.error('Failed to load access restriction types')
+    });
+  }
 
   ngAfterViewInit() {
     this.initMap();
     this.initAutocomplete();
+  }
+
+  toggleRestriction(type: 'pickup' | 'dropoff', id: string, event: any) {
+    const isChecked = event.target.checked;
+    const controlName = type === 'pickup' ? 'pickupAccessRestrictionTypeIds' : 'dropoffAccessRestrictionTypeIds';
+    const current = this.form.get(controlName)?.value || [];
+    
+    if (isChecked) {
+      this.form.patchValue({ [controlName]: [...current, id] });
+    } else {
+      this.form.patchValue({ [controlName]: current.filter((val: string) => val !== id) });
+    }
+  }
+
+  isRestrictionSelected(type: 'pickup' | 'dropoff', id: string): boolean {
+    const controlName = type === 'pickup' ? 'pickupAccessRestrictionTypeIds' : 'dropoffAccessRestrictionTypeIds';
+    const current = this.form.get(controlName)?.value || [];
+    return current.includes(id);
   }
 
   initMap() {
@@ -158,19 +238,22 @@ export class QuickMoveBookDialogComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.toastService.showError('Please fill out all required fields properly.', 'Error');
+      return;
+    }
     
     this.isSubmitting = true;
     
-    // Mock API call delay
     setTimeout(() => {
       this.isSubmitting = false;
       this.toastService.showSuccess('Move Booked Successfully!', 'Quick Book');
-      this.dialogRef.close(this.form.value);
+      this.router.navigate(['../'], { relativeTo: this.route });
     }, 1500);
   }
 
   onCancel() {
-    this.dialogRef.close();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }
