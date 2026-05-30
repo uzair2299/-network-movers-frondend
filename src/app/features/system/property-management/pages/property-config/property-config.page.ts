@@ -21,6 +21,10 @@ export class PropertyConfigPage implements OnInit {
   data: any[] = [];
   isLoading = false;
 
+  searchQuery = '';
+  sortColumn: string = 'name';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
   constructor(
     private propertyService: PropertyService,
     private dialog: MatDialog,
@@ -35,6 +39,7 @@ export class PropertyConfigPage implements OnInit {
       if (tab) {
         this.activeTab = tab;
       }
+      this.searchQuery = '';
       this.loadData();
     });
   }
@@ -134,7 +139,7 @@ export class PropertyConfigPage implements OnInit {
     });
   }
 
-  getTabTitle(): string {
+  getTabTitle() {
     switch(this.activeTab) {
       case 'categories': return 'Property Categories';
       case 'types': return 'Property Types';
@@ -143,6 +148,49 @@ export class PropertyConfigPage implements OnInit {
       case 'building': return 'Building Access';
       case 'parking': return 'Parking Access';
       case 'restrictions': return 'Access Restrictions';
+    }
+  }
+
+  getFilteredAndSortedData() {
+    let result = [...this.data];
+
+    if (this.searchQuery) {
+      const q = this.searchQuery.toLowerCase();
+      result = result.filter(item => 
+        item.name?.toLowerCase().includes(q) || 
+        item.code?.toLowerCase().includes(q)
+      );
+    }
+
+    result.sort((a, b) => {
+      let valA = a[this.sortColumn];
+      let valB = b[this.sortColumn];
+
+      if (this.sortColumn === 'categoryName') {
+        valA = a.category?.name || '';
+        valB = b.category?.name || '';
+      } else if (this.sortColumn === 'typeName') {
+        valA = a.type?.name || '';
+        valB = b.type?.name || '';
+      }
+
+      if (typeof valA === 'string') valA = valA.toLowerCase();
+      if (typeof valB === 'string') valB = valB.toLowerCase();
+
+      if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    return result;
+  }
+
+  toggleSort(column: string) {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
     }
   }
 }

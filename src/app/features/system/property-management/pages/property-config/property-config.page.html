@@ -23,32 +23,57 @@
     <div class="main-content">
       <div class="content-header">
         <h2>{{ getTabTitle() }}</h2>
-        <app-button variant="primary" (btnClick)="openCreateDialog()">Add New</app-button>
+        <div class="header-actions">
+          <app-search-bar 
+            placeholder="Search {{ getTabTitle() }}..." 
+            [(value)]="searchQuery">
+          </app-search-bar>
+          <app-button variant="primary" (btnClick)="openCreateDialog()">Add New</app-button>
+        </div>
       </div>
 
       <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
-      <div *ngIf="!isLoading && data.length === 0" class="empty-state">
+      <div *ngIf="!isLoading && getFilteredAndSortedData().length === 0" class="empty-state">
         <div class="empty-icon">📋</div>
         <h3>No {{ getTabTitle() }} Found</h3>
-        <p>Click "Add New" to create your first entry.</p>
+        <p *ngIf="searchQuery">No results match your search for "{{ searchQuery }}".</p>
+        <p *ngIf="!searchQuery">Click "Add New" to create your first entry.</p>
       </div>
 
-      <div *ngIf="!isLoading && data.length > 0" class="table-container">
+      <div *ngIf="!isLoading && getFilteredAndSortedData().length > 0" class="table-container">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Code</th>
-              <th *ngIf="activeTab === 'types'">Category</th>
-              <th *ngIf="activeTab === 'sizes'">Property Type</th>
-              <th *ngIf="activeTab === 'sizes'">Unit Type</th>
-              <th>Status</th>
+              <th (click)="toggleSort('name')" class="sortable">
+                Name
+                <span class="sort-icon" *ngIf="sortColumn === 'name'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+              </th>
+              <th (click)="toggleSort('code')" class="sortable">
+                Code
+                <span class="sort-icon" *ngIf="sortColumn === 'code'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+              </th>
+              <th *ngIf="activeTab === 'types'" (click)="toggleSort('categoryName')" class="sortable">
+                Category
+                <span class="sort-icon" *ngIf="sortColumn === 'categoryName'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+              </th>
+              <th *ngIf="activeTab === 'sizes'" (click)="toggleSort('typeName')" class="sortable">
+                Property Type
+                <span class="sort-icon" *ngIf="sortColumn === 'typeName'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+              </th>
+              <th *ngIf="activeTab === 'sizes'" (click)="toggleSort('unitType')" class="sortable">
+                Unit Type
+                <span class="sort-icon" *ngIf="sortColumn === 'unitType'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+              </th>
+              <th (click)="toggleSort('active')" class="sortable">
+                Status
+                <span class="sort-icon" *ngIf="sortColumn === 'active'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+              </th>
               <th class="actions-col">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of data">
+            <tr *ngFor="let item of getFilteredAndSortedData()">
               <td><strong>{{ item.name }}</strong></td>
               <td><span class="code-badge">{{ item.code }}</span></td>
               <td *ngIf="activeTab === 'types'">{{ item.category?.name || 'N/A' }}</td>
@@ -60,8 +85,10 @@
                 </span>
               </td>
               <td class="actions-col">
-                <button class="icon-btn edit-btn" (click)="openEditDialog(item)" title="Edit">✎</button>
-                <button class="icon-btn delete-btn" (click)="deleteItem(item)" title="Delete">🗑</button>
+                <div class="table-actions">
+                  <app-button variant="ghost" size="sm" (btnClick)="openEditDialog(item)" title="Edit">✎</app-button>
+                  <app-button variant="ghost-danger" size="sm" (btnClick)="deleteItem(item)" title="Delete">🗑</app-button>
+                </div>
               </td>
             </tr>
           </tbody>
