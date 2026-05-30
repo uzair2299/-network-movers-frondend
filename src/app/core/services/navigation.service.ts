@@ -9,7 +9,9 @@ export interface NavigationItem {
   name: string;
   icon?: string;
   path?: string;
+  section?: 'PROFILE' | 'SIDEBAR' | 'TOPBAR';
   sortOrder?: number;
+  active?: boolean;
   children?: NavigationItem[];
 }
 

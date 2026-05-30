@@ -1,0 +1,212 @@
+<div class="navigation-management-container">
+  <div class="page-header">
+    <h1>Navigation Management</h1>
+    <p>Manage and organize your application menus and navigation items</p>
+  </div>
+
+  <!-- Status Messages -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Section Tabs -->
+  <div class="section-tabs">
+    <button 
+      *ngFor="let section of sections"
+      (click)="selectedSection = section.value; clearSelection()"
+      [class.active]="selectedSection === section.value"
+      class="tab-button">
+      {{ section.label }}
+    </button>
+  </div>
+
+  <!-- Bulk Actions Toolbar -->
+  <div *ngIf="hasSelectedItems" class="bulk-actions-toolbar">
+    <div class="selection-info">
+      <span>{{ selectedCount }} item(s) selected</span>
+      <button (click)="clearSelection()" class="link-button">Clear</button>
+    </div>
+    
+    <div class="bulk-action-buttons">
+      <button 
+        *ngIf="permissions.canBulkUpdate"
+        (click)="bulkActivate()" 
+        class="btn btn-success btn-sm"
+        title="Activate selected items">
+        <span>✓</span> Activate
+      </button>
+      
+      <button 
+        *ngIf="permissions.canBulkUpdate"
+        (click)="bulkDeactivate()" 
+        class="btn btn-warning btn-sm"
+        title="Deactivate selected items">
+        <span>✗</span> Deactivate
+      </button>
+      
+      <button 
+        *ngIf="permissions.canDelete"
+        (click)="bulkDelete()" 
+        class="btn btn-danger btn-sm"
+        title="Delete selected items">
+        <span>🗑</span> Delete
+      </button>
+    </div>
+  </div>
+
+  <!-- Actions Bar -->
+  <div class="actions-bar">
+    <button 
+      *ngIf="permissions.canCreate"
+      (click)="createNewItem()" 
+      class="btn btn-primary">
+      <span class="icon">+</span> Add Menu Item
+    </button>
+    
+    <div class="import-export-buttons">
+      <button 
+        *ngIf="permissions.canExport"
+        (click)="exportNavigation()" 
+        class="btn btn-secondary">
+        <span class="icon">📥</span> Export
+      </button>
+      
+      <label 
+        *ngIf="permissions.canImport"
+        class="btn btn-secondary">
+        <span class="icon">📤</span> Import
+        <input 
+          type="file" 
+          accept=".json" 
+          (change)="importNavigation($event)" 
+          style="display: none;">
+      </label>
+    </div>
+  </div>
+
+  <!-- Navigation Items List -->
+  <div class="navigation-list">
+    <div *ngIf="getCurrentSectionItems().length === 0" class="empty-state">
+      <p>No navigation items in this section</p>
+      <button 
+        *ngIf="permissions.canCreate"
+        (click)="createNewItem()" 
+        class="btn btn-primary">
+        Create First Item
+      </button>
+    </div>
+
+    <div 
+      cdkDropList 
+      [cdkDropListData]="getCurrentSectionItems()"
+      (cdkDropListDropped)="drop($event)"
+      (cdkDropListEntered)="onDragStart()"
+      (cdkDropListExited)="onDragEnd()"
+      class="navigation-items-list">
+      
+      <div 
+        *ngFor="let item of getCurrentSectionItems()" 
+        cdkDrag
+        [class.dragging]="isDragging"
+        class="navigation-item">
+        
+        <div class="item-header">
+          <!-- Select Checkbox -->
+          <input 
+            *ngIf="permissions.canBulkUpdate || permissions.canDelete"
+            type="checkbox" 
+            [checked]="isItemSelected(item.id)"
+            (change)="toggleItemSelection(item.id, $event)"
+            class="item-checkbox">
+
+          <!-- Drag Handle -->
+          <div cdkDragHandle class="drag-handle">⋮⋮</div>
+
+          <!-- Item Info -->
+          <div class="item-info">
+            <span *ngIf="item.icon" class="item-icon">
+              {{ item.icon }}
+            </span>
+            <div class="item-details">
+              <h3>{{ item.name }}</h3>
+              <p *ngIf="item.path" class="item-path">{{ item.path }}</p>
+            </div>
+          </div>
+
+          <!-- Item Metadata -->
+          <div class="item-metadata">
+            <span class="badge">Sort: {{ item.sortOrder }}</span>
+            <span 
+              [class.badge-active]="item.active" 
+              [class.badge-inactive]="!item.active"
+              class="badge">
+              {{ item.active ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+
+          <!-- Item Actions -->
+          <div class="item-actions">
+            <button 
+              *ngIf="permissions.canEdit"
+              (click)="toggleItemActive(item)"
+              [class.btn-success]="!item.active"
+              [class.btn-warning]="item.active"
+              class="btn btn-sm"
+              [title]="item.active ? 'Deactivate' : 'Activate'">
+              {{ item.active ? 'Deactivate' : 'Activate' }}
+            </button>
+
+            <button 
+              *ngIf="permissions.canEdit"
+              (click)="editItem(item)" 
+              class="btn btn-sm btn-info">
+              Edit
+            </button>
+
+            <button 
+              *ngIf="permissions.canDelete"
+              (click)="deleteItem(item)" 
+              class="btn btn-sm btn-danger"
+              title="Delete">
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <!-- Children Items -->
+        <div *ngIf="item.children && item.children.length > 0" class="item-children">
+          <div *ngFor="let child of item.children" class="child-item">
+            <div class="child-info">
+              <span class="child-icon">• {{ child.name }}</span>
+              <span *ngIf="child.path" class="child-path">{{ child.path }}</span>
+            </div>
+            <div class="child-actions">
+              <button 
+                *ngIf="permissions.canEdit"
+                (click)="editItem(child)" 
+                class="btn btn-xs">
+                Edit
+              </button>
+              <button 
+                *ngIf="permissions.canDelete"
+                (click)="deleteItem(child)" 
+                class="btn btn-xs btn-danger">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

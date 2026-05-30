@@ -1,0 +1,118 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>{{ dialogTitle }}</h2>
+    <button mat-icon-button (click)="onCancel()" class="close-button">
+      <span>✕</span>
+    </button>
+  </div>
+
+  <div mat-dialog-content class="dialog-content">
+    <!-- Error Message -->
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <form [formGroup]="form">
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Name *</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="e.g., Dashboard, Settings, Users"
+          class="form-control">
+        <div *ngIf="nameError" class="form-error">{{ nameError }}</div>
+      </div>
+
+      <!-- Icon Field -->
+      <div class="form-group">
+        <label for="icon">Icon</label>
+        <div class="icon-picker">
+          <input
+            id="icon"
+            type="text"
+            formControlName="icon"
+            placeholder="Enter icon name or SVG path"
+            class="form-control">
+          <div class="icon-suggestions">
+            <span
+              *ngFor="let iconName of commonIcons"
+              (click)="form.patchValue({icon: iconName})"
+              [class.selected]="form.get('icon')?.value === iconName"
+              class="icon-suggestion">
+              {{ iconName }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Path Field -->
+      <div class="form-group">
+        <label for="path">Path</label>
+        <input
+          id="path"
+          type="text"
+          formControlName="path"
+          placeholder="e.g., /dashboard, /settings"
+          class="form-control">
+        <small>Leave empty if this is a parent menu item</small>
+      </div>
+
+      <!-- Section Field -->
+      <div class="form-group">
+        <label for="section">Section *</label>
+        <select
+          id="section"
+          formControlName="section"
+          class="form-control">
+          <option *ngFor="let section of sections" [value]="section.value">
+            {{ section.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Sort Order Field -->
+      <div class="form-group">
+        <label for="sortOrder">Sort Order *</label>
+        <input
+          id="sortOrder"
+          type="number"
+          formControlName="sortOrder"
+          min="0"
+          class="form-control">
+        <div *ngIf="sortOrderError" class="form-error">{{ sortOrderError }}</div>
+        <small>Lower values appear first</small>
+      </div>
+
+      <!-- Active Checkbox -->
+      <div class="form-group checkbox-group">
+        <label>
+          <input
+            type="checkbox"
+            formControlName="active">
+          <span>Active</span>
+        </label>
+        <small>Inactive items will be hidden from the menu</small>
+      </div>
+    </form>
+  </div>
+
+  <div mat-dialog-actions class="dialog-actions">
+    <button
+      mat-stroked-button
+      (click)="onCancel()"
+      class="btn-cancel">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      [disabled]="!form.valid || isSubmitting"
+      class="btn-submit">
+      <span *ngIf="!isSubmitting">{{ isEditMode ? 'Update' : 'Create' }}</span>
+      <span *ngIf="isSubmitting">Saving...</span>
+    </button>
+  </div>
+</div>
