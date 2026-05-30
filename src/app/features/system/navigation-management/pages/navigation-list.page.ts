@@ -50,9 +50,9 @@ export class NavigationListPage implements OnInit {
         this.navigationData = data;
         
         // Expand top-level items by default
-        Object.values(this.navigationData).forEach(sectionItems => {
-          if (sectionItems) {
-            sectionItems.forEach(item => this.expandedItems.add(item.id));
+        Object.values(this.navigationData).forEach((sectionItems: any) => {
+          if (sectionItems && Array.isArray(sectionItems)) {
+            sectionItems.forEach((item: any) => this.expandedItems.add(item.id));
           }
         });
         
@@ -77,6 +77,10 @@ export class NavigationListPage implements OnInit {
 
   isExpanded(item: NavigationItemModel): boolean {
     return this.expandedItems.has(item.id);
+  }
+
+  asItems(items: any): NavigationItemModel[] {
+    return items as NavigationItemModel[];
   }
 
   getCurrentSectionItems(): NavigationItemModel[] {

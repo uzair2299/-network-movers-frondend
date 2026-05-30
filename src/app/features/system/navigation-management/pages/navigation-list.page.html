@@ -108,7 +108,7 @@
     <!-- Recursive Tree Template -->
     <ng-template #treeNodeTemplate let-items="items" let-depth="depth">
       <div class="tree-level" [attr.data-depth]="depth">
-        <div class="tree-node-wrapper" *ngFor="let item of items; let isLast = last" [class.is-last]="isLast">
+        <div class="tree-node-wrapper" *ngFor="let item of asItems(items); let isLast = last" [class.is-last]="isLast">
           <div class="tree-node">
             
             <!-- Toggle Button for Children -->
