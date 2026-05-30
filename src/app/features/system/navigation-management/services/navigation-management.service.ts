@@ -14,7 +14,7 @@ import {
   providedIn: 'root'
 })
 export class NavigationManagementService {
-  private readonly baseEndpoint = '/admin/navigation';
+  private readonly baseEndpoint = '/navigation';
 
   constructor(private api: ApiService) {}
 
