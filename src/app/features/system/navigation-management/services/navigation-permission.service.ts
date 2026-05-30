@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { JwtService } from '../../../core/auth/jwt.service';
+import { JwtService } from '../../../../core/auth/jwt.service';
 import { NavigationPermission, PermissionContext } from '../models/permissions.model';
 
 @Injectable({
