@@ -6,7 +6,8 @@ import { ToastService } from '../../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-property-size-dialog',
-  templateUrl: './property-size-dialog.component.html'
+  templateUrl: './property-size-dialog.component.html',
+  styleUrls: ['./property-size-dialog.component.css']
 })
 export class PropertySizeDialogComponent implements OnInit {
   form: FormGroup;

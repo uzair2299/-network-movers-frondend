@@ -6,7 +6,8 @@ import { ToastService } from '../../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-generic-lookup-dialog',
-  templateUrl: './generic-lookup-dialog.component.html'
+  templateUrl: './generic-lookup-dialog.component.html',
+  styleUrls: ['./generic-lookup-dialog.component.css']
 })
 export class GenericLookupDialogComponent implements OnInit {
   form: FormGroup;

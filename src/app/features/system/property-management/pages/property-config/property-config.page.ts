@@ -82,7 +82,8 @@ export class PropertyConfigPage implements OnInit {
     let config = {
       width: '500px',
       data: { item, type: this.activeTab },
-      panelClass: 'custom-dialog-container',
+      panelClass: 'premium-dark-dialog',
+      backdropClass: 'premium-backdrop',
       autoFocus: false
     };
 
@@ -105,6 +106,7 @@ export class PropertyConfigPage implements OnInit {
   deleteItem(item: any) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
+      maxWidth: '95vw',
       data: {
         title: 'Delete Item',
         message: `Are you sure you want to delete ${item.name}?`,
@@ -112,7 +114,8 @@ export class PropertyConfigPage implements OnInit {
         cancelText: 'Cancel',
         type: 'warning'
       },
-      panelClass: 'custom-dialog-container'
+      panelClass: 'premium-dark-dialog',
+      backdropClass: 'premium-backdrop'
     });
 
     dialogRef.afterClosed().subscribe(result => {

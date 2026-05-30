@@ -6,7 +6,8 @@ import { ToastService } from '../../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-property-type-dialog',
-  templateUrl: './property-type-dialog.component.html'
+  templateUrl: './property-type-dialog.component.html',
+  styleUrls: ['./property-type-dialog.component.css']
 })
 export class PropertyTypeDialogComponent implements OnInit {
   form: FormGroup;

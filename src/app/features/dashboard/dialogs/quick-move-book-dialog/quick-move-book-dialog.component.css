@@ -1,0 +1,61 @@
+.map-layout {
+  display: flex;
+  gap: 1.5rem;
+  height: 100%;
+  min-height: 400px;
+}
+
+.booking-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-container {
+  flex: 1.2;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.google-map {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 900px) {
+  .map-layout {
+    flex-direction: column-reverse;
+  }
+  .map-container {
+    min-height: 250px;
+  }
+}
+
+/* Fix Google Places Autocomplete dropdown z-index for modals */
+::ng-deep .pac-container {
+  z-index: 10000 !important;
+  background-color: #1b2028;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
+::ng-deep .pac-item {
+  color: #c9d1d9;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+::ng-deep .pac-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+::ng-deep .pac-item-query {
+  color: #f5a623;
+  font-weight: 600;
+}
