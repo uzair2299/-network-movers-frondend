@@ -251,18 +251,19 @@
 /* Tree Card */
 .navigation-item {
   flex: 1;
-  background-color: var(--surface-color);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background-color: #1b2028; /* Match sidebar background exactly */
+  border: 1px solid rgba(255, 255, 255, 0.03); /* Subtle borders */
   border-radius: var(--radius-sm);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s, background-color 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15); /* Sleeker shadow */
+  transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
   display: flex;
-  border-left-width: 4px;
+  border-left-width: 3px; /* Thinner accent line */
   border-left-style: solid;
 }
 
 .navigation-item:hover {
-  background-color: var(--surface-strong);
+  background-color: #212731; /* Slightly lighter shade for hover */
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 /* Colored Borders based on depth */
@@ -362,4 +363,38 @@
 .tree-children {
   padding-left: 1.5rem;
   margin-top: 0.5rem;
+}
+
+/* Sleek Buttons Override */
+.btn-sm {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.btn-outline {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: var(--muted-color) !important;
+  box-shadow: none !important;
+}
+
+.btn-outline:hover {
+  background: rgba(139, 92, 246, 0.1) !important;
+  border-color: rgba(139, 92, 246, 0.4) !important;
+  color: #a78bfa !important;
+}
+
+.btn-outline-danger {
+  background: transparent !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+  box-shadow: none !important;
+}
+
+.btn-outline-danger:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: #f87171 !important;
 }

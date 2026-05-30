@@ -145,13 +145,13 @@
                   <button 
                     *ngIf="permissions.canEdit"
                     (click)="editItem(item)" 
-                    class="btn btn-sm">
+                    class="btn btn-outline btn-sm">
                     Edit
                   </button>
                   <button 
                     *ngIf="permissions.canDelete"
                     (click)="deleteItem(item)" 
-                    class="btn btn-sm btn-danger">
+                    class="btn btn-outline-danger btn-sm">
                     Delete
                   </button>
                 </div>
