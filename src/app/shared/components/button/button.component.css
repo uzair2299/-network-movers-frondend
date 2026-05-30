@@ -1,0 +1,132 @@
+/* button.component.css */
+.app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  font-family: inherit;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.app-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.app-btn-sm {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.app-btn-md {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+}
+
+.app-btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+}
+
+/* Variants */
+.app-btn-primary {
+  background: #f5a623;
+  color: #fff;
+  border: 1px solid rgba(245, 166, 35, 0.8);
+  box-shadow: 0 2px 6px rgba(245, 166, 35, 0.2);
+}
+.app-btn-primary:not(:disabled):hover {
+  background: #d98f1b;
+  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.4);
+  color: #fff;
+}
+
+.app-btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(245, 166, 35, 0.5);
+  color: #f5a623;
+}
+.app-btn-secondary:not(:disabled):hover {
+  background: rgba(245, 166, 35, 0.1);
+  border-color: #f5a623;
+  color: #f5a623;
+}
+
+.app-btn-success {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.app-btn-success:not(:disabled):hover {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #6ee7b7;
+}
+
+.app-btn-warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.app-btn-warning:not(:disabled):hover {
+  background: rgba(245, 158, 11, 0.25);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #fcd34d;
+}
+
+.app-btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.app-btn-danger:not(:disabled):hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+}
+
+.app-btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255,255,255,0.6);
+}
+.app-btn-ghost:not(:disabled):hover {
+  background: rgba(245, 166, 35, 0.1);
+  border-color: rgba(245, 166, 35, 0.4);
+  color: #f5a623;
+}
+
+.app-btn-ghost-danger {
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+.app-btn-ghost-danger:not(:disabled):hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+}
+
+.app-btn-link {
+  background: transparent;
+  border: none;
+  color: #f5a623;
+  padding: 0;
+  text-decoration: none;
+}
+.app-btn-link:not(:disabled):hover {
+  text-decoration: underline;
+}
+
+/* Full Width */
+.app-btn-block {
+  width: 100%;
+}

@@ -1,0 +1,24 @@
+<div class="form-group custom-dropdown-container" *ngIf="control">
+  <label>{{ label }}</label>
+  <div 
+    class="custom-select-trigger" 
+    [class.open]="isOpen"
+    (click)="toggleDropdown()">
+    <span [class.placeholder]="!control.value">{{ selectedLabel }}</span>
+    <svg class="caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+  
+  <div class="custom-options-menu" *ngIf="isOpen">
+    <div 
+      *ngFor="let option of options" 
+      class="custom-option"
+      [class.selected]="control.value === option.value"
+      (click)="selectOption(option.value)">
+      {{ option.label }}
+    </div>
+  </div>
+  
+  <div *ngIf="errorMessage" class="form-error">{{ errorMessage }}</div>
+</div>

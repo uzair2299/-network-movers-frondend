@@ -11,6 +11,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { FormInputComponent } from './components/form-input/form-input.component';
+import { FormSelectComponent } from './components/form-select/form-select.component';
+import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -26,7 +28,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     ConfirmDialogComponent,
     PageHeaderComponent,
     SearchBarComponent,
-    FormInputComponent
+    FormInputComponent,
+    FormSelectComponent,
+    DropdownMenuComponent
   ],
   imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
   exports: [
@@ -43,6 +47,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     PageHeaderComponent,
     SearchBarComponent,
     FormInputComponent,
+    FormSelectComponent,
+    DropdownMenuComponent,
     ReactiveFormsModule
   ]
 })

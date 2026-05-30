@@ -67,31 +67,12 @@
           <span class="icon">+</span> Add Menu Item
         </button>
 
-        <!-- More Actions Dropdown (Custom Figma Style) -->
-        <div class="custom-dropdown-container">
-          <div class="custom-select-trigger" 
-               [class.open]="isMoreActionsOpen"
-               (click)="isMoreActionsOpen = !isMoreActionsOpen">
-            <span>More Actions</span>
-            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </div>
-          
-          <div class="custom-options-menu" *ngIf="isMoreActionsOpen">
-            <div class="custom-option" 
-                 *ngIf="permissions.canExport"
-                 (click)="exportNavigation(); isMoreActionsOpen = false">
-              <span class="icon">📥</span> Export Configuration
-            </div>
-            
-            <div class="custom-option" 
-                 *ngIf="permissions.canImport"
-                 (click)="fileInput.click(); isMoreActionsOpen = false">
-              <span class="icon">📤</span> Import Configuration
-            </div>
-          </div>
-          
+        <!-- More Actions Dropdown (Reusable Component) -->
+        <app-dropdown-menu
+          label="More Actions"
+          [items]="moreActions"
+          (itemSelected)="handleMoreAction($event)">
+        </app-dropdown-menu>  
           <!-- Hidden file input for import -->
           <input 
             #fileInput
@@ -101,7 +82,6 @@
             style="display: none;">
         </div>
       </div>
-    </div>
 
     <div class="toolbar-divider"></div>
 

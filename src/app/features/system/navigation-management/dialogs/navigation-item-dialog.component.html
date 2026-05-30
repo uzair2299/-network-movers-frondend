@@ -35,26 +35,11 @@
       </app-form-input>
 
       <!-- Section Field -->
-      <div class="form-group custom-dropdown-container">
-        <label>Section *</label>
-        <div class="custom-select-trigger" 
-             [class.open]="isSectionDropdownOpen"
-             (click)="toggleSectionDropdown()">
-          <span>{{ getSectionLabel(form.get('section')?.value) }}</span>
-          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </div>
-        
-        <div class="custom-options-menu" *ngIf="isSectionDropdownOpen">
-          <div class="custom-option" 
-               *ngFor="let section of sections" 
-               [class.selected]="form.get('section')?.value === section.value"
-               (click)="selectSection(section.value)">
-            {{ section.label }}
-          </div>
-        </div>
-      </div>
+      <app-form-select
+        label="Section *"
+        [options]="sections"
+        [control]="$any(form.get('section'))">
+      </app-form-select>
 
       <!-- Sort Order Field -->
       <app-form-input

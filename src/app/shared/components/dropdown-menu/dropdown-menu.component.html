@@ -1,0 +1,21 @@
+<div class="custom-dropdown-container">
+  <div 
+    class="custom-select-trigger" 
+    [class.open]="isOpen"
+    (click)="toggleDropdown()">
+    <span>{{ label }}</span>
+    <svg class="caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+  
+  <div class="custom-options-menu" *ngIf="isOpen">
+    <div 
+      *ngFor="let item of items" 
+      class="custom-option"
+      (click)="selectItem(item.id)">
+      <span class="icon" *ngIf="item.icon" [innerHTML]="getSafeHtml(item.icon)"></span>
+      {{ item.label }}
+    </div>
+  </div>
+</div>

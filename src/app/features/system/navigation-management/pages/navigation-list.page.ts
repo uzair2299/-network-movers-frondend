@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationManagementService } from '../services/navigation-management.service';
@@ -25,7 +25,23 @@ export class NavigationListPage implements OnInit {
   expandedItems: Set<number> = new Set();
   isDragging = false;
   searchQuery: string = '';
+  
+  moreActions = [
+    { 
+      id: 'export', 
+      label: 'Export', 
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>' 
+    },
+    { 
+      id: 'import', 
+      label: 'Import', 
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>' 
+    }
+  ];
+
   isMoreActionsOpen = false;
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -77,6 +93,15 @@ export class NavigationListPage implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  handleMoreAction(actionId: string): void {
+    if (actionId === 'export') {
+      if (this.permissions.canExport) this.exportNavigation();
+    } else if (actionId === 'import') {
+      if (this.permissions.canImport) this.fileInput.nativeElement.click();
+    }
+    this.isMoreActionsOpen = false;
   }
 
   toggleExpand(item: NavigationItemModel, event: Event): void {
