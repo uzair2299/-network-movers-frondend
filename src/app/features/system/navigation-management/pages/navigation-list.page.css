@@ -269,15 +269,32 @@
 }
 
 /* Info Section */
-.item-info {
+.item-left {
   display: flex;
   align-items: center;
+}
+
+.item-info {
+  display: flex;
+  align-items: flex-start;
   gap: 1rem;
 }
 
 .item-icon {
   color: var(--primary-color);
   font-size: 1.1rem;
+  margin-top: 0.2rem; /* align icon with multi-line text */
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .item-details h3 {
@@ -296,18 +313,15 @@
   border-radius: 4px;
   display: inline-block;
   margin-top: 0.25rem;
+  align-self: flex-start;
 }
 
 /* Actions */
 .item-actions {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.navigation-item:hover .item-actions {
-  opacity: 1;
+  opacity: 1; /* Always visible */
 }
 
 .add-child-btn {

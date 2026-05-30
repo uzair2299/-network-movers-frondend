@@ -123,21 +123,22 @@
             <div class="navigation-item" [attr.data-depth]="depth">
               <div class="item-header">
                 
-                <div class="item-info">
-                  <span *ngIf="item.icon" class="item-icon">{{ item.icon }}</span>
-                  <div class="item-details">
-                    <h3>{{ item.name }}</h3>
-                    <p *ngIf="item.path" class="item-path">{{ item.path }}</p>
+                <div class="item-left">
+                  <div class="item-info">
+                    <span *ngIf="item.icon" class="item-icon">{{ item.icon }}</span>
+                    <div class="item-details">
+                      <div class="details-top">
+                        <h3>{{ item.name }}</h3>
+                        <span 
+                          [class.badge-active]="item.active" 
+                          [class.badge-inactive]="!item.active"
+                          class="badge">
+                          {{ item.active ? 'Active' : 'Inactive' }}
+                        </span>
+                      </div>
+                      <p *ngIf="item.path" class="item-path">{{ item.path }}</p>
+                    </div>
                   </div>
-                </div>
-
-                <div class="item-metadata">
-                  <span 
-                    [class.badge-active]="item.active" 
-                    [class.badge-inactive]="!item.active"
-                    class="badge">
-                    {{ item.active ? 'Active' : 'Inactive' }}
-                  </span>
                 </div>
 
                 <div class="item-actions">
