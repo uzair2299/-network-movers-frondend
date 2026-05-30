@@ -14,38 +14,25 @@
 
     <form [formGroup]="form" class="form-grid">
       <!-- Name Field -->
-      <div class="form-group">
-        <label for="name">Name *</label>
-        <input
-          id="name"
-          type="text"
-          formControlName="name"
-          placeholder="e.g., Dashboard, Settings, Users"
-          class="form-control">
-        <div *ngIf="nameError" class="form-error">{{ nameError }}</div>
-      </div>
+      <app-form-input
+        label="Name *"
+        placeholder="e.g., Dashboard, Settings, Users"
+        [control]="$any(form.get('name'))">
+      </app-form-input>
 
       <!-- Icon Field -->
-      <div class="form-group">
-        <label for="icon">Icon</label>
-        <input
-          id="icon"
-          type="text"
-          formControlName="icon"
-          placeholder="Enter icon name or SVG path"
-          class="form-control">
-      </div>
+      <app-form-input
+        label="Icon"
+        placeholder="Enter icon name or SVG path"
+        [control]="$any(form.get('icon'))">
+      </app-form-input>
 
       <!-- Path Field -->
-      <div class="form-group">
-        <label for="path">Path</label>
-        <input
-          id="path"
-          type="text"
-          formControlName="path"
-          placeholder="e.g., /dashboard, /settings"
-          class="form-control">
-      </div>
+      <app-form-input
+        label="Path"
+        placeholder="e.g., /dashboard, /settings"
+        [control]="$any(form.get('path'))">
+      </app-form-input>
 
       <!-- Section Field -->
       <div class="form-group custom-dropdown-container">
@@ -70,38 +57,28 @@
       </div>
 
       <!-- Sort Order Field -->
-      <div class="form-group">
-        <label for="sortOrder">Sort Order *</label>
-        <input
-          id="sortOrder"
-          type="number"
-          formControlName="sortOrder"
-          min="0"
-          class="form-control">
-        <div *ngIf="sortOrderError" class="form-error">{{ sortOrderError }}</div>
-      </div>
+      <app-form-input
+        label="Sort Order *"
+        type="number"
+        [min]="0"
+        [control]="$any(form.get('sortOrder'))">
+      </app-form-input>
 
       <!-- Parent ID Field -->
-      <div class="form-group">
-        <label for="parentId">Parent ID</label>
-        <input 
-          type="number" 
-          id="parentId" 
-          formControlName="parentId"
-          class="form-control"
-          placeholder="e.g. 11">
-      </div>
+      <app-form-input
+        label="Parent ID"
+        type="number"
+        placeholder="e.g. 11"
+        [control]="$any(form.get('parentId'))">
+      </app-form-input>
 
       <!-- Permission ID Field -->
-      <div class="form-group">
-        <label for="permissionId">Permission ID</label>
-        <input 
-          type="number" 
-          id="permissionId" 
-          formControlName="permissionId"
-          class="form-control"
-          placeholder="e.g. 5">
-      </div>
+      <app-form-input
+        label="Permission ID"
+        type="number"
+        placeholder="e.g. 5"
+        [control]="$any(form.get('permissionId'))">
+      </app-form-input>
 
       <!-- Active Checkbox -->
       <div class="form-group checkbox-group full-width">

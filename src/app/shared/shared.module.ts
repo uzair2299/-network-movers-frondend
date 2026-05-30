@@ -10,7 +10,9 @@ import { ToastComponent } from './components/toast/toast.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { FormInputComponent } from './components/form-input/form-input.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,9 +25,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     ToastComponent,
     ConfirmDialogComponent,
     PageHeaderComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    FormInputComponent
   ],
-  imports: [CommonModule, MatDialogModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
   exports: [
     CommonModule,
     MatDialogModule, 
@@ -38,7 +41,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     ToastComponent,
     ConfirmDialogComponent,
     PageHeaderComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    FormInputComponent,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule {}

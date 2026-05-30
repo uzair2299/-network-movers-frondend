@@ -118,30 +118,4 @@ export class NavigationItemDialogComponent implements OnInit {
   onCancel(): void {
     this.dialogRef.close(null);
   }
-
-  get nameError(): string {
-    const control = this.form.get('name');
-    if (control && (control.touched || control.dirty)) {
-      if (control.hasError('required')) {
-        return 'Name is required';
-      }
-      if (control.hasError('minlength')) {
-        return 'Name must be at least 2 characters';
-      }
-    }
-    return '';
-  }
-
-  get sortOrderError(): string {
-    const control = this.form.get('sortOrder');
-    if (control && (control.touched || control.dirty)) {
-      if (control.hasError('required')) {
-        return 'Sort order is required';
-      }
-      if (control.hasError('min')) {
-        return 'Sort order must be 0 or greater';
-      }
-    }
-    return '';
-  }
 }

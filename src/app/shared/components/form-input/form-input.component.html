@@ -1,0 +1,12 @@
+<div class="form-group" *ngIf="control">
+  <label [for]="inputId">{{ label }}</label>
+  <input
+    [id]="inputId"
+    [type]="type"
+    [formControl]="control"
+    [placeholder]="placeholder"
+    [attr.min]="min"
+    [attr.max]="max"
+    class="form-control">
+  <div *ngIf="errorMessage" class="form-error">{{ errorMessage }}</div>
+</div>
