@@ -23,11 +23,11 @@
 }
 
 .nav-section-title {
-  color: #8c96a3;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 1rem;
+  color: #8c96a3;
+  margin-bottom: 0.75rem;
   font-weight: 600;
 }
 
@@ -73,7 +73,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .content-header h2 {
@@ -165,11 +165,40 @@
 }
 
 .data-table tbody tr {
-  transition: background-color 0.2s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  /* Forces the TR to be a containing block across all browsers so ::after absolute positioning works correctly */
+  transform: translateY(0);
+}
+
+.data-table tbody tr::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  width: 25%;
+  background: linear-gradient(to right, #f5a623 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 11;
 }
 
 .data-table tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.data-table tbody tr:hover::after {
+  opacity: 1;
+}
+
+.data-table tbody tr:hover td {
+  /* Hide the border on hover so it doesn't look cut off while popped up */
+  border-bottom-color: transparent;
 }
 
 .data-table td {

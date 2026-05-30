@@ -8,6 +8,7 @@
     <!-- Side Nav -->
     <div class="side-nav">
       <div class="nav-section-title">Lookup Tables</div>
+      <app-divider margin="0 0 1rem 0"></app-divider>
       <ul class="nav-list">
         <li [class.active]="activeTab === 'categories'" (click)="setTab('categories')">Property Categories</li>
         <li [class.active]="activeTab === 'types'" (click)="setTab('types')">Property Types</li>
@@ -31,6 +32,7 @@
           <app-button variant="primary" (btnClick)="openCreateDialog()">Add New</app-button>
         </div>
       </div>
+      <app-divider margin="0 0 1.5rem 0"></app-divider>
 
       <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 

@@ -15,6 +15,7 @@ import { FormSelectComponent } from './components/form-select/form-select.compon
 import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
 import { ButtonComponent } from './components/button/button.component';
 import { FormCheckboxComponent } from './components/form-checkbox/form-checkbox.component';
+import { DividerComponent } from './components/divider/divider.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -34,7 +35,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormSelectComponent,
     DropdownMenuComponent,
     ButtonComponent,
-    FormCheckboxComponent
+    FormCheckboxComponent,
+    DividerComponent
   ],
   imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
   exports: [
@@ -55,6 +57,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     DropdownMenuComponent,
     ButtonComponent,
     FormCheckboxComponent,
+    DividerComponent,
     ReactiveFormsModule
   ]
 })
