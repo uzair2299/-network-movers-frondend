@@ -13,6 +13,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { FormInputComponent } from './components/form-input/form-input.component';
 import { FormSelectComponent } from './components/form-select/form-select.component';
 import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
+import { ButtonComponent } from './components/button/button.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -30,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SearchBarComponent,
     FormInputComponent,
     FormSelectComponent,
-    DropdownMenuComponent
+    DropdownMenuComponent,
+    ButtonComponent
   ],
   imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
   exports: [
@@ -49,6 +51,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormInputComponent,
     FormSelectComponent,
     DropdownMenuComponent,
+    ButtonComponent,
     ReactiveFormsModule
   ]
 })

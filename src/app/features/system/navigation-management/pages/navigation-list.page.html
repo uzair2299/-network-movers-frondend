@@ -23,33 +23,33 @@
     <div *ngIf="hasSelectedItems" class="bulk-actions-toolbar">
       <div class="selection-info">
         <span>{{ selectedCount }} item(s) selected</span>
-        <button (click)="clearSelection()" class="link-button">Clear</button>
+        <app-button variant="link" (btnClick)="clearSelection()">Clear</app-button>
       </div>
       
       <div class="bulk-action-buttons">
-        <button 
+        <app-button 
           *ngIf="permissions.canBulkUpdate"
-          (click)="bulkActivate()" 
-          class="btn btn-success btn-sm"
+          variant="success" size="sm"
+          (btnClick)="bulkActivate()" 
           title="Activate selected items">
           <span>✓</span> Activate
-        </button>
+        </app-button>
         
-        <button 
+        <app-button 
           *ngIf="permissions.canBulkUpdate"
-          (click)="bulkDeactivate()" 
-          class="btn btn-warning btn-sm"
+          variant="warning" size="sm"
+          (btnClick)="bulkDeactivate()" 
           title="Deactivate selected items">
           <span>✗</span> Deactivate
-        </button>
+        </app-button>
         
-        <button 
+        <app-button 
           *ngIf="permissions.canDelete"
-          (click)="bulkDelete()" 
-          class="btn btn-danger btn-sm"
+          variant="danger" size="sm"
+          (btnClick)="bulkDelete()" 
           title="Delete selected items">
           <span>🗑</span> Delete
-        </button>
+        </app-button>
       </div>
     </div>
 
@@ -60,12 +60,12 @@
       
       <div class="actions-right">
         <!-- Primary Action -->
-        <button 
+        <app-button 
           *ngIf="permissions.canCreate"
-          (click)="createNewItem()" 
-          class="btn btn-primary">
+          variant="primary"
+          (btnClick)="createNewItem()">
           <span class="icon">+</span> Add Menu Item
-        </button>
+        </app-button>
 
         <!-- More Actions Dropdown (Reusable Component) -->
         <app-dropdown-menu
@@ -164,18 +164,18 @@
                 </div>
 
                 <div class="item-actions">
-                  <button 
+                  <app-button 
                     *ngIf="permissions.canEdit"
-                    (click)="editItem(item)" 
-                    class="sleek-ghost-btn">
+                    variant="ghost" size="sm"
+                    (btnClick)="editItem(item)">
                     Edit
-                  </button>
-                  <button 
+                  </app-button>
+                  <app-button 
                     *ngIf="permissions.canDelete"
-                    (click)="deleteItem(item)" 
-                    class="sleek-danger-btn">
+                    variant="ghost-danger" size="sm"
+                    (btnClick)="deleteItem(item)">
                     Delete
-                  </button>
+                  </app-button>
                 </div>
               </div>
             </div>

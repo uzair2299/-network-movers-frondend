@@ -79,19 +79,9 @@
   </div>
 
   <div class="dialog-actions">
-    <button
-      type="button"
-      (click)="onCancel()"
-      class="btn-cancel">
-      Cancel
-    </button>
-    <button
-      type="button"
-      (click)="onSubmit()"
-      [disabled]="!form.valid || isSubmitting"
-      class="btn-submit">
-      <span *ngIf="!isSubmitting">{{ isEditMode ? 'Update' : 'Create' }}</span>
-      <span *ngIf="isSubmitting">Saving...</span>
-    </button>
+    <app-button variant="secondary" (btnClick)="onCancel()">Cancel</app-button>
+    <app-button variant="primary" (btnClick)="onSubmit()" [disabled]="form.invalid || isSubmitting">
+      {{ isEditMode ? 'Save Changes' : 'Create' }}
+    </app-button>
   </div>
 </div>
