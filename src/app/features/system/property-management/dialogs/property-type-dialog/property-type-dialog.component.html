@@ -1,0 +1,46 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2>{{ isEditMode ? 'Edit Property Type' : 'Create Property Type' }}</h2>
+    <button (click)="onCancel()" class="close-button">
+      <span>✕</span>
+    </button>
+  </div>
+
+  <div class="dialog-content">
+    <form [formGroup]="form" class="form-grid">
+      <app-form-input
+        label="Name *"
+        placeholder="e.g., Apartment"
+        [control]="$any(form.get('name'))"
+        class="full-width">
+      </app-form-input>
+
+      <app-form-input
+        label="Unique Code *"
+        placeholder="e.g., TYPE_APARTMENT"
+        [control]="$any(form.get('code'))"
+        class="full-width">
+      </app-form-input>
+
+      <app-form-select
+        label="Category *"
+        [options]="categories"
+        [control]="$any(form.get('categoryId'))"
+        class="full-width">
+      </app-form-select>
+
+      <app-form-checkbox
+        label="Active"
+        [control]="$any(form.get('active'))"
+        class="full-width">
+      </app-form-checkbox>
+    </form>
+  </div>
+
+  <div class="dialog-actions">
+    <app-button variant="secondary" (btnClick)="onCancel()">Cancel</app-button>
+    <app-button variant="primary" (btnClick)="onSubmit()" [disabled]="form.invalid || isSubmitting">
+      {{ isEditMode ? 'Save Changes' : 'Create' }}
+    </app-button>
+  </div>
+</div>

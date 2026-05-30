@@ -1,0 +1,104 @@
+<div class="page-container">
+  <app-page-header 
+    title="Move State Management" 
+    description="Configure master phases and their child statuses">
+  </app-page-header>
+
+  <div class="master-detail-layout">
+    
+    <!-- LEFT COLUMN: PARENTS (PHASES) -->
+    <div class="column-card">
+      <div class="column-header">
+        <div class="header-title">
+          <h2>PARENT LIST</h2>
+        </div>
+        <app-button variant="primary" size="sm" (btnClick)="openPhaseDialog()">
+          <span class="icon">+</span> New Parent
+        </app-button>
+      </div>
+      
+      <div class="column-meta">
+        {{ phases.length }} PARENTS FOUND
+      </div>
+
+      <div class="column-body">
+        <div class="loading-state" *ngIf="isLoadingPhases">Loading...</div>
+        
+        <div class="list-container" *ngIf="!isLoadingPhases">
+          <div *ngFor="let phase of phases" 
+               class="list-item"
+               [class.active]="selectedPhase?.id === phase.id"
+               (click)="selectPhase(phase)">
+            
+            <div class="item-content">
+              <div class="drag-handle">⋮⋮</div>
+              <div class="icon-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              </div>
+              <span class="item-name">{{ phase.name }}</span>
+            </div>
+            
+            <div class="item-actions">
+              <app-button variant="ghost" size="sm" (btnClick)="openPhaseDialog(phase); $event.stopPropagation()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              </app-button>
+              <app-button variant="ghost-danger" size="sm" (btnClick)="deletePhase(phase, $event)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </app-button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: CHILDREN (STATUSES) -->
+    <div class="column-card">
+      <div class="column-header child-header">
+        <div class="header-title">
+          <h2>{{ selectedPhase ? 'CHILDREN OF: ' + (selectedPhase.name | uppercase) : 'SELECT A PARENT' }}</h2>
+        </div>
+        <app-button variant="primary" size="sm" (btnClick)="openStatusDialog()" [disabled]="!selectedPhase">
+          <span class="icon">+</span> New Child
+        </app-button>
+      </div>
+
+      <div class="column-meta">
+        {{ selectedPhase ? statuses.length + ' CHILDREN FOUND' : '0 CHILDREN FOUND' }}
+      </div>
+
+      <div class="column-body">
+        <div class="empty-state" *ngIf="!selectedPhase">
+          Please select a parent category to view its children.
+        </div>
+        
+        <div class="loading-state" *ngIf="selectedPhase && isLoadingStatuses">Loading...</div>
+
+        <div class="list-container" *ngIf="selectedPhase && !isLoadingStatuses">
+          <div *ngFor="let status of statuses" class="list-item child-item">
+            
+            <div class="item-content">
+              <div class="drag-handle">⋮⋮</div>
+              <div class="icon-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <span class="item-name">{{ status.name }}</span>
+              <span class="color-badge" [style.backgroundColor]="status.colorCode"></span>
+            </div>
+            
+            <div class="item-actions">
+              <app-button variant="ghost" size="sm" (btnClick)="openStatusDialog(status)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              </app-button>
+              <app-button variant="ghost-danger" size="sm" (btnClick)="deleteStatus(status, $event)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </app-button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

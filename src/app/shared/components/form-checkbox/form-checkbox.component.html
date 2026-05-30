@@ -1,0 +1,11 @@
+<div class="form-group checkbox-group">
+  <label [for]="checkboxId" class="checkbox-label">
+    <input
+      type="checkbox"
+      [id]="checkboxId"
+      [formControl]="control"
+      class="premium-checkbox">
+    <span class="label-text">{{ label }}</span>
+  </label>
+  <small *ngIf="description" class="description-text">{{ description }}</small>
+</div>

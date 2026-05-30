@@ -1,0 +1,72 @@
+<div class="page-container">
+  <app-page-header
+    title="Property Configuration"
+    description="Manage core property lookup tables and configurations">
+  </app-page-header>
+
+  <div class="modern-list-card config-layout">
+    <!-- Side Nav -->
+    <div class="side-nav">
+      <div class="nav-section-title">Lookup Tables</div>
+      <ul class="nav-list">
+        <li [class.active]="activeTab === 'categories'" (click)="setTab('categories')">Property Categories</li>
+        <li [class.active]="activeTab === 'types'" (click)="setTab('types')">Property Types</li>
+        <li [class.active]="activeTab === 'sizes'" (click)="setTab('sizes')">Property Sizes</li>
+        <li [class.active]="activeTab === 'floor'" (click)="setTab('floor')">Floor Types</li>
+        <li [class.active]="activeTab === 'building'" (click)="setTab('building')">Building Access</li>
+        <li [class.active]="activeTab === 'parking'" (click)="setTab('parking')">Parking Access</li>
+        <li [class.active]="activeTab === 'restrictions'" (click)="setTab('restrictions')">Access Restrictions</li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="content-header">
+        <h2>{{ getTabTitle() }}</h2>
+        <app-button variant="primary" (btnClick)="openCreateDialog()">Add New</app-button>
+      </div>
+
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+      <div *ngIf="!isLoading && data.length === 0" class="empty-state">
+        <div class="empty-icon">📋</div>
+        <h3>No {{ getTabTitle() }} Found</h3>
+        <p>Click "Add New" to create your first entry.</p>
+      </div>
+
+      <div *ngIf="!isLoading && data.length > 0" class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Code</th>
+              <th *ngIf="activeTab === 'types'">Category</th>
+              <th *ngIf="activeTab === 'sizes'">Property Type</th>
+              <th *ngIf="activeTab === 'sizes'">Unit Type</th>
+              <th>Status</th>
+              <th class="actions-col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data">
+              <td><strong>{{ item.name }}</strong></td>
+              <td><span class="code-badge">{{ item.code }}</span></td>
+              <td *ngIf="activeTab === 'types'">{{ item.category?.name || 'N/A' }}</td>
+              <td *ngIf="activeTab === 'sizes'">{{ item.type?.name || 'N/A' }}</td>
+              <td *ngIf="activeTab === 'sizes'">{{ item.unitType }}</td>
+              <td>
+                <span class="status-badge" [class.active]="item.active">
+                  {{ item.active ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td class="actions-col">
+                <button class="icon-btn edit-btn" (click)="openEditDialog(item)" title="Edit">✎</button>
+                <button class="icon-btn delete-btn" (click)="deleteItem(item)" title="Delete">🗑</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

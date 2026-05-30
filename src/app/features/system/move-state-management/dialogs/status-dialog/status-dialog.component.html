@@ -1,0 +1,76 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2>{{ isEditMode ? 'Edit Status' : 'Create New Status' }}</h2>
+    <button (click)="onCancel()" class="close-button">
+      <span>✕</span>
+    </button>
+  </div>
+
+  <div class="dialog-content">
+    <form [formGroup]="form" class="form-grid">
+      
+      <app-form-input
+        label="Status Name *"
+        placeholder="e.g., Survey Scheduled"
+        [control]="$any(form.get('name'))">
+      </app-form-input>
+
+      <app-form-input
+        label="Unique Code *"
+        placeholder="e.g., STATUS_SURVEY_SCHEDULED"
+        [control]="$any(form.get('code'))">
+      </app-form-input>
+
+      <app-form-input
+        label="Description"
+        placeholder="Detailed meaning of this status..."
+        [control]="$any(form.get('description'))">
+      </app-form-input>
+
+      <app-form-input
+        type="number"
+        label="Sequence Number *"
+        placeholder="e.g., 1"
+        [control]="$any(form.get('sequenceNo'))"
+        [min]="0">
+      </app-form-input>
+
+      <app-form-input
+        type="color"
+        label="Color Code *"
+        placeholder="#3498db"
+        [control]="$any(form.get('colorCode'))">
+      </app-form-input>
+      
+      <!-- Empty div for grid alignment spacing -->
+      <div></div>
+
+      <div class="full-width" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+        <app-form-checkbox
+          label="Active"
+          [control]="$any(form.get('active'))">
+        </app-form-checkbox>
+        <app-form-checkbox
+          label="Is Final Status"
+          [control]="$any(form.get('isFinal'))">
+        </app-form-checkbox>
+        <app-form-checkbox
+          label="Customer Visible"
+          [control]="$any(form.get('customerVisible'))">
+        </app-form-checkbox>
+        <app-form-checkbox
+          label="Internal Only"
+          [control]="$any(form.get('internalOnly'))">
+        </app-form-checkbox>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="dialog-actions">
+    <app-button variant="secondary" (btnClick)="onCancel()">Cancel</app-button>
+    <app-button variant="primary" (btnClick)="onSubmit()" [disabled]="form.invalid">
+      {{ isEditMode ? 'Save Changes' : 'Create Status' }}
+    </app-button>
+  </div>
+</div>

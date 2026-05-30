@@ -1,0 +1,39 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2>{{ dialogTitle }}</h2>
+    <button (click)="onCancel()" class="close-button">
+      <span>✕</span>
+    </button>
+  </div>
+
+  <div class="dialog-content">
+    <form [formGroup]="form" class="form-grid">
+      <app-form-input
+        label="Name *"
+        placeholder="e.g., Elevator Access"
+        [control]="$any(form.get('name'))"
+        class="full-width">
+      </app-form-input>
+
+      <app-form-input
+        label="Unique Code *"
+        placeholder="e.g., ACCESS_ELEVATOR"
+        [control]="$any(form.get('code'))"
+        class="full-width">
+      </app-form-input>
+
+      <app-form-checkbox
+        label="Active"
+        [control]="$any(form.get('active'))"
+        class="full-width">
+      </app-form-checkbox>
+    </form>
+  </div>
+
+  <div class="dialog-actions">
+    <app-button variant="secondary" (btnClick)="onCancel()">Cancel</app-button>
+    <app-button variant="primary" (btnClick)="onSubmit()" [disabled]="form.invalid || isSubmitting">
+      {{ isEditMode ? 'Save Changes' : 'Create' }}
+    </app-button>
+  </div>
+</div>

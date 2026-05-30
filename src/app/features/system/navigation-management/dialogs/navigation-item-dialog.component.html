@@ -66,15 +66,12 @@
       </app-form-input>
 
       <!-- Active Checkbox -->
-      <div class="form-group checkbox-group full-width">
-        <label>
-          <input
-            type="checkbox"
-            formControlName="active">
-          <span>Active</span>
-        </label>
-        <small>Inactive items will be hidden from the menu</small>
-      </div>
+      <app-form-checkbox
+        label="Active"
+        description="Inactive items will be hidden from the menu"
+        [control]="$any(form.get('active'))"
+        class="full-width">
+      </app-form-checkbox>
     </form>
   </div>
 

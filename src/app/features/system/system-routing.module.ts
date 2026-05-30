@@ -9,6 +9,14 @@ const routes: Routes = [
   {
     path: 'navigation',
     loadChildren: () => import('./navigation-management/navigation-management.module').then(m => m.NavigationManagementModule)
+  },
+  {
+    path: 'move-states',
+    loadChildren: () => import('./move-state-management/move-state-management.module').then(m => m.MoveStateManagementModule)
+  },
+  {
+    path: 'property-types',
+    loadChildren: () => import('./property-management/property-management.module').then(m => m.PropertyManagementModule)
   }
 ];
 

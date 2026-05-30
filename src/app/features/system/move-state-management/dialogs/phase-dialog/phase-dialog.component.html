@@ -1,0 +1,48 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2>{{ isEditMode ? 'Edit Phase' : 'Create New Phase' }}</h2>
+    <button (click)="onCancel()" class="close-button">
+      <span>✕</span>
+    </button>
+  </div>
+
+  <div class="dialog-content">
+    <form [formGroup]="form" class="form-grid">
+      
+      <app-form-input
+        label="Phase Name *"
+        placeholder="e.g., Pre-Move Survey"
+        [control]="$any(form.get('name'))">
+      </app-form-input>
+
+      <app-form-input
+        label="Unique Code *"
+        placeholder="e.g., PHASE_PRE_SURVEY"
+        [control]="$any(form.get('code'))">
+      </app-form-input>
+
+      <app-form-input
+        type="number"
+        label="Sequence Number *"
+        placeholder="e.g., 10"
+        [control]="$any(form.get('sequenceNo'))"
+        [min]="0">
+      </app-form-input>
+
+      <app-form-checkbox
+        label="Active"
+        description="Inactive phases are hidden from regular users."
+        [control]="$any(form.get('active'))"
+        class="full-width">
+      </app-form-checkbox>
+
+    </form>
+  </div>
+
+  <div class="dialog-actions">
+    <app-button variant="secondary" (btnClick)="onCancel()">Cancel</app-button>
+    <app-button variant="primary" (btnClick)="onSubmit()" [disabled]="form.invalid">
+      {{ isEditMode ? 'Save Changes' : 'Create Phase' }}
+    </app-button>
+  </div>
+</div>

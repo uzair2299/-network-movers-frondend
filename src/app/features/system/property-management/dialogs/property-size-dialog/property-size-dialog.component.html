@@ -1,0 +1,51 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2>{{ isEditMode ? 'Edit Property Size' : 'Create Property Size' }}</h2>
+    <button (click)="onCancel()" class="close-button">
+      <span>✕</span>
+    </button>
+  </div>
+
+  <div class="dialog-content">
+    <form [formGroup]="form" class="form-grid">
+      <app-form-input
+        label="Name *"
+        placeholder="e.g., 2 Bedroom"
+        [control]="$any(form.get('name'))"
+        class="full-width">
+      </app-form-input>
+
+      <app-form-input
+        label="Unique Code *"
+        placeholder="e.g., SIZE_2BR"
+        [control]="$any(form.get('code'))"
+        class="full-width">
+      </app-form-input>
+
+      <app-form-select
+        label="Property Type *"
+        [options]="types"
+        [control]="$any(form.get('typeId'))">
+      </app-form-select>
+
+      <app-form-select
+        label="Unit Type *"
+        [options]="unitTypes"
+        [control]="$any(form.get('unitType'))">
+      </app-form-select>
+
+      <app-form-checkbox
+        label="Active"
+        [control]="$any(form.get('active'))"
+        class="full-width">
+      </app-form-checkbox>
+    </form>
+  </div>
+
+  <div class="dialog-actions">
+    <app-button variant="secondary" (btnClick)="onCancel()">Cancel</app-button>
+    <app-button variant="primary" (btnClick)="onSubmit()" [disabled]="form.invalid || isSubmitting">
+      {{ isEditMode ? 'Save Changes' : 'Create' }}
+    </app-button>
+  </div>
+</div>
