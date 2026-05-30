@@ -20,6 +20,7 @@ export class NavigationListPage implements OnInit {
   successMessage: string | null = null;
   permissions: PermissionContext;
   selectedItems: Set<number> = new Set();
+  expandedItems: Set<number> = new Set();
   isDragging = false;
 
   sections = [
@@ -47,6 +48,14 @@ export class NavigationListPage implements OnInit {
     this.navigationService.getAllNavigationItems().subscribe({
       next: (data) => {
         this.navigationData = data;
+        
+        // Expand top-level items by default
+        Object.values(this.navigationData).forEach(sectionItems => {
+          if (sectionItems) {
+            sectionItems.forEach(item => this.expandedItems.add(item.id));
+          }
+        });
+        
         this.isLoading = false;
       },
       error: (error) => {
@@ -55,6 +64,19 @@ export class NavigationListPage implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  toggleExpand(item: NavigationItemModel, event: Event): void {
+    event.stopPropagation();
+    if (this.expandedItems.has(item.id)) {
+      this.expandedItems.delete(item.id);
+    } else {
+      this.expandedItems.add(item.id);
+    }
+  }
+
+  isExpanded(item: NavigationItemModel): boolean {
+    return this.expandedItems.has(item.id);
   }
 
   getCurrentSectionItems(): NavigationItemModel[] {
