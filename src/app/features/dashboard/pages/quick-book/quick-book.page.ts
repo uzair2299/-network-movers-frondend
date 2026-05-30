@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { PropertyService } from '../../../system/property-management/services/property.service';
@@ -105,7 +105,14 @@ export class QuickBookPageComponent implements OnInit, AfterViewInit {
     });
 
     this.propertyService.getActiveAccessRestrictions().subscribe({
-      next: (types) => this.accessRestrictionTypes = types.map((t: any) => ({ label: t.name, value: t.id })),
+      next: (types) => {
+        this.accessRestrictionTypes = types.map((t: any) => ({ label: t.name, value: t.id }));
+        // Dynamically add boolean FormControls for the shared app-form-checkbox component
+        this.accessRestrictionTypes.forEach(t => {
+          this.form.addControl('pickup_restriction_' + t.value, new FormControl(false));
+          this.form.addControl('dropoff_restriction_' + t.value, new FormControl(false));
+        });
+      },
       error: () => console.error('Failed to load access restriction types')
     });
   }
@@ -115,23 +122,7 @@ export class QuickBookPageComponent implements OnInit, AfterViewInit {
     this.initAutocomplete();
   }
 
-  toggleRestriction(type: 'pickup' | 'dropoff', id: string, event: any) {
-    const isChecked = event.target.checked;
-    const controlName = type === 'pickup' ? 'pickupAccessRestrictionTypeIds' : 'dropoffAccessRestrictionTypeIds';
-    const current = this.form.get(controlName)?.value || [];
-    
-    if (isChecked) {
-      this.form.patchValue({ [controlName]: [...current, id] });
-    } else {
-      this.form.patchValue({ [controlName]: current.filter((val: string) => val !== id) });
-    }
-  }
 
-  isRestrictionSelected(type: 'pickup' | 'dropoff', id: string): boolean {
-    const controlName = type === 'pickup' ? 'pickupAccessRestrictionTypeIds' : 'dropoffAccessRestrictionTypeIds';
-    const current = this.form.get(controlName)?.value || [];
-    return current.includes(id);
-  }
 
   initMap() {
     if (typeof google === 'undefined') {
@@ -245,6 +236,23 @@ export class QuickBookPageComponent implements OnInit, AfterViewInit {
     }
     
     this.isSubmitting = true;
+
+    // Map the dynamic boolean FormControls back into an array of IDs for the backend
+    const pickupRestrictionIds = this.accessRestrictionTypes
+      .filter(t => this.form.get('pickup_restriction_' + t.value)?.value)
+      .map(t => t.value);
+    
+    const dropoffRestrictionIds = this.accessRestrictionTypes
+      .filter(t => this.form.get('dropoff_restriction_' + t.value)?.value)
+      .map(t => t.value);
+
+    // This is the final payload containing the properly formatted arrays
+    const finalPayload = {
+      ...this.form.value,
+      pickupAccessRestrictionTypeIds: pickupRestrictionIds,
+      dropoffAccessRestrictionTypeIds: dropoffRestrictionIds
+    };
+    console.log('Booking Payload:', finalPayload);
     
     setTimeout(() => {
       this.isSubmitting = false;

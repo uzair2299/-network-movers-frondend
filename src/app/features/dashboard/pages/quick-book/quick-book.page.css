@@ -210,6 +210,12 @@
   grid-column: 1 / -1;
 }
 
+.panel-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
 .row-section {
   display: flex;
   flex-direction: column;
