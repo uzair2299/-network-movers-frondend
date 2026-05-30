@@ -6,10 +6,33 @@ import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switch
 import { ThemeProviderComponent } from './components/theme-provider/theme-provider.component';
 import { DateFormatPipe } from './pipes/date-format.pipe';
 import { HasRoleDirective } from './directives/has-role.directive';
+import { ToastComponent } from './components/toast/toast.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [LoadingSpinnerComponent, CardComponent, ThemeSwitcherComponent, ThemeProviderComponent, DateFormatPipe, HasRoleDirective],
-  imports: [CommonModule],
-  exports: [CommonModule, LoadingSpinnerComponent, CardComponent, ThemeSwitcherComponent, ThemeProviderComponent, DateFormatPipe, HasRoleDirective]
+  declarations: [
+    LoadingSpinnerComponent, 
+    CardComponent, 
+    ThemeSwitcherComponent, 
+    ThemeProviderComponent, 
+    DateFormatPipe, 
+    HasRoleDirective,
+    ToastComponent,
+    ConfirmDialogComponent
+  ],
+  imports: [CommonModule, MatDialogModule],
+  exports: [
+    CommonModule,
+    MatDialogModule, 
+    LoadingSpinnerComponent, 
+    CardComponent, 
+    ThemeSwitcherComponent, 
+    ThemeProviderComponent, 
+    DateFormatPipe, 
+    HasRoleDirective,
+    ToastComponent,
+    ConfirmDialogComponent
+  ]
 })
 export class SharedModule {}

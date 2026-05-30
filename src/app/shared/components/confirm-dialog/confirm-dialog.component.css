@@ -1,0 +1,132 @@
+.confirm-dialog-container {
+  background-color: #1b2028;
+  color: var(--text-color, #e2e8f0);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Top accent line */
+.confirm-dialog-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.dialog-danger::before { background-color: #ef4444; }
+.dialog-warning::before { background-color: #f5a623; }
+.dialog-info::before { background-color: #3b82f6; }
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 0.5rem;
+}
+
+.dialog-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+.dialog-danger .dialog-icon { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.dialog-warning .dialog-icon { background: rgba(245, 166, 35, 0.15); color: #f5a623; }
+.dialog-info .dialog-icon { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+
+h2, .mat-mdc-dialog-title, [mat-dialog-title] {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff !important;
+}
+
+.dialog-content {
+  padding: 0 1.5rem 1.5rem;
+  margin: 0;
+  color: #8c96a3;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  margin: 0;
+}
+
+/* Button overrides for modal */
+.sleek-ghost-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted-color, #8c96a3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sleek-ghost-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.sleek-solid-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 6px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.sleek-solid-btn.btn-danger {
+  background: #ef4444;
+}
+.sleek-solid-btn.btn-danger:hover {
+  background: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.sleek-solid-btn.btn-warning {
+  background: #f5a623;
+}
+.sleek-solid-btn.btn-warning:hover {
+  background: #d98f1b;
+  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
+}
+
+.sleek-solid-btn.btn-info {
+  background: #3b82f6;
+}
+.sleek-solid-btn.btn-info:hover {
+  background: #2563eb;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Angular Material overrides for this specific modal */
+::ng-deep .mat-dialog-container,
+::ng-deep .mdc-dialog__surface,
+::ng-deep mat-mdc-dialog-container {
+  padding: 0 !important;
+  border-radius: 12px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}

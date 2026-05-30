@@ -1,0 +1,112 @@
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast-item {
+  display: flex;
+  align-items: flex-start;
+  min-width: 300px;
+  max-width: 400px;
+  background-color: rgba(27, 32, 40, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Left accent line */
+.toast-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.toast-success::before { background-color: #f5a623; }
+.toast-error::before { background-color: #ef4444; }
+.toast-info::before { background-color: #3b82f6; }
+.toast-warning::before { background-color: #f5a623; }
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.toast-success .toast-icon { background: rgba(245, 166, 35, 0.15); color: #f5a623; }
+.toast-error .toast-icon { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.toast-info .toast-icon { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.toast-warning .toast-icon { background: rgba(245, 166, 35, 0.15); color: #f5a623; }
+
+.toast-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.toast-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.toast-message {
+  font-size: 0.85rem;
+  color: #8c96a3;
+  line-height: 1.4;
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  color: #8c96a3;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.toast-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}

@@ -1,0 +1,26 @@
+<div class="confirm-dialog-container" [ngClass]="'dialog-' + data.type">
+  <div class="dialog-header">
+    <div class="dialog-icon">
+      <span *ngIf="data.type === 'danger'">🗑</span>
+      <span *ngIf="data.type === 'warning'">⚠</span>
+      <span *ngIf="data.type === 'info'">ℹ</span>
+    </div>
+    <h2 mat-dialog-title>{{ data.title }}</h2>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <p>{{ data.message }}</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <button class="sleek-ghost-btn" (click)="onCancel()">
+      {{ data.cancelText }}
+    </button>
+    <button 
+      class="sleek-solid-btn" 
+      [ngClass]="'btn-' + data.type"
+      (click)="onConfirm()">
+      {{ data.confirmText }}
+    </button>
+  </mat-dialog-actions>
+</div>

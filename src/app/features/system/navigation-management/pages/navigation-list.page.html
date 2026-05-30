@@ -145,27 +145,20 @@
                   <button 
                     *ngIf="permissions.canEdit"
                     (click)="editItem(item)" 
-                    class="btn btn-outline btn-sm">
+                    class="sleek-ghost-btn">
                     Edit
                   </button>
                   <button 
                     *ngIf="permissions.canDelete"
                     (click)="deleteItem(item)" 
-                    class="btn btn-outline-danger btn-sm">
+                    class="sleek-danger-btn">
                     Delete
                   </button>
                 </div>
               </div>
             </div>
 
-            <!-- Add Child Button on the right -->
-            <button 
-              *ngIf="permissions.canCreate" 
-              class="add-child-btn" 
-              title="Add Child" 
-              (click)="createNewItem()">
-              +
-            </button>
+
           </div>
 
           <!-- Recursive Children Container -->

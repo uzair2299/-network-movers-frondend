@@ -3,6 +3,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationManagementService } from '../services/navigation-management.service';
 import { NavigationPermissionService } from '../services/navigation-permission.service';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { ConfirmDialogComponent, ConfirmDialogData } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NavigationItemModel, NavigationMenuResponse, NavigationCreateRequest } from '../models/navigation-item.model';
 import { PermissionContext } from '../models/permissions.model';
 import { NavigationItemDialogComponent, NavigationItemDialogData } from '../dialogs/navigation-item-dialog.component';
@@ -32,7 +34,8 @@ export class NavigationListPage implements OnInit {
   constructor(
     private navigationService: NavigationManagementService,
     private permissionService: NavigationPermissionService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toastService: ToastService
   ) {
     this.permissions = this.permissionService.getPermissionContext();
   }
@@ -103,24 +106,36 @@ export class NavigationListPage implements OnInit {
   }
 
   deleteItem(item: NavigationItemModel): void {
-    if (!confirm(`Are you sure you want to delete "${item.name}"?`)) {
-      return;
-    }
+    const dialogData: ConfirmDialogData = {
+      title: 'Confirm Deletion',
+      message: `Are you sure you want to delete "${item.name}"? This action cannot be undone.`,
+      confirmText: 'Delete',
+      type: 'warning'
+    };
 
-    this.navigationService.deleteNavigationItem(item.id).subscribe({
-      next: () => {
-        const items = this.getCurrentSectionItems();
-        const index = items.findIndex(i => i.id === item.id);
-        if (index > -1) {
-          items.splice(index, 1);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
+
+      this.navigationService.deleteNavigationItem(item.id).subscribe({
+        next: () => {
+          const items = this.getCurrentSectionItems();
+          const index = items.findIndex(i => i.id === item.id);
+          if (index > -1) {
+            items.splice(index, 1);
+          }
+          this.toastService.showWarning(`${item.name} deleted successfully`, 'Item Deleted');
+        },
+        error: (error) => {
+          this.toastService.showError(`Failed to delete ${item.name}`, 'Delete Error');
+          console.error('Delete error:', error);
         }
-        this.successMessage = `${item.name} deleted successfully`;
-        this.clearSuccessMessage();
-      },
-      error: (error) => {
-        this.error = `Failed to delete ${item.name}`;
-        console.error('Delete error:', error);
-      }
+      });
     });
   }
 
@@ -373,24 +388,36 @@ export class NavigationListPage implements OnInit {
     if (this.selectedItems.size === 0) return;
 
     const count = this.selectedItems.size;
-    if (!confirm(`Are you sure you want to delete ${count} item(s)?`)) {
-      return;
-    }
+    const dialogData: ConfirmDialogData = {
+      title: 'Bulk Delete',
+      message: `Are you sure you want to delete ${count} item(s)? This action cannot be undone.`,
+      confirmText: 'Delete All',
+      type: 'warning'
+    };
 
-    const deletePromises: Promise<void>[] = [];
-    this.selectedItems.forEach(id => {
-      const promise = this.navigationService.deleteNavigationItem(id).toPromise().then(() => {});
-      deletePromises.push(promise);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      panelClass: 'custom-dialog-container'
     });
 
-    Promise.all(deletePromises).then(() => {
-      this.loadNavigationData();
-      this.selectedItems.clear();
-      this.successMessage = `${count} item(s) deleted`;
-      this.clearSuccessMessage();
-    }).catch(error => {
-      this.error = 'Failed to delete some items';
-      console.error('Bulk delete error:', error);
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
+
+      const deletePromises: Promise<void>[] = [];
+      this.selectedItems.forEach(id => {
+        const promise = this.navigationService.deleteNavigationItem(id).toPromise().then(() => {});
+        deletePromises.push(promise);
+      });
+
+      Promise.all(deletePromises).then(() => {
+        this.loadNavigationData();
+        this.selectedItems.clear();
+        this.toastService.showWarning(`${count} item(s) deleted`, 'Bulk Delete');
+      }).catch(error => {
+        this.toastService.showError('Failed to delete some items', 'Delete Error');
+        console.error('Bulk delete error:', error);
+      });
     });
   }
 

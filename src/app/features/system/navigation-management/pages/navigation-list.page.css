@@ -68,10 +68,10 @@
 .alert-success::before { background-color: var(--success-color, #10b981); }
 
 .badge-active {
-  background-color: rgba(139, 92, 246, 0.1);
-  color: #a78bfa; /* Light purple for better contrast */
-  border-color: rgba(139, 92, 246, 0.3);
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.15);
+  background-color: rgba(245, 166, 35, 0.1);
+  color: #f5a623;
+  border-color: rgba(245, 166, 35, 0.3);
+  box-shadow: 0 0 12px rgba(245, 166, 35, 0.15);
 }
 
 .badge-inactive {
@@ -240,8 +240,8 @@
 }
 
 .tree-toggle:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
+  border-color: #f5a623;
+  color: #f5a623;
 }
 
 .tree-level[data-depth="0"] > .tree-node-wrapper > .tree-node > .tree-toggle {
@@ -267,7 +267,7 @@
 }
 
 /* Colored Borders based on depth */
-.navigation-item[data-depth="0"] { border-left-color: #fca5a5; } /* Light Red */
+.navigation-item[data-depth="0"] { border-left-color: #f5a623; } /* Main Accent */
 .navigation-item[data-depth="1"] { border-left-color: #93c5fd; } /* Light Blue */
 .navigation-item[data-depth="2"] { border-left-color: #86efac; } /* Light Green */
 .navigation-item[data-depth="3"] { border-left-color: #d8b4fe; } /* Light Purple */
@@ -295,7 +295,7 @@
 }
 
 .item-icon {
-  color: var(--primary-color);
+  color: #f5a623;
   font-size: 1.1rem;
   margin-top: 0.2rem; /* align icon with multi-line text */
 }
@@ -344,7 +344,7 @@
   border-radius: 50%;
   border: 1px dashed rgba(255,255,255,0.2);
   background: transparent;
-  color: var(--primary-color);
+  color: #f5a623;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -355,8 +355,8 @@
 
 .add-child-btn:hover {
   border-style: solid;
-  border-color: var(--primary-color);
-  background: rgba(139, 92, 246, 0.1);
+  border-color: #f5a623;
+  background: rgba(245, 166, 35, 0.1);
 }
 
 /* Children Container */
@@ -366,35 +366,69 @@
 }
 
 /* Sleek Buttons Override */
-.btn-sm {
+.sleek-ghost-btn {
   padding: 0.35rem 0.85rem;
   font-size: 0.8rem;
   font-weight: 500;
   border-radius: 6px;
-}
-
-.btn-outline {
   background: transparent !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   color: var(--muted-color) !important;
   box-shadow: none !important;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.btn-outline:hover {
-  background: rgba(139, 92, 246, 0.1) !important;
-  border-color: rgba(139, 92, 246, 0.4) !important;
-  color: #a78bfa !important;
+.sleek-ghost-btn:hover {
+  background: rgba(245, 166, 35, 0.1) !important;
+  border-color: rgba(245, 166, 35, 0.4) !important;
+  color: #f5a623 !important;
 }
 
-.btn-outline-danger {
+.sleek-danger-btn {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 6px;
   background: transparent !important;
   border: 1px solid rgba(239, 68, 68, 0.2) !important;
   color: #fca5a5 !important;
   box-shadow: none !important;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.btn-outline-danger:hover {
+.sleek-danger-btn:hover {
   background: rgba(239, 68, 68, 0.15) !important;
   border-color: rgba(239, 68, 68, 0.5) !important;
   color: #f87171 !important;
+}
+
+/* Override Global Top Buttons to match theme */
+.btn-primary {
+  background: #f5a623 !important;
+  color: #fff !important;
+  border: 1px solid rgba(245, 166, 35, 0.8) !important;
+  box-shadow: 0 2px 6px rgba(245, 166, 35, 0.2) !important;
+  border-radius: 6px !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s !important;
+}
+.btn-primary:hover {
+  background: #d98f1b !important;
+  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.4) !important;
+  color: #fff !important;
+}
+
+.btn-secondary {
+  background: transparent !important;
+  border: 1px solid rgba(245, 166, 35, 0.5) !important;
+  color: #f5a623 !important;
+  border-radius: 6px !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s !important;
+}
+.btn-secondary:hover {
+  background: rgba(245, 166, 35, 0.1) !important;
+  border-color: #f5a623 !important;
 }
