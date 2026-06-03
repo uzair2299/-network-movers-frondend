@@ -15,6 +15,7 @@ export interface DropdownMenuItem {
 export class DropdownMenuComponent {
   @Input() label: string = 'Options';
   @Input() items: DropdownMenuItem[] = [];
+  @Input() iconOnly: boolean = false;
   @Output() itemSelected = new EventEmitter<string>();
 
   isOpen = false;

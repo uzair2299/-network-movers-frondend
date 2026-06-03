@@ -1,122 +1,4 @@
-/* Styles for UsersListPage. Add component-specific CSS here. */
-
-.page-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.modern-list-card {
-  background: #1e2128;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.table-container {
-  overflow-x: auto;
-  width: 100%;
-}
-
-.modern-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.modern-table th {
-  padding: 1rem 1.25rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #8c96a3;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(0, 0, 0, 0.1);
-  white-space: nowrap;
-}
-
-.modern-table td {
-  padding: 1rem 1.25rem;
-  font-size: 0.9rem;
-  color: #e2e8f0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  vertical-align: middle;
-}
-
-.modern-table tbody tr {
-  transition: background-color 0.2s;
-}
-
-.modern-table tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-.text-muted {
-  color: #8c96a3;
-}
-
-.address-cell {
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* User Name Cell */
-.user-name-cell {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.avatar-placeholder {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-}
-
-/* Badges */
-.badge {
-  display: inline-block;
-  padding: 0.25rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.badge-active {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-}
-
-.badge-inactive {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-}
-
-.pagination-wrapper {
-  padding: 0 1.25rem 1.25rem;
-}
-
-.alert {
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-/* Styles for UsersListPage. Add component-specific CSS here. */
+/* Styles for RolesListPage. Add component-specific CSS here. */
 
 .page-container {
   display: flex;
@@ -204,18 +86,12 @@
   color: #8c96a3;
 }
 
-.address-cell {
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* User Name Cell */
-.user-name-cell {
+/* Role Name Cell */
+.role-name-cell {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  font-weight: 500;
 }
 
 .pagination-wrapper {

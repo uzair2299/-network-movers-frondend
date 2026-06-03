@@ -1,16 +1,16 @@
 <div class="page-container">
   <app-page-header 
-    title="Users" 
-    description="Manage system users">
+    title="Roles" 
+    description="Manage system roles">
   </app-page-header>
 
   <div *ngIf="error" class="alert alert-danger">
     {{ error }}
   </div>
 
-  <app-loading-spinner *ngIf="isLoading" message="Loading users..."></app-loading-spinner>
+  <app-loading-spinner *ngIf="isLoading" message="Loading roles..."></app-loading-spinner>
 
-  <div class="modern-list-card" *ngIf="!isLoading || users.length > 0">
+  <div class="modern-list-card" *ngIf="!isLoading || roles.length > 0">
     <!-- Actions Bar -->
     <div class="actions-bar">
       <div class="spacer"></div>
@@ -18,8 +18,8 @@
       <div class="actions-right">
         <app-button 
           variant="primary"
-          (btnClick)="createNewUser()">
-          <span class="icon">+</span> Add New User
+          (btnClick)="createNewRole()">
+          <span class="icon">+</span> Add New Role
         </app-button>
 
         <app-dropdown-menu
@@ -38,7 +38,7 @@
       </div>
 
       <app-search-bar 
-        placeholder="Search users..." 
+        placeholder="Search roles..." 
         [value]="searchQuery"
         (valueChange)="onSearch($event)">
       </app-search-bar>
@@ -49,43 +49,38 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Phone</th>
+            <th>Code</th>
+            <th>Description</th>
             <th>Status</th>
             <th class="actions-th"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users">
+          <tr *ngFor="let role of roles">
             <td>
-              <div class="user-name-cell">
-                <app-avatar [firstName]="user.profile.firstName" [lastName]="user.profile.lastName"></app-avatar>
-                <div>
-                  <div class="font-medium text-white">{{ user.profile.firstName }} {{ user.profile.lastName }}</div>
-                </div>
+              <div class="role-name-cell">
+                <span>{{ role.name }}</span>
               </div>
             </td>
-            <td><span class="text-muted">{{ user.username }}</span></td>
-            <td>{{ user.email }}</td>
-            <td><span class="text-muted">{{ user.profile.phoneNumber || 'N/A' }}</span></td>
+            <td><span class="text-muted">{{ role.code }}</span></td>
+            <td><span class="text-muted">{{ role.description }}</span></td>
             <td>
-              <app-status-badge [status]="user.enabled"></app-status-badge>
+              <app-status-badge [status]="role.active"></app-status-badge>
             </td>
             <td class="actions-cell">
               <app-dropdown-menu
-                [items]="userActions"
+                [items]="roleActions"
                 [iconOnly]="true"
-                (itemSelected)="handleUserAction($event, user)">
+                (itemSelected)="handleRoleAction($event, role)">
               </app-dropdown-menu>
             </td>
           </tr>
           
           <!-- Empty state -->
-          <tr *ngIf="users.length === 0 && !isLoading">
-            <td colspan="6" class="text-center py-5">
+          <tr *ngIf="roles.length === 0 && !isLoading">
+            <td colspan="5" class="text-center py-5">
               <div class="empty-state">
-                <p>No users found.</p>
+                <p>No roles found.</p>
               </div>
             </td>
           </tr>

@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersListPage } from './pages/users-list.page';
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
   declarations: [UsersListPage],
-  imports: [CommonModule, RouterModule, UsersRoutingModule]
+  imports: [CommonModule, RouterModule, SharedModule, UsersRoutingModule]
 })
 export class UsersModule {}

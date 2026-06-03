@@ -1,12 +1,26 @@
-<div class="custom-dropdown-container">
+<div class="custom-dropdown-container" [class.icon-only-container]="iconOnly">
   <div 
     class="custom-select-trigger" 
     [class.open]="isOpen"
+    [class.icon-only]="iconOnly"
     (click)="toggleDropdown()">
-    <span>{{ label }}</span>
-    <svg class="caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9"></polyline>
-    </svg>
+    
+    <!-- Text Label & Caret -->
+    <ng-container *ngIf="!iconOnly">
+      <span>{{ label }}</span>
+      <svg class="caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </ng-container>
+
+    <!-- 3-Dots Icon -->
+    <ng-container *ngIf="iconOnly">
+      <svg class="dots-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="5" r="2"></circle>
+        <circle cx="12" cy="12" r="2"></circle>
+        <circle cx="12" cy="19" r="2"></circle>
+      </svg>
+    </ng-container>
   </div>
   
   <div class="custom-options-menu" *ngIf="isOpen">

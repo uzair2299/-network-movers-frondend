@@ -20,6 +20,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
+import { StatusBadgeComponent } from './components/status-badge/status-badge.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     ButtonComponent,
     FormCheckboxComponent,
     DividerComponent,
-    PaginationComponent
+    PaginationComponent,
+    AvatarComponent,
+    StatusBadgeComponent
   ],
   imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
   exports: [
@@ -62,6 +66,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     FormCheckboxComponent,
     DividerComponent,
     PaginationComponent,
+    AvatarComponent,
+    StatusBadgeComponent,
     ReactiveFormsModule
   ]
 })
