@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Booking } from '../models/booking.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Booking, PaginatedResponse } from '../models/booking.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingsService {
-  getBookings(): Observable<Booking[]> {
-    const sample: Booking[] = [
-      { id: 'BKG-1001', reference: 'NM-1001', customerName: 'Acme Corp', requestedDate: new Date() },
-      { id: 'BKG-1002', reference: 'NM-1002', customerName: 'Blue Transport', requestedDate: new Date() }
-    ];
+  private baseUrl = 'https://network-movers-backend-production.up.railway.app/api/v1/admin';
 
-    return of(sample);
+  constructor(private http: HttpClient) {}
+
+  getBookings(page: number = 0, size: number = 20, sort: string = 'createdAt,desc'): Observable<PaginatedResponse<Booking>> {
+    const url = `${this.baseUrl}/booking?page=${page}&size=${size}&sort=${sort}`;
+    return this.http.get<PaginatedResponse<Booking>>(url);
+  }
+
+  getBookingById(id: number | string): Observable<Booking> {
+    return this.http.get<Booking>(`${this.baseUrl}/booking/${id}`);
   }
 }

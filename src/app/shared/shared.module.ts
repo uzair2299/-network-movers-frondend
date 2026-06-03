@@ -19,6 +19,8 @@ import { DividerComponent } from './components/divider/divider.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { PaginationComponent } from './components/pagination/pagination.component';
+
 @NgModule({
   declarations: [
     LoadingSpinnerComponent, 
@@ -36,7 +38,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DropdownMenuComponent,
     ButtonComponent,
     FormCheckboxComponent,
-    DividerComponent
+    DividerComponent,
+    PaginationComponent
   ],
   imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
   exports: [
@@ -58,6 +61,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ButtonComponent,
     FormCheckboxComponent,
     DividerComponent,
+    PaginationComponent,
     ReactiveFormsModule
   ]
 })

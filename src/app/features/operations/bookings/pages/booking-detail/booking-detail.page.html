@@ -1,0 +1,210 @@
+<div class="page-container">
+  <div class="header-section">
+    <app-button variant="ghost" (btnClick)="goBack()" class="back-btn">← Back to Bookings</app-button>
+    
+    <app-page-header
+      *ngIf="booking"
+      [title]="'Booking #' + booking.id"
+      [description]="'Details for ' + booking.name">
+    </app-page-header>
+  </div>
+
+  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+  <div *ngIf="!isLoading && !booking" class="empty-state">
+    <div class="empty-icon">⚠️</div>
+    <h3>Booking Not Found</h3>
+    <p>The booking you are looking for does not exist or could not be loaded.</p>
+    <app-button variant="primary" (btnClick)="goBack()">Go Back</app-button>
+  </div>
+
+  <div *ngIf="!isLoading && booking" class="details-grid">
+    <!-- Left Column: Primary Information -->
+    <div class="main-column">
+      
+      <!-- Move Specifications Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Move Overview</h3>
+          <span class="status-badge" [style.backgroundColor]="booking.current_status?.colorCode">
+            {{ booking.current_status?.name }}
+          </span>
+        </div>
+        <div class="card-body">
+          <p class="description-text">{{ booking.description }}</p>
+          
+          <app-divider margin="1rem 0"></app-divider>
+          
+          <div class="info-grid">
+            <div class="info-group">
+              <label>Property Category</label>
+              <span>{{ booking.move_specifications?.property_category_name || 'N/A' }}</span>
+            </div>
+            <div class="info-group">
+              <label>Property Type</label>
+              <span>{{ booking.move_specifications?.property_type_name || 'N/A' }}</span>
+            </div>
+            <div class="info-group">
+              <label>Property Size</label>
+              <span>{{ booking.move_specifications?.property_size_name || 'N/A' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Route Details Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Route Details</h3>
+        </div>
+        <div class="card-body">
+          <div class="route-timeline">
+            <div class="route-point pickup">
+              <div class="point-icon">📍</div>
+              <div class="point-content">
+                <h4>Pickup Location</h4>
+                <p>{{ booking.route_details?.pickup_address }}</p>
+              </div>
+            </div>
+            
+            <div class="route-line">
+              <span class="distance" *ngIf="booking.route_details?.distance_km">
+                {{ booking.route_details?.distance_km }} km ({{ booking.route_details?.duration_minutes }} mins)
+              </span>
+            </div>
+            
+            <div class="route-point destination">
+              <div class="point-icon">🏁</div>
+              <div class="point-content">
+                <h4>Destination Location</h4>
+                <p>{{ booking.route_details?.destination_address }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Access Details Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Access Requirements</h3>
+        </div>
+        <div class="card-body access-grid">
+          <div class="access-section">
+            <h4>Pickup Access</h4>
+            <div class="info-list">
+              <div class="info-item">
+                <span class="label">Floor Type:</span>
+                <span class="value">{{ booking.access_details?.pickup?.floor_type_name || 'N/A' }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Building Access:</span>
+                <span class="value">{{ booking.access_details?.pickup?.building_access_name || 'N/A' }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Parking Access:</span>
+                <span class="value">{{ booking.access_details?.pickup?.parking_access_name || 'N/A' }}</span>
+              </div>
+            </div>
+            <div class="restrictions" *ngIf="booking.access_details?.pickup?.restriction_details?.length">
+              <h5>Restrictions</h5>
+              <ul>
+                <li *ngFor="let r of booking.access_details.pickup.restriction_details">{{ r.name }}</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="access-divider"></div>
+          
+          <div class="access-section">
+            <h4>Destination Access</h4>
+            <div class="info-list">
+              <div class="info-item">
+                <span class="label">Floor Type:</span>
+                <span class="value">{{ booking.access_details?.destination?.floor_type_name || 'N/A' }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Building Access:</span>
+                <span class="value">{{ booking.access_details?.destination?.building_access_name || 'N/A' }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Parking Access:</span>
+                <span class="value">{{ booking.access_details?.destination?.parking_access_name || 'N/A' }}</span>
+              </div>
+            </div>
+            <div class="restrictions" *ngIf="booking.access_details?.destination?.restriction_details?.length">
+              <h5>Restrictions</h5>
+              <ul>
+                <li *ngFor="let r of booking.access_details.destination.restriction_details">{{ r.name }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Secondary Information -->
+    <div class="side-column">
+      
+      <!-- Customer Info Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Customer Information</h3>
+        </div>
+        <div class="card-body">
+          <div class="customer-profile">
+            <div class="avatar">{{ booking.user?.first_name?.charAt(0) }}{{ booking.user?.last_name?.charAt(0) }}</div>
+            <div class="customer-details">
+              <h4>{{ booking.user?.first_name }} {{ booking.user?.last_name }}</h4>
+              <p>&#64;{{ booking.user?.username }}</p>
+            </div>
+          </div>
+          
+          <app-divider margin="1rem 0"></app-divider>
+          
+          <div class="contact-info">
+            <div class="contact-item">
+              <span class="icon">✉️</span>
+              <a href="mailto:{{ booking.user?.email }}">{{ booking.user?.email }}</a>
+            </div>
+            <div class="contact-item">
+              <span class="icon">📞</span>
+              <a href="tel:{{ booking.user?.phone_number }}">{{ booking.user?.phone_number }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scheduling Info Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Scheduling</h3>
+        </div>
+        <div class="card-body">
+          <div class="schedule-summary">
+            <div class="schedule-badge" [class.instant]="booking.scheduling?.schedule_type === 'instant'">
+              {{ booking.scheduling?.schedule_type | uppercase }}
+            </div>
+          </div>
+          
+          <div class="info-list mt-3">
+            <div class="info-item">
+              <span class="label">Date:</span>
+              <span class="value">{{ booking.scheduling?.scheduled_date | date:'mediumDate' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Time Slot:</span>
+              <span class="value">{{ booking.scheduling?.time_slot }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Requested On:</span>
+              <span class="value">{{ booking.createdAt | date:'short' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
