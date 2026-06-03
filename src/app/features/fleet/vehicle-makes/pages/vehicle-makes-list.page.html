@@ -1,0 +1,100 @@
+<div class="page-container">
+  <app-page-header 
+    title="Vehicle Makers" 
+    description="Manage fleet vehicle manufacturers">
+  </app-page-header>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <app-loading-spinner *ngIf="isLoading" message="Loading vehicle makers..."></app-loading-spinner>
+
+  <div class="modern-list-card" *ngIf="!isLoading || vehicleMakes.length > 0">
+    <!-- Actions Bar -->
+    <div class="actions-bar">
+      <div class="spacer"></div>
+      
+      <div class="actions-right">
+        <app-button 
+          variant="primary"
+          (btnClick)="createNewVehicleMake()">
+          <span class="icon">+</span> Add Vehicle Maker
+        </app-button>
+
+        <app-dropdown-menu
+          label="More Actions"
+          [items]="moreActions"
+          (itemSelected)="handleMoreAction($event)">
+        </app-dropdown-menu>  
+      </div>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <div class="tabs-and-search-row">
+      <div class="section-tabs">
+        <!-- Add tabs here if needed later -->
+      </div>
+
+      <app-search-bar 
+        placeholder="Search vehicle makers..." 
+        [value]="searchQuery"
+        (valueChange)="onSearch($event)">
+      </app-search-bar>
+    </div>
+
+    <div class="table-container">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Country</th>
+            <th>Status</th>
+            <th class="actions-th"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let make of vehicleMakes">
+            <td>
+              <div class="font-medium text-white">{{ make.name }}</div>
+            </td>
+            <td><span class="text-muted">{{ make.code }}</span></td>
+            <td><span class="text-white">{{ make.country }}</span></td>
+            <td>
+              <app-status-badge [status]="make.active"></app-status-badge>
+            </td>
+            <td class="actions-cell">
+              <app-dropdown-menu
+                [items]="makeActions"
+                [iconOnly]="true"
+                (itemSelected)="handleMakeAction($event, make)">
+              </app-dropdown-menu>
+            </td>
+          </tr>
+          
+          <!-- Empty state -->
+          <tr *ngIf="vehicleMakes.length === 0 && !isLoading">
+            <td colspan="5" class="text-center py-5">
+              <div class="empty-state">
+                <p>No vehicle makers found.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalElements > 0">
+      <app-pagination
+        [totalElements]="totalElements"
+        [pageSize]="pageSize"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+        (sizeChange)="onSizeChange($event)">
+      </app-pagination>
+    </div>
+  </div>
+</div>

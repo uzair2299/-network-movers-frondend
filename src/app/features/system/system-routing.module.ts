@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: 'property-types',
     loadChildren: () => import('./property-management/property-management.module').then(m => m.PropertyManagementModule)
+  },
+  {
+    path: 'document-types',
+    loadChildren: () => import('./document-types/document-types.module').then(m => m.DocumentTypesModule)
   }
 ];
 

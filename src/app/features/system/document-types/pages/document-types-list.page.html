@@ -1,0 +1,111 @@
+<div class="page-container">
+  <app-page-header 
+    title="Document Types" 
+    description="Manage system document types">
+  </app-page-header>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <app-loading-spinner *ngIf="isLoading" message="Loading document types..."></app-loading-spinner>
+
+  <div class="modern-list-card" *ngIf="!isLoading || documentTypes.length > 0">
+    <!-- Actions Bar -->
+    <div class="actions-bar">
+      <div class="spacer"></div>
+      
+      <div class="actions-right">
+        <app-button 
+          variant="primary"
+          (btnClick)="createNewDocumentType()">
+          <span class="icon">+</span> Add Document Type
+        </app-button>
+
+        <app-dropdown-menu
+          label="More Actions"
+          [items]="moreActions"
+          (itemSelected)="handleMoreAction($event)">
+        </app-dropdown-menu>  
+      </div>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <div class="tabs-and-search-row">
+      <div class="section-tabs">
+        <!-- Add tabs here if needed later -->
+      </div>
+
+      <app-search-bar 
+        placeholder="Search document types..." 
+        [value]="searchQuery"
+        (valueChange)="onSearch($event)">
+      </app-search-bar>
+    </div>
+
+    <div class="table-container">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Mandatory</th>
+            <th>Expiry Required</th>
+            <th>Status</th>
+            <th class="actions-th"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of documentTypes">
+            <td>
+              <div>
+                <div class="font-medium text-white">{{ doc.name }}</div>
+                <div class="text-muted" style="font-size: 0.8em; margin-top: 4px;">{{ doc.description }}</div>
+              </div>
+            </td>
+            <td><span class="text-muted">{{ doc.code }}</span></td>
+            <td>
+              <span *ngIf="doc.mandatory" class="text-white">Yes</span>
+              <span *ngIf="!doc.mandatory" class="text-muted">No</span>
+            </td>
+            <td>
+              <span *ngIf="doc.expiryRequired" class="text-white">Yes</span>
+              <span *ngIf="!doc.expiryRequired" class="text-muted">No</span>
+            </td>
+            <td>
+              <app-status-badge [status]="doc.active"></app-status-badge>
+            </td>
+            <td class="actions-cell">
+              <app-dropdown-menu
+                [items]="documentActions"
+                [iconOnly]="true"
+                (itemSelected)="handleDocumentAction($event, doc)">
+              </app-dropdown-menu>
+            </td>
+          </tr>
+          
+          <!-- Empty state -->
+          <tr *ngIf="documentTypes.length === 0 && !isLoading">
+            <td colspan="6" class="text-center py-5">
+              <div class="empty-state">
+                <p>No document types found.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalElements > 0">
+      <app-pagination
+        [totalElements]="totalElements"
+        [pageSize]="pageSize"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+        (sizeChange)="onSizeChange($event)">
+      </app-pagination>
+    </div>
+  </div>
+</div>
