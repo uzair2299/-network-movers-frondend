@@ -1,0 +1,80 @@
+<div class="page-container" *ngIf="user && !isLoading">
+  
+  <app-page-header 
+    [title]="'Assign Roles to ' + (user.profile?.firstName || 'User') + ' ' + (user.profile?.lastName || '')" 
+    [description]="'Manage system access for ' + (user.username || 'unknown') + ' (' + (user.email || 'no email') + ')'">
+    <button class="app-btn app-btn-secondary" (click)="cancel()">Back to Users</button>
+  </app-page-header>
+
+  <div class="error-alert" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="modern-list-card">
+    <div class="tabs-and-search-row">
+      <div class="section-tabs">
+        <div class="tab active">Available Roles</div>
+      </div>
+
+      <app-search-bar 
+        placeholder="Search roles..." 
+        (search)="onSearch($event)">
+      </app-search-bar>
+    </div>
+
+    <div class="table-container">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th class="checkbox-th">
+              <input type="checkbox" class="premium-checkbox"
+                [checked]="areAllSelected()"
+                (change)="toggleAll($any($event.target).checked)">
+            </th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of filteredRoles" (click)="toggleRole(role.code, !isRoleSelected(role.code))" style="cursor: pointer;">
+            <td class="checkbox-cell" (click)="$event.stopPropagation()">
+              <input type="checkbox" class="premium-checkbox"
+                [checked]="isRoleSelected(role.code)"
+                (change)="toggleRole(role.code, $any($event.target).checked)">
+            </td>
+            <td><span class="role-code">{{ role.code }}</span></td>
+            <td><span class="font-medium text-white">{{ role.name }}</span></td>
+            <td><span class="text-muted">{{ role.description }}</span></td>
+            <td>
+              <app-status-badge [status]="role.active"></app-status-badge>
+            </td>
+          </tr>
+          
+          <tr *ngIf="!error && filteredRoles.length === 0">
+            <td colspan="5" class="text-center py-5">
+              <div class="empty-state">
+                <p>No roles found matching your search.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="toolbar-divider" style="margin-top: 1.5rem; margin-bottom: 1.5rem;"></div>
+
+    <div class="bottom-actions-row">
+      <button class="app-btn app-btn-secondary" (click)="cancel()">Cancel</button>
+      <button class="app-btn app-btn-primary" [disabled]="isSaving" (click)="save()">
+        {{ isSaving ? 'Saving...' : 'Save Changes' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Global Loading State -->
+<div class="global-loading" *ngIf="isLoading">
+  <app-loading-spinner message="Loading user and roles data..."></app-loading-spinner>
+</div>

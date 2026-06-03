@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { UsersService } from '../services/users.service';
@@ -30,7 +31,7 @@ export class UsersListPage implements OnInit {
     { id: 'assign_roles', label: 'Assign Roles' }
   ];
 
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -80,6 +81,10 @@ export class UsersListPage implements OnInit {
   }
 
   handleUserAction(actionId: string, user: User): void {
-    console.log('User action clicked:', actionId, 'for user:', user.username);
+    if (actionId === 'assign_roles') {
+      this.router.navigate(['/system/users', user.id, 'assign-roles']);
+    } else {
+      console.log('User action clicked:', actionId, 'for user:', user.username);
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.model';
@@ -18,5 +18,18 @@ export class UsersService {
     }).pipe(
       map(response => response instanceof HttpResponse ? response.body as PaginatedResponse<User> : response as PaginatedResponse<User>)
     );
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.api.get<User>(`/admin/users/${id}`).pipe(
+      map(response => response instanceof HttpResponse ? response.body as User : response as User)
+    );
+  }
+
+  updateUserRoles(userId: number, roleCodes: string[]): Observable<any> {
+    // TODO: Replace with the actual endpoint once provided by the backend developer.
+    // For now, we simulate a successful save.
+    console.log(`Mock saving roles for user ${userId}:`, roleCodes);
+    return of({ success: true });
   }
 }

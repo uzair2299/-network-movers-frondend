@@ -38,26 +38,26 @@
 
 /* Variants */
 .app-btn-primary {
-  background: #f5a623;
-  color: #fff;
-  border: 1px solid rgba(245, 166, 35, 0.8);
-  box-shadow: 0 2px 6px rgba(245, 166, 35, 0.2);
+  background: #f5a623 !important;
+  color: #fff !important;
+  border: 1px solid rgba(245, 166, 35, 0.8) !important;
+  box-shadow: 0 2px 6px rgba(245, 166, 35, 0.2) !important;
 }
 .app-btn-primary:not(:disabled):hover {
-  background: #d98f1b;
-  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.4);
-  color: #fff;
+  background: #d98f1b !important;
+  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.4) !important;
+  color: #fff !important;
 }
 
 .app-btn-secondary {
-  background: transparent;
-  border: 1px solid rgba(245, 166, 35, 0.5);
-  color: #f5a623;
+  background: transparent !important;
+  border: 1px solid rgba(245, 166, 35, 0.5) !important;
+  color: #f5a623 !important;
 }
 .app-btn-secondary:not(:disabled):hover {
-  background: rgba(245, 166, 35, 0.1);
-  border-color: #f5a623;
-  color: #f5a623;
+  background: rgba(245, 166, 35, 0.1) !important;
+  border-color: #f5a623 !important;
+  color: #f5a623 !important;
 }
 
 .app-btn-success {
