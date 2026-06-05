@@ -18,6 +18,7 @@
 
 .table-container {
   overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
 }
 

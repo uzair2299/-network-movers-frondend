@@ -12,11 +12,21 @@ import { PaginatedResponse } from '../../../../core/models/pagination.model';
 export class RolesService {
   constructor(private api: ApiService) {}
 
-  getRoles(page: number = 0, size: number = 20, sort: string = 'createdAt,desc'): Observable<PaginatedResponse<Role>> {
+  getRoles(page: number = 0, size: number = 20, sort: string = 'createdAt,desc', search?: string): Observable<PaginatedResponse<Role>> {
+    let params: any = { page: page.toString(), size: size.toString(), sort };
+    if (search) {
+      params.search = search;
+    }
     return this.api.get<PaginatedResponse<Role>>('/admin/roles', {
-      params: { page: page.toString(), size: size.toString(), sort }
+      params
     }).pipe(
       map(response => response instanceof HttpResponse ? response.body as PaginatedResponse<Role> : response as PaginatedResponse<Role>)
+    );
+  }
+
+  createRole(roleData: Partial<Role>): Observable<Role> {
+    return this.api.post<Role>('/admin/roles', roleData).pipe(
+      map(response => response instanceof HttpResponse ? response.body as Role : response as Role)
     );
   }
 }

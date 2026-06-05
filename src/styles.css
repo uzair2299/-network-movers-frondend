@@ -66,3 +66,8 @@ body {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
+
+/* Global fix to prevent inner vertical scrollbars in table containers */
+.table-container {
+  overflow-y: hidden !important;
+}

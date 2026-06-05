@@ -15,6 +15,7 @@ import { FormSelectComponent } from './components/form-select/form-select.compon
 import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
 import { ButtonComponent } from './components/button/button.component';
 import { FormCheckboxComponent } from './components/form-checkbox/form-checkbox.component';
+import { FormToggleComponent } from './components/form-toggle/form-toggle.component';
 import { DividerComponent } from './components/divider/divider.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -40,6 +41,7 @@ import { StatusBadgeComponent } from './components/status-badge/status-badge.com
     DropdownMenuComponent,
     ButtonComponent,
     FormCheckboxComponent,
+    FormToggleComponent,
     DividerComponent,
     PaginationComponent,
     AvatarComponent,
@@ -64,6 +66,7 @@ import { StatusBadgeComponent } from './components/status-badge/status-badge.com
     DropdownMenuComponent,
     ButtonComponent,
     FormCheckboxComponent,
+    FormToggleComponent,
     DividerComponent,
     PaginationComponent,
     AvatarComponent,

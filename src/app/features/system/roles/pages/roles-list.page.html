@@ -48,10 +48,34 @@
       <table class="modern-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Code</th>
-            <th>Description</th>
-            <th>Status</th>
+            <th (click)="toggleSort('name')" class="sortable" [class.active-sort]="sortColumn === 'name'">
+              Name
+              <div class="sort-arrows">
+                <span class="sort-up" [class.active]="sortColumn === 'name' && sortDirection === 'asc'">▲</span>
+                <span class="sort-down" [class.active]="sortColumn === 'name' && sortDirection === 'desc'">▼</span>
+              </div>
+            </th>
+            <th (click)="toggleSort('code')" class="sortable" [class.active-sort]="sortColumn === 'code'">
+              Code
+              <div class="sort-arrows">
+                <span class="sort-up" [class.active]="sortColumn === 'code' && sortDirection === 'asc'">▲</span>
+                <span class="sort-down" [class.active]="sortColumn === 'code' && sortDirection === 'desc'">▼</span>
+              </div>
+            </th>
+            <th (click)="toggleSort('description')" class="sortable" [class.active-sort]="sortColumn === 'description'">
+              Description
+              <div class="sort-arrows">
+                <span class="sort-up" [class.active]="sortColumn === 'description' && sortDirection === 'asc'">▲</span>
+                <span class="sort-down" [class.active]="sortColumn === 'description' && sortDirection === 'desc'">▼</span>
+              </div>
+            </th>
+            <th (click)="toggleSort('active')" class="sortable" [class.active-sort]="sortColumn === 'active'">
+              Status
+              <div class="sort-arrows">
+                <span class="sort-up" [class.active]="sortColumn === 'active' && sortDirection === 'asc'">▲</span>
+                <span class="sort-down" [class.active]="sortColumn === 'active' && sortDirection === 'desc'">▼</span>
+              </div>
+            </th>
             <th class="actions-th"></th>
           </tr>
         </thead>
