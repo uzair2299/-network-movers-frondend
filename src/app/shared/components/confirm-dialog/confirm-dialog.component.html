@@ -1,9 +1,15 @@
 <div class="confirm-dialog-container" [ngClass]="'dialog-' + data.type">
   <div class="dialog-header">
     <div class="dialog-icon">
-      <span *ngIf="data.type === 'danger'">🗑</span>
-      <span *ngIf="data.type === 'warning'">⚠</span>
-      <span *ngIf="data.type === 'info'">ℹ</span>
+      <svg *ngIf="data.type === 'danger'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+      </svg>
+      <svg *ngIf="data.type === 'warning'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <svg *ngIf="data.type === 'info'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
     </div>
     <h2 mat-dialog-title>{{ data.title }}</h2>
   </div>
@@ -13,7 +19,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="dialog-actions">
-    <button class="sleek-ghost-btn" (click)="onCancel()">
+    <button *ngIf="data.cancelText !== null" class="sleek-ghost-btn" (click)="onCancel()">
       {{ data.cancelText }}
     </button>
     <button 

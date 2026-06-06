@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
@@ -15,7 +15,7 @@ export interface Toast {
 })
 export class ToastService {
   private toasts: Toast[] = [];
-  private toastsSubject = new Subject<Toast[]>();
+  private toastsSubject = new BehaviorSubject<Toast[]>([]);
 
   constructor() {}
 

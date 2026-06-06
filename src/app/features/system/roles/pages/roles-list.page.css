@@ -7,10 +7,10 @@
 }
 
 .modern-list-card {
-  background: #1e2128;
-  border-radius: 12px;
+  background: var(--surface-strong, #1b2028);
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -28,14 +28,14 @@
 }
 
 .modern-table th {
-  padding: 0.5rem 1rem;
-  font-size: 0.7rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #8c96a3;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   white-space: nowrap;
 }
 

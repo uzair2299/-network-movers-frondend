@@ -43,18 +43,26 @@
 .dialog-info .dialog-icon { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
 
 h2, .mat-mdc-dialog-title, [mat-dialog-title] {
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   font-size: 1.25rem;
   font-weight: 600;
   color: #fff !important;
+  text-align: left;
+  flex: 1;
 }
 
 .dialog-content {
-  padding: 0 1.5rem 1.5rem;
+  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
   margin: 0;
-  color: #8c96a3;
+}
+
+.dialog-content p {
+  margin: 0;
+  color: #a1a1aa; /* Softer, premium muted text */
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
 }
 
 .dialog-actions {

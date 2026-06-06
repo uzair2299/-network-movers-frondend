@@ -34,68 +34,17 @@
       </div>
       <app-divider margin="0 0 1.5rem 0"></app-divider>
 
-      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-
-      <div *ngIf="!isLoading && getFilteredAndSortedData().length === 0" class="empty-state">
-        <div class="empty-icon">📋</div>
-        <h3>No {{ getTabTitle() }} Found</h3>
-        <p *ngIf="searchQuery">No results match your search for "{{ searchQuery }}".</p>
-        <p *ngIf="!searchQuery">Click "Add New" to create your first entry.</p>
-      </div>
-
-      <div *ngIf="!isLoading && getFilteredAndSortedData().length > 0" class="table-container">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th (click)="toggleSort('name')" class="sortable">
-                Name
-                <span class="sort-icon" *ngIf="sortColumn === 'name'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
-              </th>
-              <th (click)="toggleSort('code')" class="sortable">
-                Code
-                <span class="sort-icon" *ngIf="sortColumn === 'code'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
-              </th>
-              <th *ngIf="activeTab === 'types'" (click)="toggleSort('categoryName')" class="sortable">
-                Category
-                <span class="sort-icon" *ngIf="sortColumn === 'categoryName'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
-              </th>
-              <th *ngIf="activeTab === 'sizes'" (click)="toggleSort('typeName')" class="sortable">
-                Property Type
-                <span class="sort-icon" *ngIf="sortColumn === 'typeName'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
-              </th>
-              <th *ngIf="activeTab === 'sizes'" (click)="toggleSort('unitType')" class="sortable">
-                Unit Type
-                <span class="sort-icon" *ngIf="sortColumn === 'unitType'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
-              </th>
-              <th (click)="toggleSort('active')" class="sortable">
-                Status
-                <span class="sort-icon" *ngIf="sortColumn === 'active'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
-              </th>
-              <th class="actions-col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of getFilteredAndSortedData()">
-              <td><strong>{{ item.name }}</strong></td>
-              <td><span class="code-badge">{{ item.code }}</span></td>
-              <td *ngIf="activeTab === 'types'">{{ item.category?.name || 'N/A' }}</td>
-              <td *ngIf="activeTab === 'sizes'">{{ item.type?.name || 'N/A' }}</td>
-              <td *ngIf="activeTab === 'sizes'">{{ item.unitType }}</td>
-              <td>
-                <span class="status-badge" [class.active]="item.active">
-                  {{ item.active ? 'Active' : 'Inactive' }}
-                </span>
-              </td>
-              <td class="actions-col">
-                <div class="table-actions">
-                  <app-button variant="ghost" size="sm" (btnClick)="openEditDialog(item)" title="Edit">✎</app-button>
-                  <app-button variant="ghost-danger" size="sm" (btnClick)="deleteItem(item)" title="Delete">🗑</app-button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <app-dynamic-table
+        [columns]="tableColumns"
+        [data]="getFilteredAndSortedData()"
+        [sortColumn]="sortColumn"
+        [sortDirection]="sortDirection"
+        [isLoading]="isLoading"
+        [emptyTitle]="'No ' + getTabTitle() + ' Found'"
+        [emptyMessage]="searchQuery ? 'No results match your search for \'' + searchQuery + '\'.' : 'Click \'Add New\' to create your first entry.'"
+        (sort)="toggleSort($event)"
+        (action)="handleTableAction($event)">
+      </app-dynamic-table>
     </div>
   </div>
 </div>

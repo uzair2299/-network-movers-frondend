@@ -24,9 +24,27 @@ export class RolesService {
     );
   }
 
+  getRoleById(id: string): Observable<Role> {
+    return this.api.get<Role>(`/admin/roles/${id}`).pipe(
+      map(response => response instanceof HttpResponse ? response.body as Role : response as Role)
+    );
+  }
+
   createRole(roleData: Partial<Role>): Observable<Role> {
     return this.api.post<Role>('/admin/roles', roleData).pipe(
       map(response => response instanceof HttpResponse ? response.body as Role : response as Role)
+    );
+  }
+
+  updateRole(id: string, roleData: Partial<Role>): Observable<Role> {
+    return this.api.put<Role>(`/admin/roles/${id}`, roleData).pipe(
+      map(response => response instanceof HttpResponse ? response.body as Role : response as Role)
+    );
+  }
+
+  deleteRole(id: string): Observable<void> {
+    return this.api.delete<void>(`/admin/roles/${id}`).pipe(
+      map(response => response instanceof HttpResponse ? response.body as void : response as void)
     );
   }
 }

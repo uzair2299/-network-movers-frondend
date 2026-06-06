@@ -6,11 +6,13 @@ import { SharedModule } from '../../../shared/shared.module';
 import { RolesRoutingModule } from './roles-routing.module';
 import { RolesListPage } from './pages/roles-list.page';
 import { RoleDialogComponent } from './dialogs/role-dialog/role-dialog.component';
+import { RoleDetailDialogComponent } from './dialogs/role-detail-dialog/role-detail-dialog.component';
 
 @NgModule({
   declarations: [
     RolesListPage,
-    RoleDialogComponent
+    RoleDialogComponent,
+    RoleDetailDialogComponent
   ],
   imports: [
     CommonModule,

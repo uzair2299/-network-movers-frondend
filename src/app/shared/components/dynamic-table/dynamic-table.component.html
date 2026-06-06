@@ -1,0 +1,64 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+<div *ngIf="!isLoading && data.length === 0" class="empty-state">
+  <div class="empty-icon">{{ emptyIcon }}</div>
+  <h3>{{ emptyTitle }}</h3>
+  <p>{{ emptyMessage }}</p>
+</div>
+
+<div *ngIf="!isLoading && data.length > 0" class="table-container">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns" 
+            (click)="onSort(col)" 
+            [class.sortable]="col.sortable"
+            [class.active-sort]="sortColumn === col.key"
+            [ngClass]="col.type === 'actions' ? 'actions-col' : ''">
+          {{ col.label }}
+          
+          <div class="sort-arrows" *ngIf="col.sortable">
+            <span class="sort-up" [class.active]="sortColumn === col.key && sortDirection === 'asc'">▲</span>
+            <span class="sort-down" [class.active]="sortColumn === col.key && sortDirection === 'desc'">▼</span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data">
+        <td *ngFor="let col of columns" [ngClass]="col.type === 'actions' ? 'actions-col' : ''">
+          
+          <ng-container [ngSwitch]="col.type || 'text'">
+            
+            <ng-container *ngSwitchCase="'text'">
+              <strong *ngIf="col.bold">{{ getValue(item, col) }}</strong>
+              <span *ngIf="!col.bold">{{ getValue(item, col) }}</span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'code'">
+              <span class="code-badge">{{ getValue(item, col) }}</span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'status'">
+              <app-status-badge [status]="getValue(item, col)"></app-status-badge>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'actions'">
+              <div class="table-actions" *ngIf="!col.actionsDropdown">
+                <app-button variant="ghost" size="sm" (btnClick)="onAction('edit', item)" title="Edit">✎</app-button>
+                <app-button variant="ghost-danger" size="sm" (btnClick)="onAction('delete', item)" title="Delete">🗑</app-button>
+              </div>
+              <app-dropdown-menu *ngIf="col.actionsDropdown"
+                [items]="col.dropdownItems || []"
+                [iconOnly]="true"
+                (itemSelected)="onAction($event, item)">
+              </app-dropdown-menu>
+            </ng-container>
+
+          </ng-container>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -15,4 +15,9 @@ export class SearchBarComponent {
     this.value = input.value;
     this.valueChange.emit(this.value);
   }
+
+  clearSearch(): void {
+    this.value = '';
+    this.valueChange.emit(this.value);
+  }
 }

@@ -9,24 +9,33 @@
   <form [formGroup]="roleForm" (ngSubmit)="onSubmit()" class="modern-form">
     
     <app-form-input
-      label="Role Name *"
+      label="Role Name"
+      [required]="true"
       placeholder="e.g., Administrator"
       [control]="$any(roleForm.get('name'))">
     </app-form-input>
 
     <app-form-input
-      label="Role Code *"
+      label="Role Code"
+      [required]="true"
       placeholder="e.g., ADMIN"
       [control]="$any(roleForm.get('code'))">
     </app-form-input>
 
     <div class="form-group full-width">
-      <label for="description">Description</label>
-      <textarea id="description" formControlName="description" class="form-control" rows="3" placeholder="Enter role description..."></textarea>
+      <app-form-textarea
+        label="Description"
+        placeholder="Brief description of the role's purpose..."
+        [rows]="3"
+        [control]="$any(roleForm.get('description'))">
+      </app-form-textarea>
     </div>
 
     <div class="form-group full-width">
-      <app-form-toggle label="Status (Active)" [control]="$any(roleForm.get('active'))"></app-form-toggle>
+      <app-form-toggle
+        label="Status"
+        [control]="$any(roleForm.get('active'))">
+      </app-form-toggle>
     </div>
 
   </form>

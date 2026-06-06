@@ -5,7 +5,7 @@ export interface ConfirmDialogData {
   title: string;
   message: string;
   confirmText?: string;
-  cancelText?: string;
+  cancelText?: string | null;
   type?: 'danger' | 'warning' | 'info';
 }
 
@@ -20,7 +20,7 @@ export class ConfirmDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
   ) {
     if (!this.data.confirmText) this.data.confirmText = 'Confirm';
-    if (!this.data.cancelText) this.data.cancelText = 'Cancel';
+    if (this.data.cancelText === undefined) this.data.cancelText = 'Cancel';
     if (!this.data.type) this.data.type = 'info';
   }
 

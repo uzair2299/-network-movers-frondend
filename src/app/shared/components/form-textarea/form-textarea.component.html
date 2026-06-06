@@ -1,12 +1,10 @@
 <div class="form-group" *ngIf="control">
-  <label [for]="inputId">{{ label }}<span *ngIf="required" class="required-asterisk"> *</span></label>
-  <input
+  <label [for]="inputId">{{ label }}</label>
+  <textarea
     [id]="inputId"
-    [type]="type"
     [formControl]="control"
     [placeholder]="placeholder"
-    [attr.min]="min"
-    [attr.max]="max"
-    class="form-control">
+    [rows]="rows"
+    class="form-control"></textarea>
   <div *ngIf="errorMessage" class="form-error">{{ errorMessage }}</div>
 </div>

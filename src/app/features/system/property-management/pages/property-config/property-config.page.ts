@@ -7,6 +7,7 @@ import { PropertyTypeDialogComponent } from '../../dialogs/property-type-dialog/
 import { PropertySizeDialogComponent } from '../../dialogs/property-size-dialog/property-size-dialog.component';
 import { ConfirmDialogComponent } from '../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ToastService } from '../../../../../shared/services/toast.service';
+import { TableColumn } from '../../../../../shared/components/dynamic-table/dynamic-table.component';
 
 type ActiveTab = 'categories' | 'types' | 'sizes' | 'floor' | 'building' | 'parking' | 'restrictions';
 
@@ -25,6 +26,8 @@ export class PropertyConfigPage implements OnInit {
   sortColumn: string = 'name';
   sortDirection: 'asc' | 'desc' = 'asc';
 
+  tableColumns: TableColumn[] = [];
+
   constructor(
     private propertyService: PropertyService,
     private dialog: MatDialog,
@@ -40,6 +43,7 @@ export class PropertyConfigPage implements OnInit {
         this.activeTab = tab;
       }
       this.searchQuery = '';
+      this.updateTableColumns();
       this.loadData();
     });
   }
@@ -140,6 +144,43 @@ export class PropertyConfigPage implements OnInit {
         });
       }
     });
+  }
+
+  handleTableAction(event: { action: string, item: any }) {
+    if (event.action === 'edit') {
+      this.openEditDialog(event.item);
+    } else if (event.action === 'delete') {
+      this.deleteItem(event.item);
+    }
+  }
+
+  updateTableColumns() {
+    const baseCols: TableColumn[] = [
+      { key: 'name', label: 'Name', type: 'text', sortable: true, bold: true },
+      { key: 'code', label: 'Code', type: 'code', sortable: true }
+    ];
+
+    const endCols: TableColumn[] = [
+      { key: 'active', label: 'Status', type: 'status', sortable: true },
+      { key: 'actions', label: 'Actions', type: 'actions' }
+    ];
+
+    if (this.activeTab === 'types') {
+      this.tableColumns = [
+        ...baseCols,
+        { key: 'categoryName', label: 'Category', type: 'text', sortable: true, valueGetter: (item) => item.category?.name || 'N/A' },
+        ...endCols
+      ];
+    } else if (this.activeTab === 'sizes') {
+      this.tableColumns = [
+        ...baseCols,
+        { key: 'typeName', label: 'Property Type', type: 'text', sortable: true, valueGetter: (item) => item.type?.name || 'N/A' },
+        { key: 'unitType', label: 'Unit Type', type: 'text', sortable: true },
+        ...endCols
+      ];
+    } else {
+      this.tableColumns = [...baseCols, ...endCols];
+    }
   }
 
   getTabTitle() {

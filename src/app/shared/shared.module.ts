@@ -16,6 +16,7 @@ import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.
 import { ButtonComponent } from './components/button/button.component';
 import { FormCheckboxComponent } from './components/form-checkbox/form-checkbox.component';
 import { FormToggleComponent } from './components/form-toggle/form-toggle.component';
+import { FormTextareaComponent } from './components/form-textarea/form-textarea.component';
 import { DividerComponent } from './components/divider/divider.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { StatusBadgeComponent } from './components/status-badge/status-badge.component';
+import { DynamicTableComponent } from './components/dynamic-table/dynamic-table.component';
 
 @NgModule({
   declarations: [
@@ -42,10 +44,12 @@ import { StatusBadgeComponent } from './components/status-badge/status-badge.com
     ButtonComponent,
     FormCheckboxComponent,
     FormToggleComponent,
+    FormTextareaComponent,
     DividerComponent,
     PaginationComponent,
     AvatarComponent,
-    StatusBadgeComponent
+    StatusBadgeComponent,
+    DynamicTableComponent
   ],
   imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
   exports: [
@@ -67,10 +71,12 @@ import { StatusBadgeComponent } from './components/status-badge/status-badge.com
     ButtonComponent,
     FormCheckboxComponent,
     FormToggleComponent,
+    FormTextareaComponent,
     DividerComponent,
     PaginationComponent,
     AvatarComponent,
     StatusBadgeComponent,
+    DynamicTableComponent,
     ReactiveFormsModule
   ]
 })

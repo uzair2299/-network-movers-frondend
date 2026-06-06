@@ -2,31 +2,28 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-form-input',
-  templateUrl: './form-input.component.html',
-  styleUrls: ['./form-input.component.css']
+  selector: 'app-form-textarea',
+  templateUrl: './form-textarea.component.html',
+  styleUrls: ['./form-textarea.component.css']
 })
-export class FormInputComponent implements OnInit {
+export class FormTextareaComponent implements OnInit {
   @Input() label: string = '';
-  @Input() type: string = 'text';
   @Input() placeholder: string = '';
+  @Input() rows: number = 3;
   @Input() control!: FormControl;
-  @Input() required: boolean = false;
-  @Input() min?: number;
-  @Input() max?: number;
 
   inputId: string = '';
 
   ngOnInit() {
-    this.inputId = `input-${Math.random().toString(36).substring(2, 9)}`;
+    this.inputId = `textarea-${Math.random().toString(36).substring(2, 9)}`;
   }
 
   get errorMessage(): string | null {
     if (this.control && (this.control.touched || this.control.dirty) && this.control.invalid) {
-      const fieldName = this.label;
+      const fieldName = this.label.replace(' *', '');
       if (this.control.hasError('required')) return `${fieldName} is required`;
       if (this.control.hasError('minlength')) return `${fieldName} must be at least ${this.control.errors?.['minlength'].requiredLength} characters`;
-      if (this.control.hasError('min')) return `${fieldName} must be ${this.control.errors?.['min'].min} or greater`;
+      if (this.control.hasError('maxlength')) return `${fieldName} cannot exceed ${this.control.errors?.['maxlength'].requiredLength} characters`;
     }
     return null;
   }
