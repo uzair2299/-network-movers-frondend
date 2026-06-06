@@ -48,3 +48,13 @@ export interface UserRole {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface Module {
+  id: string;
+  code: string;
+  name: string;
+  description?: string;
+  active: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}

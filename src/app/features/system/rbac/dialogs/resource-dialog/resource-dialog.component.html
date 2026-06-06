@@ -1,0 +1,47 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>{{ isEdit ? 'Edit Resource' : 'Add New Resource' }}</h2>
+  <button class="close-btn" (click)="onCancel()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content-body">
+  <form [formGroup]="resourceForm" (ngSubmit)="onSubmit()" class="modern-form">
+    
+    <app-form-input
+      label="Resource Name"
+      [required]="true"
+      placeholder="e.g., Booking Management"
+      [control]="$any(resourceForm.get('name'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Resource Code"
+      [required]="true"
+      placeholder="e.g., BOOKING"
+      [control]="$any(resourceForm.get('code'))">
+    </app-form-input>
+
+    <div class="form-group full-width">
+      <app-form-textarea
+        label="Description"
+        placeholder="Brief description of the resource's purpose..."
+        [rows]="3"
+        [control]="$any(resourceForm.get('description'))">
+      </app-form-textarea>
+    </div>
+
+    <div class="form-group full-width">
+      <app-form-toggle
+        label="Status"
+        [control]="$any(resourceForm.get('active'))">
+      </app-form-toggle>
+    </div>
+
+  </form>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <app-button variant="outline" (btnClick)="onCancel()">Cancel</app-button>
+  <app-button variant="primary" (btnClick)="onSubmit()">{{ isEdit ? 'Save Changes' : 'Create Resource' }}</app-button>
+</div>

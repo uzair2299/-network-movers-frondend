@@ -16,6 +16,7 @@ export class FormSelectComponent {
   @Input() options: SelectOption[] = [];
   @Input() control!: FormControl;
   @Input() placeholder: string = 'Select an option';
+  @Input() required: boolean = false;
 
   isOpen = false;
 

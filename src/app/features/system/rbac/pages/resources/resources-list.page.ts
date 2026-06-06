@@ -2,21 +2,21 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { finalize, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { Role } from '../models/role.model';
-import { RolesService } from '../services/roles.service';
-import { RoleDialogComponent } from '../dialogs/role-dialog/role-dialog.component';
-import { RoleDetailDialogComponent } from '../dialogs/role-detail-dialog/role-detail-dialog.component';
-import { ToastService } from '../../../../shared/services/toast.service';
-import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { TableColumn } from '../../../../shared/components/dynamic-table/dynamic-table.component';
+import { Resource } from '../../models/rbac.models';
+import { RbacService } from '../../services/rbac.service';
+import { ResourceDialogComponent } from '../../dialogs/resource-dialog/resource-dialog.component';
+import { ResourceDetailDialogComponent } from '../../dialogs/resource-detail-dialog/resource-detail-dialog.component';
+import { ToastService } from '../../../../../shared/services/toast.service';
+import { ConfirmDialogComponent } from '../../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { TableColumn } from '../../../../../shared/components/dynamic-table/dynamic-table.component';
 
 @Component({
-  selector: 'app-roles-list',
-  templateUrl: './roles-list.page.html',
-  styleUrls: ['./roles-list.page.css']
+  selector: 'app-resources-list',
+  templateUrl: './resources-list.page.html',
+  styleUrls: ['./resources-list.page.css']
 })
-export class RolesListPage implements OnInit, OnDestroy {
-  roles: Role[] = [];
+export class ResourcesListPage implements OnInit, OnDestroy {
+  resources: Resource[] = [];
   isLoading = false;
   error: string | null = null;
   
@@ -34,15 +34,14 @@ export class RolesListPage implements OnInit, OnDestroy {
   }
   
   moreActions = [
-    { id: 'export', label: 'Export Roles' },
-    { id: 'import', label: 'Import Roles' }
+    { id: 'export', label: 'Export Resources' },
+    { id: 'import', label: 'Import Resources' }
   ];
 
-  roleActions = [
+  resourceActions = [
     { id: 'view', label: 'View Details' },
-    { id: 'edit', label: 'Edit Role' },
-    { id: 'permissions', label: 'Manage Permissions' },
-    { id: 'delete', label: 'Delete Role' }
+    { id: 'edit', label: 'Edit Resource' },
+    { id: 'delete', label: 'Delete Resource' }
   ];
 
   tableColumns: TableColumn[] = [
@@ -55,12 +54,12 @@ export class RolesListPage implements OnInit, OnDestroy {
       label: '', 
       type: 'actions', 
       actionsDropdown: true,
-      dropdownItems: this.roleActions
+      dropdownItems: this.resourceActions
     }
   ];
 
   constructor(
-    private rolesService: RolesService,
+    private rbacService: RbacService,
     private dialog: MatDialog,
     private toastService: ToastService
   ) {}
@@ -72,10 +71,10 @@ export class RolesListPage implements OnInit, OnDestroy {
     ).subscribe(query => {
       this.searchQuery = query;
       this.currentPage = 0;
-      this.loadRoles();
+      this.loadResources();
     });
 
-    this.loadRoles();
+    this.loadResources();
   }
 
   ngOnDestroy(): void {
@@ -84,40 +83,40 @@ export class RolesListPage implements OnInit, OnDestroy {
     }
   }
 
-  loadRoles(): void {
+  loadResources(): void {
     this.isLoading = true;
     this.error = null;
-    this.rolesService.getRoles(this.currentPage, this.pageSize, this.sort, this.searchQuery)
+    this.rbacService.getResources(this.currentPage, this.pageSize, this.sort, this.searchQuery)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (response) => {
-          this.roles = response.content;
+          this.resources = response.content;
           this.totalElements = response.totalElements;
         },
         error: (err) => {
-          console.error('Error fetching roles', err);
-          this.error = 'Failed to load roles. Please try again later.';
+          console.error('Error fetching resources', err);
+          this.error = 'Failed to load resources. Please try again later.';
         }
       });
   }
 
   onPageChange(page: number): void {
     this.currentPage = page;
-    this.loadRoles();
+    this.loadResources();
   }
 
   onSizeChange(size: number): void {
     this.pageSize = size;
     this.currentPage = 0;
-    this.loadRoles();
+    this.loadResources();
   }
 
   onSearch(query: string): void {
     this.searchSubject.next(query);
   }
 
-  createNewRole(): void {
-    const dialogRef = this.dialog.open(RoleDialogComponent, {
+  createNewResource(): void {
+    const dialogRef = this.dialog.open(ResourceDialogComponent, {
       width: '700px',
       maxWidth: '95vw',
       disableClose: false,
@@ -127,17 +126,17 @@ export class RolesListPage implements OnInit, OnDestroy {
       backdropClass: 'premium-backdrop'
     });
 
-    dialogRef.afterClosed().subscribe((result: Role | null) => {
+    dialogRef.afterClosed().subscribe((result: Resource | null) => {
       if (result) {
         this.isLoading = true;
-        this.rolesService.createRole(result).subscribe({
+        this.rbacService.createResource(result).subscribe({
           next: () => {
-            this.toastService.showSuccess('Role created successfully.', 'Success');
-            this.loadRoles();
+            this.toastService.showSuccess('Resource created successfully.', 'Success');
+            this.loadResources();
           },
           error: (err) => {
-            console.error('Error creating role', err);
-            this.error = 'Failed to create role.';
+            console.error('Error creating resource', err);
+            this.toastService.showError('Failed to create resource.', 'Error');
             this.isLoading = false;
           }
         });
@@ -149,29 +148,29 @@ export class RolesListPage implements OnInit, OnDestroy {
     console.log('More action clicked:', actionId);
   }
 
-  handleRoleAction(actionId: string, role: Role): void {
+  handleResourceAction(actionId: string, resource: Resource): void {
     if (actionId === 'edit') {
-      this.editRole(role);
+      this.editResource(resource);
     } else if (actionId === 'view') {
-      this.viewRole(role);
+      this.viewResource(resource);
     } else if (actionId === 'delete') {
-      this.deleteRole(role);
+      this.deleteResource(resource);
     } else {
-      console.log('Role action clicked:', actionId, 'for role:', role.code);
+      console.log('Resource action clicked:', actionId, 'for resource:', resource.code);
     }
   }
 
-  handleTableAction(event: { action: string, item: Role }): void {
-    this.handleRoleAction(event.action, event.item);
+  handleTableAction(event: { action: string, item: Resource }): void {
+    this.handleResourceAction(event.action, event.item);
   }
 
-  deleteRole(role: Role): void {
+  deleteResource(resource: Resource): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       disableClose: true,
       data: {
-        title: 'Delete Role',
-        message: `Are you sure you want to delete the role "${role.name}"? This action will deactivate it.`,
+        title: 'Delete Resource',
+        message: `Are you sure you want to delete the resource "${resource.name}"? This action will deactivate it.`,
         confirmText: 'Delete',
         cancelText: 'Cancel',
         type: 'danger'
@@ -183,14 +182,14 @@ export class RolesListPage implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.isLoading = true;
-        this.rolesService.deleteRole(role.id).subscribe({
+        this.rbacService.deleteResource(resource.id).subscribe({
           next: () => {
-            this.toastService.showSuccess('Role deleted successfully.', 'Success');
-            this.loadRoles();
+            this.toastService.showSuccess('Resource deleted successfully.', 'Success');
+            this.loadResources();
           },
           error: (err) => {
-            console.error('Error deleting role', err);
-            this.toastService.showError('Failed to delete role.', 'Error');
+            console.error('Error deleting resource', err);
+            this.toastService.showError('Failed to delete resource.', 'Error');
             this.isLoading = false;
           }
         });
@@ -198,51 +197,51 @@ export class RolesListPage implements OnInit, OnDestroy {
     });
   }
 
-  viewRole(role: Role): void {
+  viewResource(resource: Resource): void {
     this.isLoading = true;
-    this.rolesService.getRoleById(role.id).pipe(
+    this.rbacService.getResourceById(resource.id).pipe(
       finalize(() => this.isLoading = false)
     ).subscribe({
-      next: (fullRole) => {
-        this.dialog.open(RoleDetailDialogComponent, {
+      next: (fullResource) => {
+        this.dialog.open(ResourceDetailDialogComponent, {
           width: '600px',
           maxWidth: '95vw',
           disableClose: false,
           hasBackdrop: true,
-          data: { role: fullRole },
+          data: { resource: fullResource },
           panelClass: 'premium-dark-dialog',
           backdropClass: 'premium-backdrop'
         });
       },
       error: (err) => {
-        console.error('Error fetching role details', err);
-        this.toastService.showError('Failed to load role details.', 'Error');
+        console.error('Error fetching resource details', err);
+        this.toastService.showError('Failed to load resource details.', 'Error');
       }
     });
   }
 
-  editRole(role: Role): void {
-    const dialogRef = this.dialog.open(RoleDialogComponent, {
+  editResource(resource: Resource): void {
+    const dialogRef = this.dialog.open(ResourceDialogComponent, {
       width: '700px',
       maxWidth: '95vw',
       disableClose: false,
       hasBackdrop: true,
-      data: { role, isEdit: true },
+      data: { resource, isEdit: true },
       panelClass: 'premium-dark-dialog',
       backdropClass: 'premium-backdrop'
     });
 
-    dialogRef.afterClosed().subscribe((result: Role | null) => {
+    dialogRef.afterClosed().subscribe((result: Resource | null) => {
       if (result) {
         this.isLoading = true;
-        this.rolesService.updateRole(role.id, result).subscribe({
+        this.rbacService.updateResource(resource.id, result).subscribe({
           next: () => {
-            this.toastService.showSuccess('Role updated successfully.', 'Success');
-            this.loadRoles();
+            this.toastService.showSuccess('Resource updated successfully.', 'Success');
+            this.loadResources();
           },
           error: (err) => {
-            console.error('Error updating role', err);
-            this.error = 'Failed to update role.';
+            console.error('Error updating resource', err);
+            this.toastService.showError('Failed to update resource.', 'Error');
             this.isLoading = false;
           }
         });
@@ -258,6 +257,6 @@ export class RolesListPage implements OnInit, OnDestroy {
       this.sortDirection = 'asc';
     }
     this.currentPage = 0;
-    this.loadRoles();
+    this.loadResources();
   }
 }

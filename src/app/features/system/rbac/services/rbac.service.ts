@@ -4,7 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../../../../core/services/api.service';
 import { PaginatedResponse } from '../../../../core/models/pagination.model';
-import { MenuItem, Resource, Permission, Role, UserRole } from '../models/rbac.models';
+import { MenuItem, Resource, Permission, Role, UserRole, Module } from '../models/rbac.models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,35 +13,35 @@ export class RbacService {
   constructor(private api: ApiService) {}
 
   // =========================================================================
-  // MODULES (MenuItems)
+  // MODULES
   // =========================================================================
-  getModules(page: number = 0, size: number = 20, sort: string = 'sortOrder,asc', search?: string): Observable<PaginatedResponse<MenuItem>> {
+  getModules(page: number = 0, size: number = 20, sort: string = 'createdAt,desc', search?: string): Observable<PaginatedResponse<Module>> {
     let params: any = { page: page.toString(), size: size.toString(), sort };
     if (search) params.search = search;
-    return this.api.get<PaginatedResponse<MenuItem>>('/admin/rbac/modules', { params }).pipe(
-      map(res => res instanceof HttpResponse ? res.body as PaginatedResponse<MenuItem> : res as PaginatedResponse<MenuItem>)
+    return this.api.get<PaginatedResponse<Module>>('/admin/rbac/modules', { params }).pipe(
+      map(res => res instanceof HttpResponse ? res.body as PaginatedResponse<Module> : res as PaginatedResponse<Module>)
     );
   }
 
-  getModuleById(id: number): Observable<MenuItem> {
-    return this.api.get<MenuItem>(`/admin/rbac/modules/${id}`).pipe(
-      map(res => res instanceof HttpResponse ? res.body as MenuItem : res as MenuItem)
+  getModuleById(id: string): Observable<Module> {
+    return this.api.get<Module>(`/admin/rbac/modules/${id}`).pipe(
+      map(res => res instanceof HttpResponse ? res.body as Module : res as Module)
     );
   }
 
-  createModule(data: Partial<MenuItem>): Observable<MenuItem> {
-    return this.api.post<MenuItem>('/admin/rbac/modules', data).pipe(
-      map(res => res instanceof HttpResponse ? res.body as MenuItem : res as MenuItem)
+  createModule(data: Partial<Module>): Observable<Module> {
+    return this.api.post<Module>('/admin/rbac/modules', data).pipe(
+      map(res => res instanceof HttpResponse ? res.body as Module : res as Module)
     );
   }
 
-  updateModule(id: number, data: Partial<MenuItem>): Observable<MenuItem> {
-    return this.api.put<MenuItem>(`/admin/rbac/modules/${id}`, data).pipe(
-      map(res => res instanceof HttpResponse ? res.body as MenuItem : res as MenuItem)
+  updateModule(id: string, data: Partial<Module>): Observable<Module> {
+    return this.api.put<Module>(`/admin/rbac/modules/${id}`, data).pipe(
+      map(res => res instanceof HttpResponse ? res.body as Module : res as Module)
     );
   }
 
-  deleteModule(id: number): Observable<void> {
+  deleteModule(id: string): Observable<void> {
     return this.api.delete<void>(`/admin/rbac/modules/${id}`).pipe(
       map(res => res instanceof HttpResponse ? res.body as void : res as void)
     );

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Role } from '../../models/role.model';
+import { Role } from '../../models/rbac.models';
 
 export interface RoleDialogData {
   role?: Role;
@@ -11,7 +11,7 @@ export interface RoleDialogData {
 @Component({
   selector: 'app-role-dialog',
   templateUrl: './role-dialog.component.html',
-  styleUrls: ['./role-dialog.component.css']
+  styleUrls: []
 })
 export class RoleDialogComponent implements OnInit {
   roleForm: FormGroup;

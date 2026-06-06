@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user.model';
-import { RolesService } from '../../../roles/services/roles.service';
+import { RbacService } from '../../../rbac/services/rbac.service';
 import { UsersService } from '../../services/users.service';
-import { Role } from '../../../roles/models/role.model';
+import { Role } from '../../../rbac/models/rbac.models';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -26,7 +26,7 @@ export class AssignRolesPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private rolesService: RolesService,
+    private rbacService: RbacService,
     private usersService: UsersService,
     private cdr: ChangeDetectorRef
   ) {}
@@ -66,14 +66,14 @@ export class AssignRolesPage implements OnInit {
 
   loadRoles(): void {
     // Fetch all roles (assuming size 1000 is enough to get all without pagination for this UI)
-    this.rolesService.getRoles(0, 1000).subscribe({
-      next: (response) => {
+    this.rbacService.getRoles(0, 1000).subscribe({
+      next: (response: any) => {
         this.availableRoles = response.content || [];
         this.filteredRoles = [...this.availableRoles];
         this.isLoading = false;
         this.cdr.detectChanges();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Failed to load roles', err);
         this.error = "Failed to load available roles.";
         this.isLoading = false;

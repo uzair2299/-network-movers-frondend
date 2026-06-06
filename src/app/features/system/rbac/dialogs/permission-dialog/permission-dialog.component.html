@@ -1,0 +1,47 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>{{ isEdit ? 'Edit Permission' : 'Add New Permission' }}</h2>
+  <button class="close-btn" (click)="onCancel()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content-body">
+  <form [formGroup]="permissionForm" (ngSubmit)="onSubmit()" class="modern-form">
+    
+    <app-form-input
+      label="Permission Name"
+      [required]="true"
+      placeholder="e.g., View Booking Details"
+      [control]="$any(permissionForm.get('name'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Permission Code"
+      [required]="true"
+      placeholder="e.g., VIEW_BOOKING"
+      [control]="$any(permissionForm.get('code'))">
+    </app-form-input>
+
+    <div class="form-group full-width">
+      <app-form-textarea
+        label="Description"
+        placeholder="Brief description of the permission's scope..."
+        [rows]="3"
+        [control]="$any(permissionForm.get('description'))">
+      </app-form-textarea>
+    </div>
+
+    <div class="form-group full-width">
+      <app-form-toggle
+        label="Status"
+        [control]="$any(permissionForm.get('active'))">
+      </app-form-toggle>
+    </div>
+
+  </form>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <app-button variant="outline" (btnClick)="onCancel()">Cancel</app-button>
+  <app-button variant="primary" (btnClick)="onSubmit()">{{ isEdit ? 'Save Changes' : 'Create Permission' }}</app-button>
+</div>

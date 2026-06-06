@@ -1,5 +1,5 @@
 <div class="form-group custom-dropdown-container" *ngIf="control">
-  <label>{{ label }}</label>
+  <label>{{ label }}<span *ngIf="required" class="required-asterisk"> *</span></label>
   <div 
     class="custom-select-trigger" 
     [class.open]="isOpen"

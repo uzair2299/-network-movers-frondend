@@ -7,8 +7,8 @@ const routes: Routes = [
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
   },
   {
-    path: 'roles',
-    loadChildren: () => import('./roles/roles.module').then(m => m.RolesModule)
+    path: 'rbac',
+    loadChildren: () => import('./rbac/rbac.module').then(m => m.RbacModule)
   },
   {
     path: 'navigation',

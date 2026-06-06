@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Role } from '../../models/role.model';
+import { Role } from '../../models/rbac.models';
 
 @Component({
   selector: 'app-role-detail-dialog',
   templateUrl: './role-detail-dialog.component.html',
-  styleUrls: ['./role-detail-dialog.component.css']
+  styleUrls: []
 })
 export class RoleDetailDialogComponent {
   constructor(

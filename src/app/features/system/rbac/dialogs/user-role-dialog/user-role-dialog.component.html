@@ -1,0 +1,32 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>Assign Role to User</h2>
+  <button class="close-btn" (click)="onCancel()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content-body">
+  <form [formGroup]="userRoleForm" (ngSubmit)="onSubmit()" class="modern-form">
+    
+    <app-form-input
+      label="User ID (UUID)"
+      [required]="true"
+      placeholder="e.g., f81d4fae-7dec-11d0-a765-00a0c91e6bf6"
+      [control]="$any(userRoleForm.get('userId'))">
+    </app-form-input>
+
+    <app-form-select
+      label="Role to Assign"
+      [required]="true"
+      placeholder="Select Role..."
+      [options]="roleOptions"
+      [control]="$any(userRoleForm.get('roleId'))">
+    </app-form-select>
+
+  </form>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <app-button variant="outline" (btnClick)="onCancel()">Cancel</app-button>
+  <app-button variant="primary" (btnClick)="onSubmit()">Assign Role</app-button>
+</div>

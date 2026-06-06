@@ -1,0 +1,37 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>Permission Details</h2>
+  <button class="close-btn" (click)="onClose()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content-body detail-grid">
+  <div class="detail-item">
+    <span class="detail-label">Name</span>
+    <span class="detail-value">{{ data.permission.name }}</span>
+  </div>
+
+  <div class="detail-item">
+    <span class="detail-label">Code</span>
+    <span class="detail-value">
+      <span class="code-badge">{{ data.permission.code }}</span>
+    </span>
+  </div>
+
+  <div class="detail-item full-width">
+    <span class="detail-label">Description</span>
+    <span class="detail-value" [class.text-muted]="!data.permission.description">{{ data.permission.description || 'No description provided.' }}</span>
+  </div>
+
+  <div class="detail-item">
+    <span class="detail-label">Status</span>
+    <span class="detail-value">
+      <app-status-badge [status]="data.permission.active"></app-status-badge>
+    </span>
+  </div>
+
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <app-button variant="primary" (btnClick)="onClose()">Close</app-button>
+</div>
