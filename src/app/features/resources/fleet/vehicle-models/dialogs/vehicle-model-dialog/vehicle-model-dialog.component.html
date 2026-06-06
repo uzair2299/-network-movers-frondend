@@ -1,0 +1,95 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Create' }} Vehicle Model</h2>
+  <button class="close-btn" (click)="onCancel()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content-body">
+  <app-loading-spinner *ngIf="isLoadingData"></app-loading-spinner>
+
+  <form [formGroup]="form" *ngIf="!isLoadingData" class="modern-form">
+    
+    <app-form-input
+      label="Model Code"
+      [required]="true"
+      placeholder="e.g. TOYOTA_HILUX"
+      [control]="$any(form.get('code'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Model Name"
+      [required]="true"
+      placeholder="e.g. Toyota Hilux"
+      [control]="$any(form.get('name'))">
+    </app-form-input>
+
+    <app-form-select
+      label="Vehicle Make"
+      [options]="makesOptions"
+      [control]="$any(form.get('makeId'))"
+      placeholder="Select Make">
+    </app-form-select>
+
+    <app-form-select
+      label="Vehicle Category"
+      [options]="typesOptions"
+      [control]="$any(form.get('vehicleTypeId'))"
+      placeholder="Select Category">
+    </app-form-select>
+
+    <app-form-input
+      label="Capacity (Kg)"
+      [required]="true"
+      type="number"
+      placeholder="e.g. 1000"
+      [control]="$any(form.get('capacityKg'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Capacity (Cubic Meters)"
+      [required]="true"
+      type="number"
+      placeholder="e.g. 2.5"
+      [control]="$any(form.get('capacityM3'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Length (Meters)"
+      [required]="true"
+      type="number"
+      placeholder="e.g. 5.3"
+      [control]="$any(form.get('lengthM'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Width (Meters)"
+      [required]="true"
+      type="number"
+      placeholder="e.g. 1.85"
+      [control]="$any(form.get('widthM'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Height (Meters)"
+      [required]="true"
+      type="number"
+      placeholder="e.g. 1.8"
+      [control]="$any(form.get('heightM'))">
+    </app-form-input>
+
+    <div class="form-group full-width">
+      <app-form-toggle
+        label="Status"
+        [control]="$any(form.get('active'))">
+      </app-form-toggle>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <app-button variant="outline" (btnClick)="onCancel()">Cancel</app-button>
+  <app-button variant="primary" (btnClick)="onSubmit()" [disabled]="form.invalid || isLoadingData">
+    {{ isEditMode ? 'Update' : 'Create' }}
+  </app-button>
+</div>

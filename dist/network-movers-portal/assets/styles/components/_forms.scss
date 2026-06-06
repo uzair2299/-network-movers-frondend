@@ -37,3 +37,15 @@ button,
 input[type='submit'] {
   @extend .button;
 }
+
+/* Validation styling */
+.required-asterisk {
+  color: #ef4444; /* red-500 */
+}
+
+.form-error,
+.error-msg {
+  color: #ef4444; /* red-500 */
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
