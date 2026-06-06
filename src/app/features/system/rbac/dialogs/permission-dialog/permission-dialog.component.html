@@ -23,6 +23,15 @@
     </app-form-input>
 
     <div class="form-group full-width">
+      <app-form-select
+        label="Associated Resource"
+        placeholder="Select a resource (optional)"
+        [options]="resourceOptions"
+        [control]="$any(permissionForm.get('resourceId'))">
+      </app-form-select>
+    </div>
+
+    <div class="form-group full-width">
       <app-form-textarea
         label="Description"
         placeholder="Brief description of the permission's scope..."

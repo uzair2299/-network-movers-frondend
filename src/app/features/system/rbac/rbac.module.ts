@@ -11,6 +11,7 @@ import { ResourcesListPage } from './pages/resources/resources-list.page';
 import { PermissionsListPage } from './pages/permissions/permissions-list.page';
 import { RolesListPage } from './pages/roles/roles-list.page';
 import { UserRolesListPage } from './pages/user-roles/user-roles-list.page';
+import { RolePermissionsListPage } from './pages/role-permissions/role-permissions-list.page';
 
 // Dialogs
 import { ModuleDialogComponent } from './dialogs/module-dialog/module-dialog.component';
@@ -22,6 +23,7 @@ import { PermissionDetailDialogComponent } from './dialogs/permission-detail-dia
 import { RoleDialogComponent } from './dialogs/role-dialog/role-dialog.component';
 import { RoleDetailDialogComponent } from './dialogs/role-detail-dialog/role-detail-dialog.component';
 import { UserRoleDialogComponent } from './dialogs/user-role-dialog/user-role-dialog.component';
+import { RolePermissionDialogComponent } from './dialogs/role-permission-dialog/role-permission-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { UserRoleDialogComponent } from './dialogs/user-role-dialog/user-role-di
     PermissionsListPage,
     RolesListPage,
     UserRolesListPage,
+    RolePermissionsListPage,
     ModuleDialogComponent,
     ModuleDetailDialogComponent,
     ResourceDialogComponent,
@@ -38,7 +41,8 @@ import { UserRoleDialogComponent } from './dialogs/user-role-dialog/user-role-di
     PermissionDetailDialogComponent,
     RoleDialogComponent,
     RoleDetailDialogComponent,
-    UserRoleDialogComponent
+    UserRoleDialogComponent,
+    RolePermissionDialogComponent
   ],
   imports: [
     CommonModule,

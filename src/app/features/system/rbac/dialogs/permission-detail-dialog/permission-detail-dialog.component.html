@@ -18,6 +18,14 @@
     </span>
   </div>
 
+  <div class="detail-item">
+    <span class="detail-label">Resource</span>
+    <span class="detail-value" [class.text-muted]="!data.permission.resourceName">
+      {{ data.permission.resourceName || 'Unassigned' }}
+      <span *ngIf="data.permission.resourceCode" class="code-badge" style="margin-left:6px">{{ data.permission.resourceCode }}</span>
+    </span>
+  </div>
+
   <div class="detail-item full-width">
     <span class="detail-label">Description</span>
     <span class="detail-value" [class.text-muted]="!data.permission.description">{{ data.permission.description || 'No description provided.' }}</span>

@@ -28,6 +28,9 @@ export interface Permission {
   code: string;
   name: string;
   description?: string;
+  resourceId?: string;
+  resourceName?: string;
+  resourceCode?: string;
   active: boolean;
   createdAt?: string;
   updatedAt?: string;
@@ -56,6 +59,19 @@ export interface Module {
   code: string;
   name: string;
   description?: string;
+  active: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface RolePermission {
+  id: string;
+  roleId: string;
+  roleName?: string;
+  roleCode?: string;
+  permissionId: string;
+  permissionName?: string;
+  permissionCode?: string;
   active: boolean;
   createdAt?: string;
   updatedAt?: string;

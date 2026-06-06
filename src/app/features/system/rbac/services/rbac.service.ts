@@ -4,7 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../../../../core/services/api.service';
 import { PaginatedResponse } from '../../../../core/models/pagination.model';
-import { MenuItem, Resource, Permission, Role, UserRole, Module } from '../models/rbac.models';
+import { MenuItem, Resource, Permission, Role, UserRole, Module, RolePermission } from '../models/rbac.models';
 
 @Injectable({
   providedIn: 'root'
@@ -184,6 +184,34 @@ export class RbacService {
   getRolesForUser(userId: string): Observable<UserRole[]> {
     return this.api.get<UserRole[]>(`/admin/rbac/user-roles/user/${userId}`).pipe(
       map(res => res instanceof HttpResponse ? res.body as UserRole[] : res as UserRole[])
+    );
+  }
+
+  // =========================================================================
+  // ROLE PERMISSIONS
+  // =========================================================================
+  getRolePermissions(page: number = 0, size: number = 20, sort: string = 'createdAt,desc'): Observable<PaginatedResponse<RolePermission>> {
+    const params: any = { page: page.toString(), size: size.toString(), sort };
+    return this.api.get<PaginatedResponse<RolePermission>>('/admin/rbac/role-permissions', { params }).pipe(
+      map(res => res instanceof HttpResponse ? res.body as PaginatedResponse<RolePermission> : res as PaginatedResponse<RolePermission>)
+    );
+  }
+
+  assignRolePermission(roleId: string, permissionId: string): Observable<RolePermission> {
+    return this.api.post<RolePermission>('/admin/rbac/role-permissions', { roleId, permissionId }).pipe(
+      map(res => res instanceof HttpResponse ? res.body as RolePermission : res as RolePermission)
+    );
+  }
+
+  revokeRolePermission(id: string): Observable<void> {
+    return this.api.delete<void>(`/admin/rbac/role-permissions/${id}`).pipe(
+      map(res => res instanceof HttpResponse ? res.body as void : res as void)
+    );
+  }
+
+  getPermissionsForRole(roleId: string): Observable<RolePermission[]> {
+    return this.api.get<RolePermission[]>(`/admin/rbac/role-permissions/role/${roleId}`).pipe(
+      map(res => res instanceof HttpResponse ? res.body as RolePermission[] : res as RolePermission[])
     );
   }
 }

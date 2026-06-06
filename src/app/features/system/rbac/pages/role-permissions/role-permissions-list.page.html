@@ -1,0 +1,70 @@
+<div class="page-container">
+  <app-page-header
+    title="Role Permissions"
+    description="Assign and manage which permissions belong to each role">
+  </app-page-header>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <app-loading-spinner *ngIf="isLoading" message="Loading role permissions..."></app-loading-spinner>
+
+  <div class="modern-list-card" *ngIf="!isLoading || rolePermissions.length > 0">
+    <!-- Actions Bar -->
+    <div class="actions-bar">
+      <div class="spacer"></div>
+      <div class="actions-right">
+        <app-button
+          variant="primary"
+          (btnClick)="assignPermission()">
+          <span class="icon">+</span> Assign Permission to Role
+        </app-button>
+
+        <app-dropdown-menu
+          label="More Actions"
+          [items]="moreActions"
+          (itemSelected)="handleMoreAction($event)">
+        </app-dropdown-menu>
+      </div>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <div class="tabs-and-search-row">
+      <div class="section-tabs">
+        <!-- Tabs can be added here for filter by role/permission -->
+      </div>
+      <app-search-bar
+        placeholder="Search by role or permission..."
+        [value]="searchQuery"
+        (valueChange)="onSearch($event)">
+      </app-search-bar>
+    </div>
+
+    <div class="table-container">
+      <app-dynamic-table
+        [columns]="tableColumns"
+        [data]="rolePermissions"
+        [sortColumn]="sortColumn"
+        [sortDirection]="sortDirection"
+        [isLoading]="isLoading"
+        emptyTitle="No Role-Permission Assignments Found"
+        [emptyMessage]="'Click &quot;Assign Permission to Role&quot; to get started.'"
+        (sort)="toggleSort($event)"
+        (action)="handleTableAction($event)">
+      </app-dynamic-table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalElements > 0">
+      <app-pagination
+        [totalElements]="totalElements"
+        [pageSize]="pageSize"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+        (sizeChange)="onSizeChange($event)">
+      </app-pagination>
+    </div>
+  </div>
+</div>

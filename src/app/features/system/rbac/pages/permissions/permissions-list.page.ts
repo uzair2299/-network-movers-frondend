@@ -47,6 +47,7 @@ export class PermissionsListPage implements OnInit, OnDestroy {
   tableColumns: TableColumn[] = [
     { key: 'name', label: 'Name', type: 'text', sortable: true, bold: true },
     { key: 'code', label: 'Code', type: 'text', sortable: true },
+    { key: 'resourceName', label: 'Resource', type: 'text', sortable: false },
     { key: 'description', label: 'Description', type: 'text', sortable: true },
     { key: 'active', label: 'Status', type: 'status', sortable: true },
     { 
