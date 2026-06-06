@@ -45,71 +45,17 @@
     </div>
 
     <div class="table-container">
-      <table class="modern-table">
-        <thead>
-          <tr>
-            <th (click)="toggleSort('name')" class="sortable" [class.active-sort]="sortColumn === 'name'">
-              Name
-              <div class="sort-arrows">
-                <span class="sort-up" [class.active]="sortColumn === 'name' && sortDirection === 'asc'">▲</span>
-                <span class="sort-down" [class.active]="sortColumn === 'name' && sortDirection === 'desc'">▼</span>
-              </div>
-            </th>
-            <th (click)="toggleSort('code')" class="sortable" [class.active-sort]="sortColumn === 'code'">
-              Code
-              <div class="sort-arrows">
-                <span class="sort-up" [class.active]="sortColumn === 'code' && sortDirection === 'asc'">▲</span>
-                <span class="sort-down" [class.active]="sortColumn === 'code' && sortDirection === 'desc'">▼</span>
-              </div>
-            </th>
-            <th (click)="toggleSort('description')" class="sortable" [class.active-sort]="sortColumn === 'description'">
-              Description
-              <div class="sort-arrows">
-                <span class="sort-up" [class.active]="sortColumn === 'description' && sortDirection === 'asc'">▲</span>
-                <span class="sort-down" [class.active]="sortColumn === 'description' && sortDirection === 'desc'">▼</span>
-              </div>
-            </th>
-            <th (click)="toggleSort('active')" class="sortable" [class.active-sort]="sortColumn === 'active'">
-              Status
-              <div class="sort-arrows">
-                <span class="sort-up" [class.active]="sortColumn === 'active' && sortDirection === 'asc'">▲</span>
-                <span class="sort-down" [class.active]="sortColumn === 'active' && sortDirection === 'desc'">▼</span>
-              </div>
-            </th>
-            <th class="actions-th"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let role of roles">
-            <td>
-              <div class="role-name-cell">
-                <span>{{ role.name }}</span>
-              </div>
-            </td>
-            <td><span class="text-muted">{{ role.code }}</span></td>
-            <td><span class="text-muted">{{ role.description }}</span></td>
-            <td>
-              <app-status-badge [status]="role.active"></app-status-badge>
-            </td>
-            <td class="actions-cell">
-              <app-dropdown-menu
-                [items]="roleActions"
-                [iconOnly]="true"
-                (itemSelected)="handleRoleAction($event, role)">
-              </app-dropdown-menu>
-            </td>
-          </tr>
-          
-          <!-- Empty state -->
-          <tr *ngIf="roles.length === 0 && !isLoading">
-            <td colspan="5" class="text-center py-5">
-              <div class="empty-state">
-                <p>No roles found.</p>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <app-dynamic-table
+        [columns]="tableColumns"
+        [data]="roles"
+        [sortColumn]="sortColumn"
+        [sortDirection]="sortDirection"
+        [isLoading]="isLoading"
+        emptyTitle="No Roles Found"
+        [emptyMessage]="searchQuery ? 'No roles match your search.' : 'Click &quot;Add New Role&quot; to get started.'"
+        (sort)="toggleSort($event)"
+        (action)="handleTableAction($event)">
+      </app-dynamic-table>
     </div>
 
     <!-- Pagination -->

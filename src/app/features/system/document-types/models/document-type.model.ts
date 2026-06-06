@@ -2,10 +2,10 @@ export interface DocumentType {
   id: string;
   name: string;
   code: string;
+  description: string;
   active: boolean;
   mandatory: boolean;
   expiryRequired: boolean;
-  description: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -1,0 +1,72 @@
+<div class="page-container">
+  <app-page-header 
+    title="Vehicle Types" 
+    description="Manage fleet vehicle classifications">
+  </app-page-header>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <app-loading-spinner *ngIf="isLoading" message="Loading vehicle types..."></app-loading-spinner>
+
+  <div class="modern-list-card" *ngIf="!isLoading || vehicleTypes.length > 0">
+    <!-- Actions Bar -->
+    <div class="actions-bar">
+      <div class="spacer"></div>
+      
+      <div class="actions-right">
+        <app-button 
+          variant="primary"
+          (btnClick)="createNewVehicleType()">
+          <span class="icon">+</span> Add Vehicle Type
+        </app-button>
+
+        <app-dropdown-menu
+          label="More Actions"
+          [items]="moreActions"
+          (itemSelected)="handleMoreAction($event)">
+        </app-dropdown-menu>  
+      </div>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <div class="tabs-and-search-row">
+      <div class="section-tabs">
+        <!-- Add tabs here if needed later -->
+      </div>
+
+      <app-search-bar 
+        placeholder="Search vehicle types..." 
+        [value]="searchQuery"
+        (valueChange)="onSearch($event)">
+      </app-search-bar>
+    </div>
+
+    <div class="table-container">
+      <app-dynamic-table
+        [columns]="tableColumns"
+        [data]="vehicleTypes"
+        [sortColumn]="sortColumn"
+        [sortDirection]="sortDirection"
+        [isLoading]="isLoading"
+        emptyTitle="No Vehicle Types Found"
+        [emptyMessage]="searchQuery ? 'No vehicle types match your search.' : 'Click &quot;Add Vehicle Type&quot; to get started.'"
+        (sort)="toggleSort($event)"
+        (action)="handleTableAction($event)">
+      </app-dynamic-table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalElements > 0">
+      <app-pagination
+        [totalElements]="totalElements"
+        [pageSize]="pageSize"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+        (sizeChange)="onSizeChange($event)">
+      </app-pagination>
+    </div>
+  </div>
+</div>

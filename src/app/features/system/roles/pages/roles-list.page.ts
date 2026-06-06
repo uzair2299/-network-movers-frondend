@@ -8,6 +8,7 @@ import { RoleDialogComponent } from '../dialogs/role-dialog/role-dialog.componen
 import { RoleDetailDialogComponent } from '../dialogs/role-detail-dialog/role-detail-dialog.component';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { TableColumn } from '../../../../shared/components/dynamic-table/dynamic-table.component';
 
 @Component({
   selector: 'app-roles-list',
@@ -42,6 +43,20 @@ export class RolesListPage implements OnInit, OnDestroy {
     { id: 'edit', label: 'Edit Role' },
     { id: 'permissions', label: 'Manage Permissions' },
     { id: 'delete', label: 'Delete Role' }
+  ];
+
+  tableColumns: TableColumn[] = [
+    { key: 'name', label: 'Name', type: 'text', sortable: true, bold: true },
+    { key: 'code', label: 'Code', type: 'text', sortable: true },
+    { key: 'description', label: 'Description', type: 'text', sortable: true },
+    { key: 'active', label: 'Status', type: 'status', sortable: true },
+    { 
+      key: 'actions', 
+      label: '', 
+      type: 'actions', 
+      actionsDropdown: true,
+      dropdownItems: this.roleActions
+    }
   ];
 
   constructor(
@@ -144,6 +159,10 @@ export class RolesListPage implements OnInit, OnDestroy {
     } else {
       console.log('Role action clicked:', actionId, 'for role:', role.code);
     }
+  }
+
+  handleTableAction(event: { action: string, item: Role }): void {
+    this.handleRoleAction(event.action, event.item);
   }
 
   deleteRole(role: Role): void {

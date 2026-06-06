@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export interface TableColumn {
   key: string;
   label: string;
-  type?: 'text' | 'code' | 'status' | 'actions' | 'custom';
+  type?: 'text' | 'code' | 'status' | 'actions' | 'custom' | 'boolean';
   sortable?: boolean;
   valueGetter?: (item: any) => any;
   bold?: boolean;

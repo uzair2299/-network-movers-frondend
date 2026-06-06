@@ -43,6 +43,12 @@
               <app-status-badge [status]="getValue(item, col)"></app-status-badge>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'boolean'">
+              <span class="boolean-badge" [ngClass]="(getValue(item, col) === true || getValue(item, col) === 'true') ? 'badge-true' : 'badge-false'">
+                {{ (getValue(item, col) === true || getValue(item, col) === 'true') ? 'Yes' : 'No' }}
+              </span>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'actions'">
               <div class="table-actions" *ngIf="!col.actionsDropdown">
                 <app-button variant="ghost" size="sm" (btnClick)="onAction('edit', item)" title="Edit">✎</app-button>

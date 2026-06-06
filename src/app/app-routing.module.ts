@@ -111,5 +111,16 @@ export const routes: Routes = [
         loadChildren: () => import('./features/system/system.module').then(m => m.SystemModule)
       }
     ]
+  },
+  {
+    path: 'resources',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./features/resources/resources.module').then(m => m.ResourcesModule)
+      }
+    ]
   }
 ];

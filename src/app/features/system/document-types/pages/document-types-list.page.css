@@ -22,67 +22,6 @@
   width: 100%;
 }
 
-.modern-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.modern-table th {
-  padding: 0.5rem 1rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #8c96a3;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(0, 0, 0, 0.1);
-  white-space: nowrap;
-}
-
-.modern-table td {
-  padding: 0.6rem 1rem;
-  font-size: 0.8rem;
-  color: #e2e8f0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  vertical-align: middle;
-}
-
-.modern-table tbody tr {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  transform: translateY(0);
-}
-
-.modern-table tbody tr::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  height: 2px;
-  width: 25%;
-  background: linear-gradient(to right, #f5a623 0%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 11;
-}
-
-.modern-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.04);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-  z-index: 10;
-}
-
-.modern-table tbody tr:hover::after {
-  opacity: 1;
-}
-
-.modern-table tbody tr:hover td {
-  border-bottom-color: transparent;
-}
-
 .text-muted {
   color: #8c96a3;
 }
