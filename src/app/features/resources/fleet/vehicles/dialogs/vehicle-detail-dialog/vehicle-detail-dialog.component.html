@@ -1,0 +1,80 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>Vehicle Details</h2>
+  <button class="close-btn" (click)="close()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content-body">
+  <div class="detail-grid">
+    
+    <div class="detail-item">
+      <span class="detail-label">Vehicle Code</span>
+      <span class="detail-value">{{ data.vehicleCode }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Registration No</span>
+      <span class="detail-value">{{ data.registrationNo }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Model</span>
+      <span class="detail-value">{{ data.vehicleModel?.name }} ({{ data.vehicleModel?.code }})</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Ownership Type</span>
+      <span class="detail-value badge-neutral">{{ data.ownershipType }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Status</span>
+      <span class="detail-value">
+        <app-status-badge [status]="data.status"></app-status-badge>
+      </span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Active</span>
+      <span class="detail-value boolean-badge" [ngClass]="data.active ? 'badge-true' : 'badge-false'">
+        {{ data.active ? 'Yes' : 'No' }}
+      </span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Manufacture Year</span>
+      <span class="detail-value">{{ data.manufactureYear || 'N/A' }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Odometer (km)</span>
+      <span class="detail-value">{{ data.currentOdometerKm || '0' }} km</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Acquisition Date</span>
+      <span class="detail-value">{{ (data.acquisitionDate | date) || 'N/A' }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Insurance Expiry</span>
+      <span class="detail-value">{{ (data.insuranceExpiryDate | date) || 'N/A' }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Fitness Expiry</span>
+      <span class="detail-value">{{ (data.fitnessExpiryDate | date) || 'N/A' }}</span>
+    </div>
+    
+    <div class="detail-item full-width">
+      <span class="detail-label">Remarks</span>
+      <span class="detail-value remarks-box">{{ data.remarks || 'No remarks provided.' }}</span>
+    </div>
+
+  </div>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <app-button variant="primary" (btnClick)="close()">Close</app-button>
+</div>

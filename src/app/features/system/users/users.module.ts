@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersListPage } from './pages/users-list.page';
 import { AssignRolesPage } from './pages/assign-roles/assign-roles.page';
+import { UserDialogComponent } from './dialogs/user-dialog/user-dialog.component';
 import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
-  declarations: [UsersListPage, AssignRolesPage],
+  declarations: [UsersListPage, AssignRolesPage, UserDialogComponent],
   imports: [CommonModule, RouterModule, SharedModule, UsersRoutingModule]
 })
 export class UsersModule {}

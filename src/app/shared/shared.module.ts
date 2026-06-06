@@ -25,6 +25,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { StatusBadgeComponent } from './components/status-badge/status-badge.component';
 import { DynamicTableComponent } from './components/dynamic-table/dynamic-table.component';
+import { ProfileUploaderComponent } from './components/profile-uploader/profile-uploader.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { DynamicTableComponent } from './components/dynamic-table/dynamic-table.
     PaginationComponent,
     AvatarComponent,
     StatusBadgeComponent,
-    DynamicTableComponent
+    DynamicTableComponent,
+    ProfileUploaderComponent
   ],
   imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
   exports: [
@@ -77,6 +79,7 @@ import { DynamicTableComponent } from './components/dynamic-table/dynamic-table.
     AvatarComponent,
     StatusBadgeComponent,
     DynamicTableComponent,
+    ProfileUploaderComponent,
     ReactiveFormsModule
   ]
 })

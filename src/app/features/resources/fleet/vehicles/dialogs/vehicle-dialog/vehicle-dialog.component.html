@@ -1,0 +1,97 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Add' }} Vehicle</h2>
+  <button class="close-btn" (click)="onCancel()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content-body">
+  <app-loading-spinner *ngIf="isLoadingData"></app-loading-spinner>
+
+  <form [formGroup]="form" *ngIf="!isLoadingData" class="modern-form">
+    
+    <app-form-input
+      label="Vehicle Code"
+      [required]="true"
+      placeholder="e.g. V-101"
+      [control]="$any(form.get('vehicleCode'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Registration Number"
+      [required]="true"
+      placeholder="e.g. REG-TOYOTA-01"
+      [control]="$any(form.get('registrationNo'))">
+    </app-form-input>
+
+    <app-form-select
+      label="Vehicle Model"
+      [options]="modelsOptions"
+      [control]="$any(form.get('vehicleModelId'))"
+      placeholder="Select Model">
+    </app-form-select>
+
+    <app-form-select
+      label="Ownership Type"
+      [options]="ownershipOptions"
+      [control]="$any(form.get('ownershipType'))"
+      placeholder="Select Ownership">
+    </app-form-select>
+
+
+
+    <app-form-input
+      label="Manufacture Year"
+      type="number"
+      placeholder="e.g. 2023"
+      [control]="$any(form.get('manufactureYear'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Current Odometer (km)"
+      type="number"
+      placeholder="e.g. 12500"
+      [control]="$any(form.get('currentOdometerKm'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Acquisition Date"
+      type="date"
+      [control]="$any(form.get('acquisitionDate'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Insurance Expiry Date"
+      type="date"
+      [control]="$any(form.get('insuranceExpiryDate'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Fitness Expiry Date"
+      type="date"
+      [control]="$any(form.get('fitnessExpiryDate'))">
+    </app-form-input>
+
+    <div class="form-group full-width">
+      <app-form-textarea
+        label="Remarks"
+        placeholder="Enter any additional details..."
+        [control]="$any(form.get('remarks'))">
+      </app-form-textarea>
+    </div>
+
+    <div class="form-group full-width">
+      <app-form-toggle
+        label="Active Status"
+        [control]="$any(form.get('active'))">
+      </app-form-toggle>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <app-button variant="outline" (btnClick)="onCancel()">Cancel</app-button>
+  <app-button variant="primary" (btnClick)="onSubmit()" [disabled]="form.invalid || isLoadingData">
+    {{ isEditMode ? 'Update' : 'Create' }}
+  </app-button>
+</div>

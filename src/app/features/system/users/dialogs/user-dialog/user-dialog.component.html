@@ -1,0 +1,80 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Add' }} User</h2>
+  <button class="close-btn" (click)="onCancel()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+</div>
+
+<div mat-dialog-content class="dialog-content-body">
+  <!-- Reusable Centered Circular Avatar Uploader -->
+  <app-profile-uploader [control]="$any(form.get('profilePictureUrl'))"></app-profile-uploader>
+
+  <form [formGroup]="form" class="modern-form">
+    
+    <app-form-input
+      label="First Name"
+      [required]="true"
+      placeholder="e.g. John"
+      [control]="$any(form.get('firstName'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Last Name"
+      [required]="true"
+      placeholder="e.g. Doe"
+      [control]="$any(form.get('lastName'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Username"
+      [required]="true"
+      placeholder="e.g. johndoe"
+      [control]="$any(form.get('username'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Email Address"
+      [required]="true"
+      type="email"
+      placeholder="e.g. john.doe@example.com"
+      [control]="$any(form.get('email'))">
+    </app-form-input>
+
+    <app-form-input
+      *ngIf="!isEditMode"
+      label="Password"
+      [required]="true"
+      type="password"
+      placeholder="Min 6 characters"
+      [control]="$any(form.get('password'))">
+    </app-form-input>
+
+    <app-form-input
+      label="Phone Number"
+      placeholder="e.g. +1234567890"
+      [control]="$any(form.get('phoneNumber'))">
+    </app-form-input>
+
+    <div class="form-group full-width">
+      <app-form-textarea
+        label="Address"
+        placeholder="Enter physical address..."
+        [control]="$any(form.get('address'))">
+      </app-form-textarea>
+    </div>
+
+    <div class="form-group full-width">
+      <app-form-toggle
+        label="Active Status"
+        [control]="$any(form.get('enabled'))">
+      </app-form-toggle>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <app-button variant="outline" (btnClick)="onCancel()">Cancel</app-button>
+  <app-button variant="primary" (btnClick)="onSubmit()" [disabled]="form.invalid">
+    {{ isEditMode ? 'Update' : 'Create' }}
+  </app-button>
+</div>

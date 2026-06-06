@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { User } from '../models/user.model';
+import { User, UserPayload } from '../models/user.model';
 import { ApiService } from '../../../../core/services/api.service';
 import { PaginatedResponse } from '../../../../core/models/pagination.model';
 
@@ -22,6 +22,12 @@ export class UsersService {
 
   getUserById(id: number): Observable<User> {
     return this.api.get<User>(`/admin/users/${id}`).pipe(
+      map(response => response instanceof HttpResponse ? response.body as User : response as User)
+    );
+  }
+
+  createUser(payload: UserPayload): Observable<User> {
+    return this.api.post<User>('/admin/users', payload).pipe(
       map(response => response instanceof HttpResponse ? response.body as User : response as User)
     );
   }

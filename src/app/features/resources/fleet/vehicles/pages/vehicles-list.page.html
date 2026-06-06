@@ -1,0 +1,66 @@
+<div class="page-container">
+  <app-page-header 
+    title="Vehicles" 
+    description="Manage physical vehicles in your fleet">
+  </app-page-header>
+
+  <app-loading-spinner *ngIf="isLoading && vehicles.length === 0" message="Loading vehicles..."></app-loading-spinner>
+
+  <div class="modern-list-card" *ngIf="!isLoading || vehicles.length > 0">
+    <!-- Actions Bar -->
+    <div class="actions-bar">
+      <div class="spacer"></div>
+      
+      <div class="actions-right">
+        <app-button 
+          variant="primary"
+          (btnClick)="openCreateDialog()">
+          <span class="icon">+</span> Add Vehicle
+        </app-button>
+
+        <app-dropdown-menu
+          label="More Actions"
+          [items]="moreActions"
+          (itemSelected)="handleMoreAction($event)">
+        </app-dropdown-menu>  
+      </div>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <div class="tabs-and-search-row">
+      <div class="section-tabs"></div>
+
+      <app-search-bar 
+        placeholder="Search vehicles..." 
+        [value]="searchQuery"
+        (valueChange)="onSearch($event)">
+      </app-search-bar>
+    </div>
+
+    <div class="table-container">
+      <app-dynamic-table
+        [columns]="tableColumns"
+        [data]="vehicles"
+        [sortColumn]="sortColumn"
+        [sortDirection]="sortDirection"
+        [isLoading]="isLoading"
+        emptyTitle="No Vehicles Found"
+        [emptyMessage]="searchQuery ? 'No vehicles match your search.' : 'Click &quot;Add Vehicle&quot; to get started.'"
+        (sort)="onSort($event)"
+        (action)="handleAction($event)">
+      </app-dynamic-table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalElements > 0">
+      <app-pagination
+        [totalElements]="totalElements"
+        [pageSize]="pageSize"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+        (sizeChange)="onSizeChange($event)">
+      </app-pagination>
+    </div>
+  </div>
+</div>

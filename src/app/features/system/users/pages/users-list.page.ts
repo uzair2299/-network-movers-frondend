@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { UsersService } from '../services/users.service';
+import { UserDialogComponent } from '../dialogs/user-dialog/user-dialog.component';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-users-list',
@@ -31,7 +34,12 @@ export class UsersListPage implements OnInit {
     { id: 'assign_roles', label: 'Assign Roles' }
   ];
 
-  constructor(private usersService: UsersService, private router: Router) {}
+  constructor(
+    private usersService: UsersService,
+    private router: Router,
+    private dialog: MatDialog,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -73,7 +81,32 @@ export class UsersListPage implements OnInit {
   }
 
   createNewUser(): void {
-    console.log('Create new user clicked');
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      width: '800px',
+      maxWidth: '95vw',
+      disableClose: true,
+      hasBackdrop: true,
+      data: null,
+      panelClass: 'premium-dark-dialog',
+      backdropClass: 'premium-backdrop'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.isLoading = true;
+        this.usersService.createUser(result).subscribe({
+          next: () => {
+            this.toastService.showSuccess('User created successfully.', 'Success');
+            this.loadUsers();
+          },
+          error: (err) => {
+            console.error('Failed to create user', err);
+            this.toastService.showError('Failed to create user.', 'Error');
+            this.isLoading = false;
+          }
+        });
+      }
+    });
   }
 
   handleMoreAction(actionId: string): void {
