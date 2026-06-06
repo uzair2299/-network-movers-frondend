@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { ModulesListPage } from './pages/modules/modules-list.page';
-// import { ResourcesListPage } from './pages/resources/resources-list.page';
-// import { PermissionsListPage } from './pages/permissions/permissions-list.page';
-// import { RolesListPage } from './pages/roles/roles-list.page';
-// import { UserRolesListPage } from './pages/user-roles/user-roles-list.page';
+import { ModulesListPage } from './pages/modules/modules-list.page';
+import { ResourcesListPage } from './pages/resources/resources-list.page';
+import { PermissionsListPage } from './pages/permissions/permissions-list.page';
+import { RolesListPage } from './pages/roles/roles-list.page';
+import { UserRolesListPage } from './pages/user-roles/user-roles-list.page';
 
 const routes: Routes = [
-  /*
   {
     path: 'modules',
     component: ModulesListPage
@@ -28,7 +27,6 @@ const routes: Routes = [
     path: 'user-roles',
     component: UserRolesListPage
   }
-  */
 ];
 
 @NgModule({

@@ -47,6 +47,7 @@ export class ResourcesListPage implements OnInit, OnDestroy {
   tableColumns: TableColumn[] = [
     { key: 'name', label: 'Name', type: 'text', sortable: true, bold: true },
     { key: 'code', label: 'Code', type: 'text', sortable: true },
+    { key: 'moduleName', label: 'Module', type: 'text', sortable: true },
     { key: 'description', label: 'Description', type: 'text', sortable: true },
     { key: 'active', label: 'Status', type: 'status', sortable: true },
     { 

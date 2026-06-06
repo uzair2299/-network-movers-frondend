@@ -16,6 +16,8 @@ export interface Resource {
   code: string;
   name: string;
   description?: string;
+  moduleId?: string;
+  moduleName?: string;
   active: boolean;
   createdAt?: string;
   updatedAt?: string;
