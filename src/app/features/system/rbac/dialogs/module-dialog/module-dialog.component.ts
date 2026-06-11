@@ -11,7 +11,7 @@ export interface ModuleDialogData {
 @Component({
   selector: 'app-module-dialog',
   templateUrl: './module-dialog.component.html',
-  styleUrls: []
+  styleUrls: ['./module-dialog.component.css']
 })
 export class ModuleDialogComponent implements OnInit {
   moduleForm: FormGroup;
