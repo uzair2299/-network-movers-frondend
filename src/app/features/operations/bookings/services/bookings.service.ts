@@ -24,4 +24,8 @@ export class BookingsService {
   createBooking(booking: any): Observable<Booking> {
     return this.http.post<Booking>(`${this.baseUrl}/booking`, booking);
   }
+
+  getBookingTimeline(bookingId: string | number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/booking/${bookingId}/timeline`);
+  }
 }

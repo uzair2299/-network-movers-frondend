@@ -10,6 +10,7 @@ import { BookingsService } from '../../services/bookings.service';
 })
 export class BookingDetailPage implements OnInit {
   booking: Booking | null = null;
+  timeline: any[] = [];
   isLoading = true;
 
   constructor(
@@ -34,12 +35,21 @@ export class BookingDetailPage implements OnInit {
     this.bookingsService.getBookingById(id).subscribe({
       next: (booking) => {
         this.booking = booking;
-        this.isLoading = false;
+        this.bookingsService.getBookingTimeline(id).subscribe({
+          next: (timeline) => {
+            this.timeline = timeline;
+            this.isLoading = false;
+          },
+          error: (err) => {
+            console.error('Error loading booking timeline', err);
+            this.timeline = [];
+            this.isLoading = false;
+          }
+        });
       },
       error: (error) => {
         console.error('Error loading booking details', error);
         this.isLoading = false;
-        // Optionally show error toast and redirect
       }
     });
   }

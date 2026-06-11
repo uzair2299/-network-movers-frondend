@@ -142,6 +142,48 @@
         </div>
       </div>
 
+      <!-- Booking Timeline Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Booking History Timeline</h3>
+        </div>
+        <div class="card-body">
+          <div *ngIf="timeline.length === 0" class="empty-timeline">
+            <p>No timeline updates found for this booking.</p>
+          </div>
+          
+          <div class="timeline-container" *ngIf="timeline.length > 0">
+            <div class="timeline-step" *ngFor="let event of timeline">
+              <div class="timeline-indicator">
+                <div class="indicator-circle" [style.backgroundColor]="event.newStatus?.colorCode || '#ef4444'"></div>
+                <div class="indicator-line"></div>
+              </div>
+              
+              <div class="timeline-content">
+                <div class="timeline-header-row">
+                  <span class="status-change">
+                    <span class="status-lbl old-status" *ngIf="event.previousStatus">
+                      {{ event.previousStatus.name }}
+                    </span>
+                    <span class="arrow-indicator" *ngIf="event.previousStatus">→</span>
+                    <span class="status-badge" [style.--status-color]="event.newStatus?.colorCode || '#ef4444'">
+                      {{ event.newStatus?.name }}
+                    </span>
+                  </span>
+                  <span class="timeline-time">{{ event.createdAt | date:'medium' }}</span>
+                </div>
+                
+                <p class="timeline-notes" *ngIf="event.notes">{{ event.notes }}</p>
+                
+                <div class="timeline-footer-row">
+                  <span class="author">Changed by: User #{{ event.createdBy }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- Right Column: Secondary Information -->

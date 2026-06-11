@@ -65,7 +65,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let booking of getFilteredBookings()">
-              <td><strong>#{{ booking.id }}</strong></td>
+              <td><strong title="{{ booking.id }}">#{{ booking.id | slice:0:8 }}</strong></td>
               <td>
                 <div style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ booking.name }}">
                   {{ booking.name }}
@@ -74,7 +74,7 @@
               <td>{{ booking.user?.first_name }} {{ booking.user?.last_name }}</td>
               <td>{{ booking.createdAt | date:'medium' }}</td>
               <td>
-                <span class="status-badge" [style.backgroundColor]="booking.current_status?.colorCode">
+                <span class="status-badge" [style.--status-color]="booking.current_status?.colorCode || '#ef4444'">
                   {{ booking.current_status?.name }}
                 </span>
               </td>

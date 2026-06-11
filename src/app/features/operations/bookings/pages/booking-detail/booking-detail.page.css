@@ -374,3 +374,143 @@
     height: 1px;
   }
 }
+
+/* Timeline Styling */
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.timeline-step {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.timeline-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.indicator-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  z-index: 2;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.indicator-line {
+  width: 2px;
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: -8px;
+  z-index: 1;
+}
+
+.timeline-step:last-child .indicator-line {
+  display: none;
+}
+
+.timeline-content {
+  flex-grow: 1;
+  padding-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.timeline-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.status-change {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.status-lbl.old-status {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #8c96a3;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.arrow-indicator {
+  color: #8c96a3;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.timeline-content .status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: color-mix(in srgb, var(--status-color, #ef4444) 15%, transparent);
+  color: var(--status-color, #ef4444);
+  border: 1px solid color-mix(in srgb, var(--status-color, #ef4444) 25%, transparent);
+  text-shadow: none;
+  white-space: nowrap;
+}
+
+.timeline-time {
+  color: #8c96a3;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.timeline-notes {
+  font-size: 0.9rem;
+  color: #a3b3cc;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border-left: 3px solid rgba(245, 166, 35, 0.5);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.timeline-footer-row {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 0.75rem;
+  color: #8c96a3;
+  font-weight: 500;
+}
+
+.timeline-footer-row .author {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.empty-timeline {
+  padding: 2rem;
+  text-align: center;
+  color: #8c96a3;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
