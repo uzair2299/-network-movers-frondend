@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <form [formGroup]="form" class="panel-content page-layout-grid">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="panel-content page-layout-grid">
         
         <!-- Continuous Vertical Divider -->
         <app-divider [vertical]="true" margin="0 2rem" class="form-vertical-divider"></app-divider>
@@ -230,6 +230,7 @@
               <app-button
                 variant="primary"
                 type="submit"
+                (btnClick)="onSubmit()"
                 [disabled]="form.invalid || isSubmitting">
                 {{ isSubmitting ? 'Booking...' : 'Confirm Booking' }}
               </app-button>
