@@ -20,4 +20,8 @@ export class BookingsService {
   getBookingById(id: number | string): Observable<Booking> {
     return this.http.get<Booking>(`${this.baseUrl}/booking/${id}`);
   }
+
+  createBooking(booking: any): Observable<Booking> {
+    return this.http.post<Booking>(`${this.baseUrl}/booking`, booking);
+  }
 }
