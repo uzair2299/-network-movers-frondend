@@ -52,7 +52,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
             dialogRef.afterClosed().subscribe(() => {
               this.isModalOpen = false;
-              this.router.navigate(['/auth/login']);
+              this.router.navigate(['/auth']);
             });
           }
         }
