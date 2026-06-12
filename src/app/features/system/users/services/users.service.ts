@@ -38,10 +38,12 @@ export class UsersService {
     );
   }
 
-  updateUserRoles(userId: string, roleCodes: string[]): Observable<any> {
-    // TODO: Replace with the actual endpoint once provided by the backend developer.
-    // For now, we simulate a successful save.
-    console.log(`Mock saving roles for user ${userId}:`, roleCodes);
-    return of({ success: true });
+  updateUserRoles(userId: string, roleIds: string[]): Observable<any> {
+    return this.api.post<any>('/admin/rbac/user-roles/bulk', {
+      userId,
+      roleIds
+    }).pipe(
+      map(response => response instanceof HttpResponse ? response.body : response)
+    );
   }
 }

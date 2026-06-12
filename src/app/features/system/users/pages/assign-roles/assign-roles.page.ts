@@ -131,9 +131,13 @@ export class AssignRolesPage implements OnInit {
     if (!this.user) return;
     
     this.isSaving = true;
-    const rolesArray = Array.from(this.selectedRoleCodes);
     
-    this.usersService.updateUserRoles(this.user.id, rolesArray).subscribe({
+    // Map selected role codes to their corresponding role IDs from availableRoles
+    const selectedRoleIds = this.availableRoles
+      .filter(role => this.selectedRoleCodes.has(role.code))
+      .map(role => role.id);
+    
+    this.usersService.updateUserRoles(this.user.id, selectedRoleIds).subscribe({
       next: () => {
         this.isSaving = false;
         this.router.navigate(['/system/users']);
