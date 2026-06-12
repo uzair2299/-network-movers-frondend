@@ -28,5 +28,6 @@ export interface UserPayload {
   phoneNumber?: string;
   profilePictureUrl?: string;
   address?: string;
+  roles?: string[];
 }
 

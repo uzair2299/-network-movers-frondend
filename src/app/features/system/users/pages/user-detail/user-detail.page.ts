@@ -5,7 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
 import { UserDialogComponent } from '../../dialogs/user-dialog/user-dialog.component';
-import { ToastService } from '../../../../shared/services/toast.service';
+import { ToastService } from '../../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-user-detail',

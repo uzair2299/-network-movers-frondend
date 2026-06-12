@@ -38,8 +38,11 @@ export class UserDialogComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       const formValue = { ...this.form.value };
-      if (this.isEditMode && !formValue.password) {
-        delete formValue.password;
+      if (this.isEditMode) {
+        if (!formValue.password) {
+          delete formValue.password;
+        }
+        formValue.roles = this.data?.roles || [];
       }
       this.dialogRef.close(formValue);
     } else {
