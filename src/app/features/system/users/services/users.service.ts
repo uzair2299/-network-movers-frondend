@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { User, UserPayload } from '../models/user.model';
+import { UserRole } from '../../rbac/models/rbac.models';
 import { ApiService } from '../../../../core/services/api.service';
 import { PaginatedResponse } from '../../../../core/models/pagination.model';
 
@@ -23,6 +24,12 @@ export class UsersService {
   getUserById(id: string): Observable<User> {
     return this.api.get<User>(`/admin/users/${id}`).pipe(
       map(response => response instanceof HttpResponse ? response.body as User : response as User)
+    );
+  }
+
+  getUserRoles(userId: string): Observable<UserRole[]> {
+    return this.api.get<UserRole[]>(`/admin/rbac/user-roles/user/${userId}`).pipe(
+      map(response => response instanceof HttpResponse ? response.body as UserRole[] : response as UserRole[])
     );
   }
 

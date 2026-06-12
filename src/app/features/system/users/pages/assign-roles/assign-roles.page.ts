@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { RbacService } from '../../../rbac/services/rbac.service';
 import { UsersService } from '../../services/users.service';
-import { Role } from '../../../rbac/models/rbac.models';
+import { Role, UserRole } from '../../../rbac/models/rbac.models';
 import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-assign-roles',
@@ -36,16 +36,24 @@ export class AssignRolesPage implements OnInit {
       switchMap(params => {
         const idStr = params.get('id');
         if (idStr) {
-          return this.usersService.getUserById(idStr);
+          return forkJoin({
+            user: this.usersService.getUserById(idStr),
+            userRoles: this.usersService.getUserRoles(idStr)
+          });
         }
         return of(null);
       })
     ).subscribe({
-      next: (user) => {
-        if (user) {
-          this.user = user;
-          if (user.roles) {
-            user.roles.forEach(roleCode => this.selectedRoleCodes.add(roleCode));
+      next: (result) => {
+        if (result) {
+          this.user = result.user;
+          this.selectedRoleCodes.clear();
+          if (result.userRoles && Array.isArray(result.userRoles)) {
+            result.userRoles.forEach(ur => {
+              if (ur.role && ur.role.code) {
+                this.selectedRoleCodes.add(ur.role.code);
+              }
+            });
           }
           this.loadRoles();
         } else {
@@ -55,8 +63,8 @@ export class AssignRolesPage implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error fetching user:', err);
-        this.error = "Failed to load user details.";
+        console.error('Error fetching user details and roles:', err);
+        this.error = "Failed to load user details and roles.";
         this.isLoading = false;
         this.cdr.detectChanges();
       }
