@@ -239,73 +239,71 @@
               </app-button>
             </div>
           </div>
-        </div>
-
-      </form>
+           </form>
     </div>
+  </div>
 
-    <!-- Right Drawer Client Panel -->
-    <div class="right-panel" [class.open]="isClientPanelOpen && existingClient">
-      <div class="right-panel-header">
-        <h3>Customer Profile</h3>
-        <button type="button" class="icon-btn close-panel-btn" (click)="closeClientPanel()" title="Close Profile">
-          <span>✕</span>
-        </button>
+  <!-- Right Drawer Client Panel -->
+  <div class="right-panel" [class.open]="isClientPanelOpen && existingClient">
+    <div class="right-panel-header">
+      <h3>Customer Profile</h3>
+      <button type="button" class="icon-btn close-panel-btn" (click)="closeClientPanel()" title="Close Profile">
+        <span>✕</span>
+      </button>
+    </div>
+    <div class="right-panel-body" *ngIf="existingClient">
+      <!-- Profile Overview Card -->
+      <div class="drawer-profile-card">
+        <app-avatar [firstName]="existingClient.name.split(' ')[0]" [lastName]="existingClient.name.split(' ')[1] || ''" [size]="56"></app-avatar>
+        <div class="drawer-profile-details">
+          <h4>{{ existingClient.name }}</h4>
+          <span class="status-badge" [class.vip]="existingClient.status === 'VIP'" [class.regular]="existingClient.status === 'Regular'">
+            {{ existingClient.status }}
+          </span>
+        </div>
       </div>
-      <div class="right-panel-body" *ngIf="existingClient">
-        <!-- Profile Overview Card -->
-        <div class="drawer-profile-card">
-          <app-avatar [firstName]="existingClient.name.split(' ')[0]" [lastName]="existingClient.name.split(' ')[1] || ''" [size]="56"></app-avatar>
-          <div class="drawer-profile-details">
-            <h4>{{ existingClient.name }}</h4>
-            <span class="status-badge" [class.vip]="existingClient.status === 'VIP'" [class.regular]="existingClient.status === 'Regular'">
-              {{ existingClient.status }}
-            </span>
-          </div>
+
+      <app-divider margin="1rem 0"></app-divider>
+
+      <!-- Account Info -->
+      <div class="drawer-info-section">
+        <div class="info-item">
+          <span class="label">Email:</span>
+          <span class="value">{{ existingClient.email }}</span>
         </div>
-
-        <app-divider margin="1rem 0"></app-divider>
-
-        <!-- Account Info -->
-        <div class="drawer-info-section">
-          <div class="info-item">
-            <span class="label">Email:</span>
-            <span class="value">{{ existingClient.email }}</span>
-          </div>
-          <div class="info-item">
-            <span class="label">Phone:</span>
-            <span class="value">{{ existingClient.phone }}</span>
-          </div>
-          <div class="info-item">
-            <span class="label">Default Address:</span>
-            <span class="value">{{ existingClient.address }}</span>
-          </div>
-          <div class="info-item">
-            <span class="label">Member Since:</span>
-            <span class="value">{{ existingClient.memberSince | date:'mediumDate' }}</span>
-          </div>
-          <div class="info-item" *ngIf="existingClient.notes">
-            <span class="label">Notes:</span>
-            <span class="value notes-text">{{ existingClient.notes }}</span>
-          </div>
+        <div class="info-item">
+          <span class="label">Phone:</span>
+          <span class="value">{{ existingClient.phone }}</span>
         </div>
+        <div class="info-item">
+          <span class="label">Default Address:</span>
+          <span class="value">{{ existingClient.address }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Member Since:</span>
+          <span class="value">{{ existingClient.memberSince | date:'mediumDate' }}</span>
+        </div>
+        <div class="info-item" *ngIf="existingClient.notes">
+          <span class="label">Notes:</span>
+          <span class="value notes-text">{{ existingClient.notes }}</span>
+        </div>
+      </div>
 
-        <app-divider margin="1.5rem 0"></app-divider>
+      <app-divider margin="1.5rem 0"></app-divider>
 
-        <!-- Booking History -->
-        <div class="drawer-history-section">
-          <h4>Booking History ({{ existingClient.totalBookings }})</h4>
-          <div class="history-list">
-            <div class="history-card" *ngFor="let item of existingClient.history">
-              <div class="history-card-header">
-                <span class="booking-id">{{ item.id }}</span>
-                <span class="booking-status-badge">{{ item.status }}</span>
-              </div>
-              <div class="history-card-body">
-                <div class="history-detail"><span class="lbl">Date:</span> {{ item.date | date:'mediumDate' }}</div>
-                <div class="history-detail"><span class="lbl">Route:</span> {{ item.route }}</div>
-                <div class="history-detail"><span class="lbl">Size:</span> {{ item.size }}</div>
-              </div>
+      <!-- Booking History -->
+      <div class="drawer-history-section">
+        <h4>Booking History ({{ existingClient.totalBookings }})</h4>
+        <div class="history-list">
+          <div class="history-card" *ngFor="let item of existingClient.history">
+            <div class="history-card-header">
+              <span class="booking-id">{{ item.id }}</span>
+              <span class="booking-status-badge">{{ item.status }}</span>
+            </div>
+            <div class="history-card-body">
+              <div class="history-detail"><span class="lbl">Date:</span> {{ item.date | date:'mediumDate' }}</div>
+              <div class="history-detail"><span class="lbl">Route:</span> {{ item.route }}</div>
+              <div class="history-detail"><span class="lbl">Size:</span> {{ item.size }}</div>
             </div>
           </div>
         </div>
