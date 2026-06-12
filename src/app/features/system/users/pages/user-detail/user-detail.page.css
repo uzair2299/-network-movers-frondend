@@ -1,0 +1,220 @@
+.page-container {
+  padding: 1rem;
+}
+
+.header-section {
+  margin-bottom: 1.5rem;
+}
+
+.back-btn {
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.details-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.main-column {
+  flex: 1 1 65%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.side-column {
+  flex: 1 1 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 300px;
+}
+
+/* Card Styling */
+.premium-card.detail-card {
+  background: var(--surface-strong, #1b2028);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Status Badge */
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.status-badge.enabled {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-badge.disabled {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Profile Header Section */
+.profile-header-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.profile-text-info h2 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.username-tag {
+  font-size: 0.95rem;
+  color: #8c96a3;
+  font-weight: 500;
+}
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.info-group label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #8c96a3;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.info-group span {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+/* Quick Actions spacing */
+.action-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+::ng-deep .w-full button {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Roles */
+.empty-roles-state {
+  color: #8c96a3;
+  font-style: italic;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.roles-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.role-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.role-tag:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.role-icon {
+  font-size: 0.95rem;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  margin: 0 0 0.5rem 0;
+  color: #fff;
+}
+
+.empty-state p {
+  color: #8c96a3;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .details-grid {
+    flex-direction: column;
+  }
+}

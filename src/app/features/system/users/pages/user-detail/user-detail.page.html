@@ -1,0 +1,146 @@
+<div class="page-container">
+  <div class="header-section">
+    <app-button variant="ghost" (btnClick)="goBack()" class="back-btn">← Back to Users</app-button>
+    
+    <app-page-header
+      *ngIf="user"
+      [title]="user.profile.firstName + ' ' + user.profile.lastName"
+      [description]="'@' + user.username">
+    </app-page-header>
+  </div>
+
+  <app-loading-spinner *ngIf="isLoading" message="Loading user details..."></app-loading-spinner>
+
+  <div *ngIf="!isLoading && (error || !user)" class="empty-state">
+    <div class="empty-icon">⚠️</div>
+    <h3>User Not Found</h3>
+    <p>{{ error || 'The user you are looking for does not exist or could not be loaded.' }}</p>
+    <app-button variant="primary" (btnClick)="goBack()">Go Back to Users</app-button>
+  </div>
+
+  <div *ngIf="!isLoading && user" class="details-grid">
+    <!-- Left Column: Primary Information -->
+    <div class="main-column">
+      
+      <!-- Profile Overview Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Profile Overview</h3>
+          <span class="status-badge" [class.enabled]="user.enabled" [class.disabled]="!user.enabled">
+            {{ user.enabled ? 'Active Account' : 'Disabled Account' }}
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="profile-header-info">
+            <div class="avatar-wrapper">
+              <app-avatar 
+                [firstName]="user.profile.firstName" 
+                [lastName]="user.profile.lastName"
+                [size]="64">
+              </app-avatar>
+            </div>
+            <div class="profile-text-info">
+              <h2>{{ user.profile.firstName }} {{ user.profile.lastName }}</h2>
+              <span class="username-tag">&#64;{{ user.username }}</span>
+            </div>
+          </div>
+
+          <app-divider margin="1.5rem 0"></app-divider>
+          
+          <div class="info-grid">
+            <div class="info-group">
+              <label>First Name</label>
+              <span>{{ user.profile.firstName }}</span>
+            </div>
+            <div class="info-group">
+              <label>Last Name</label>
+              <span>{{ user.profile.lastName }}</span>
+            </div>
+            <div class="info-group">
+              <label>Username</label>
+              <span>{{ user.username }}</span>
+            </div>
+            <div class="info-group">
+              <label>Email Address</label>
+              <span>{{ user.email }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact & Address Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Contact & Location</h3>
+        </div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-group">
+              <label>Phone Number</label>
+              <span>{{ user.profile.phoneNumber || 'Not Provided' }}</span>
+            </div>
+            <div class="info-group">
+              <label>Street Address</label>
+              <span>{{ user.profile.address || 'Not Provided' }}</span>
+            </div>
+            <div class="info-group">
+              <label>Member Since</label>
+              <span>{{ user.createdAt | date:'medium' }}</span>
+            </div>
+            <div class="info-group">
+              <label>Last Updated</label>
+              <span>{{ user.updatedAt | date:'medium' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Secondary Information / Actions -->
+    <div class="side-column">
+      
+      <!-- Quick Actions Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Actions</h3>
+        </div>
+        <div class="card-body action-buttons-container">
+          <app-button 
+            variant="primary" 
+            (btnClick)="editUser()"
+            class="w-full mb-3">
+            ✏️ Edit User Profile
+          </app-button>
+          
+          <app-button 
+            variant="secondary" 
+            (btnClick)="assignRoles()"
+            class="w-full">
+            🔑 Manage Roles
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Roles Card -->
+      <div class="premium-card detail-card">
+        <div class="card-header">
+          <h3>Assigned Roles</h3>
+        </div>
+        <div class="card-body">
+          <div *ngIf="!user.roles || user.roles.length === 0" class="empty-roles-state">
+            <p>No roles assigned to this user.</p>
+          </div>
+          
+          <div class="roles-list-container" *ngIf="user.roles && user.roles.length > 0">
+            <div class="role-tag" *ngFor="let role of user.roles">
+              <span class="role-icon">🛡️</span>
+              <span class="role-name">{{ role }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

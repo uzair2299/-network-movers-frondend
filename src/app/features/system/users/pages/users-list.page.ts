@@ -114,10 +114,41 @@ export class UsersListPage implements OnInit {
   }
 
   handleUserAction(actionId: string, user: User): void {
-    if (actionId === 'assign_roles') {
+    if (actionId === 'view') {
+      this.router.navigate(['/system/users', user.id]);
+    } else if (actionId === 'edit') {
+      this.editUser(user);
+    } else if (actionId === 'assign_roles') {
       this.router.navigate(['/system/users', user.id, 'assign-roles']);
-    } else {
-      console.log('User action clicked:', actionId, 'for user:', user.username);
     }
+  }
+
+  editUser(user: User): void {
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      width: '800px',
+      maxWidth: '95vw',
+      disableClose: true,
+      hasBackdrop: true,
+      data: user,
+      panelClass: 'premium-dark-dialog',
+      backdropClass: 'premium-backdrop'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.isLoading = true;
+        this.usersService.updateUser(user.id, result).subscribe({
+          next: () => {
+            this.toastService.showSuccess('User updated successfully.', 'Success');
+            this.loadUsers();
+          },
+          error: (err) => {
+            console.error('Failed to update user', err);
+            this.toastService.showError('Failed to update user.', 'Error');
+            this.isLoading = false;
+          }
+        });
+      }
+    });
   }
 }

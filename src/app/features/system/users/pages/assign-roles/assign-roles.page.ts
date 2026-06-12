@@ -36,8 +36,7 @@ export class AssignRolesPage implements OnInit {
       switchMap(params => {
         const idStr = params.get('id');
         if (idStr) {
-          const id = parseInt(idStr, 10);
-          return this.usersService.getUserById(id);
+          return this.usersService.getUserById(idStr);
         }
         return of(null);
       })

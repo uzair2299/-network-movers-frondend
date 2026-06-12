@@ -20,7 +20,7 @@ export class UsersService {
     );
   }
 
-  getUserById(id: number): Observable<User> {
+  getUserById(id: string): Observable<User> {
     return this.api.get<User>(`/admin/users/${id}`).pipe(
       map(response => response instanceof HttpResponse ? response.body as User : response as User)
     );
@@ -32,7 +32,13 @@ export class UsersService {
     );
   }
 
-  updateUserRoles(userId: number, roleCodes: string[]): Observable<any> {
+  updateUser(id: string, payload: Partial<UserPayload>): Observable<User> {
+    return this.api.put<User>(`/admin/users/${id}`, payload).pipe(
+      map(response => response instanceof HttpResponse ? response.body as User : response as User)
+    );
+  }
+
+  updateUserRoles(userId: string, roleCodes: string[]): Observable<any> {
     // TODO: Replace with the actual endpoint once provided by the backend developer.
     // For now, we simulate a successful save.
     console.log(`Mock saving roles for user ${userId}:`, roleCodes);
