@@ -22,6 +22,54 @@ export class QuickBookPageComponent implements OnInit, AfterViewInit {
   form: FormGroup;
   isSubmitting = false;
 
+  isClientPanelOpen = false;
+  existingClient: any = null;
+
+  mockClients = [
+    {
+      name: 'Sarah Jenkins',
+      email: 'sarah.jenkins@example.com',
+      phone: '+971 50 111 2222',
+      address: 'Marina Heights, Tower A, Apt 1404, Dubai Marina',
+      memberSince: '2024-03-12',
+      totalBookings: 3,
+      status: 'VIP',
+      notes: 'Requires premium handling. Prefers morning moves.',
+      history: [
+        { id: 'B-1002', date: '2025-11-14', route: 'Downtown Dubai to Dubai Marina', size: '1 BR', status: 'Completed' },
+        { id: 'B-1008', date: '2026-02-28', route: 'Dubai Marina to Palm Jumeirah', size: '2 BR', status: 'Completed' }
+      ]
+    },
+    {
+      name: 'Michael Chen',
+      email: 'michael.chen@gmail.com',
+      phone: '+971 52 333 4444',
+      address: 'Emaar Beachfront, Sunrise Bay, Apt 808, Dubai',
+      memberSince: '2025-01-05',
+      totalBookings: 1,
+      status: 'Regular',
+      notes: 'No specific requirements.',
+      history: [
+        { id: 'B-2045', date: '2025-05-10', route: 'JLT to Emaar Beachfront', size: 'Studio', status: 'Completed' }
+      ]
+    },
+    {
+      name: 'Test Client Ltd',
+      email: 'test.client@example.com',
+      phone: '+971 50 123 4567',
+      address: 'Burj Khalifa, Penthouse 101, Dubai, UAE',
+      memberSince: '2023-08-20',
+      totalBookings: 5,
+      status: 'VIP',
+      notes: 'Requires large crew. Highly valued partner.',
+      history: [
+        { id: 'B-8761', date: '2025-09-01', route: 'Dubai Marina to Burj Khalifa', size: '3 BR', status: 'Completed' },
+        { id: 'B-9021', date: '2025-12-15', route: 'Burj Khalifa to Downtown Dubai', size: '2 BR', status: 'Completed' },
+        { id: 'B-9543', date: '2026-03-10', route: 'Palm Jumeirah to Burj Khalifa', size: 'Villa', status: 'Completed' }
+      ]
+    }
+  ];
+
   @ViewChild('mapElement') mapElement!: ElementRef;
   @ViewChild('pickupInput') pickupInput!: ElementRef;
   @ViewChild('dropoffInput') dropoffInput!: ElementRef;
@@ -157,6 +205,9 @@ export class QuickBookPageComponent implements OnInit, AfterViewInit {
         }
       }
     });
+
+    this.form.get('clientEmail')?.valueChanges.subscribe(() => this.checkClientExistence());
+    this.form.get('clientPhone')?.valueChanges.subscribe(() => this.checkClientExistence());
   }
 
   ngAfterViewInit() {
@@ -463,5 +514,37 @@ export class QuickBookPageComponent implements OnInit, AfterViewInit {
 
     // Trigger route calculation
     this.calculateRoute();
+  }
+
+  checkClientExistence() {
+    const email = this.form.get('clientEmail')?.value?.trim().toLowerCase();
+    const phone = this.form.get('clientPhone')?.value?.trim();
+
+    if (!email && !phone) {
+      this.existingClient = null;
+      this.isClientPanelOpen = false;
+      return;
+    }
+
+    const cleanPhone = phone ? phone.replace(/[^\d]/g, '') : '';
+
+    const found = this.mockClients.find(c => {
+      const matchEmail = email && c.email.toLowerCase() === email;
+      const matchPhone = cleanPhone && c.phone.replace(/[^\d]/g, '').endsWith(cleanPhone.slice(-7));
+      return matchEmail || matchPhone;
+    });
+
+    this.existingClient = found || null;
+    if (!this.existingClient) {
+      this.isClientPanelOpen = false;
+    }
+  }
+
+  openClientPanel() {
+    this.isClientPanelOpen = true;
+  }
+
+  closeClientPanel() {
+    this.isClientPanelOpen = false;
   }
 }

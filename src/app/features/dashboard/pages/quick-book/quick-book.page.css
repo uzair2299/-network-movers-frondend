@@ -393,3 +393,173 @@ textarea.form-control {
   color: #f5a623;
   font-weight: 600;
 }
+
+/* Right Drawer Slide Panel */
+.right-panel {
+  position: absolute;
+  top: 0;
+  right: -420px; /* Hidden offscreen */
+  width: 400px;
+  height: 100%;
+  background: var(--surface-card, #1b2028);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto; /* enable pointer events to interact with this side panel */
+  display: flex;
+  flex-direction: column;
+}
+
+.right-panel.open {
+  right: 0;
+}
+
+.right-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.right-panel-header h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.right-panel-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.drawer-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.drawer-profile-details h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+.drawer-profile-details .status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.drawer-profile-details .status-badge.vip {
+  background: rgba(245, 166, 35, 0.15);
+  color: #f5a623;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+}
+
+.drawer-profile-details .status-badge.regular {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.drawer-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.drawer-info-section .info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.drawer-info-section .info-item .label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #8c96a3;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.drawer-info-section .info-item .value {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.drawer-info-section .info-item .value.notes-text {
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border-left: 2px solid #f5a623;
+  color: #a3b3cc;
+}
+
+.drawer-history-section h4 {
+  margin: 0 0 1rem 0;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.history-card {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-card-header .booking-id {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f5a623;
+}
+
+.history-card-header .booking-status-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.15);
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+}
+
+.history-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: #a3b3cc;
+}
+
+.history-detail .lbl {
+  color: #8c96a3;
+  font-weight: 500;
+}
