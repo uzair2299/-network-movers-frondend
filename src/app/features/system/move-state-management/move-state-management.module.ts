@@ -7,6 +7,7 @@ import { MoveStateManagementRoutingModule } from './move-state-management-routin
 import { MoveStateListPage } from './pages/move-state-list/move-state-list.page';
 import { PhaseDialogComponent } from './dialogs/phase-dialog/phase-dialog.component';
 import { StatusDialogComponent } from './dialogs/status-dialog/status-dialog.component';
+import { WorkflowDesignerComponent } from './pages/workflow-designer/workflow-designer.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { StatusDialogComponent } from './dialogs/status-dialog/status-dialog.com
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    MoveStateManagementRoutingModule
+    MoveStateManagementRoutingModule,
+    WorkflowDesignerComponent
   ]
 })
 export class MoveStateManagementModule {}

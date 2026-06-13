@@ -5,7 +5,7 @@ import { Role } from '../../models/rbac.models';
 @Component({
   selector: 'app-role-detail-dialog',
   templateUrl: './role-detail-dialog.component.html',
-  styleUrls: []
+  styleUrls: ['./role-detail-dialog.component.css']
 })
 export class RoleDetailDialogComponent {
   constructor(

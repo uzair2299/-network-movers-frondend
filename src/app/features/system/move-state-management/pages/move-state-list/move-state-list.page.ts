@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from '../../../../../shared/components/confirm
   styleUrls: ['./move-state-list.page.css']
 })
 export class MoveStateListPage implements OnInit {
+  activeTab: 'list' | 'designer' = 'list';
   phases: MovePhaseResponse[] = [];
   statuses: MoveStatusResponse[] = [];
   

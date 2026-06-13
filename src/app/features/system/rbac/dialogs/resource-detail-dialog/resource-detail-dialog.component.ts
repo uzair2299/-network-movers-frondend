@@ -5,7 +5,7 @@ import { Resource } from '../../models/rbac.models';
 @Component({
   selector: 'app-resource-detail-dialog',
   templateUrl: './resource-detail-dialog.component.html',
-  styleUrls: []
+  styleUrls: ['./resource-detail-dialog.component.css']
 })
 export class ResourceDetailDialogComponent {
   constructor(

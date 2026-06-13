@@ -1,0 +1,290 @@
+<div class="designer-container">
+  
+  <!-- LOADING INDICATOR -->
+  <div class="designer-loading" *ngIf="isLoading">
+    <app-loading-spinner></app-loading-spinner>
+    <span>Loading Workflow Designer...</span>
+  </div>
+
+  <div class="designer-main-layout" *ngIf="!isLoading">
+    
+    <!-- LEFT PANEL: STATUS PALETTE -->
+    <div class="designer-palette">
+      <div class="panel-header">
+        <h3>STATUS PALETTE</h3>
+        <p>Drag status onto canvas</p>
+      </div>
+
+      <div class="palette-scroll-area">
+        <div class="phase-group" *ngFor="let group of paletteGroups">
+          <div class="phase-group-header" (click)="group.collapsed = !group.collapsed">
+            <span class="phase-name">{{ group.phase.name }}</span>
+            <span class="chevron-icon" [class.collapsed]="group.collapsed">▼</span>
+          </div>
+
+          <div class="phase-group-items" *ngIf="!group.collapsed">
+            <div 
+              *ngFor="let status of group.statuses" 
+              class="palette-item"
+              draggable="true"
+              (dragstart)="onDragStart($event, status)"
+              (click)="addStatusToCanvas(status)"
+              [style.border-left-color]="status.colorCode"
+              title="Click to add or Drag to drop">
+              <div class="palette-item-code">{{ status.code }}</div>
+              <div class="palette-item-name">{{ status.name }}</div>
+            </div>
+            <div class="no-items-placeholder" *ngIf="group.statuses.length === 0">
+              No statuses defined.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER PANEL: WORKFLOW CANVAS -->
+    <div 
+      #canvasContainer
+      class="designer-canvas-container"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event)">
+      
+      <!-- Zoom/Pan controls overlay -->
+      <div class="canvas-controls">
+        <button class="control-btn" (click)="zoomIn()" title="Zoom In">+</button>
+        <button class="control-btn" (click)="zoomOut()" title="Zoom Out">-</button>
+        <button class="control-btn" (click)="resetZoomPan()" title="Reset View">☉</button>
+        <div class="control-divider"></div>
+        <app-button 
+          variant="primary" 
+          size="sm" 
+          [disabled]="isSaving"
+          (btnClick)="saveWorkflow()">
+          {{ isSaving ? 'Saving...' : 'Save Workflow' }}
+        </app-button>
+      </div>
+
+      <!-- Canvas viewport containing grid background, SVG lines, and nodes -->
+      <div 
+        class="canvas-viewport"
+        (mousedown)="onCanvasMouseDown($event)"
+        [style.transform]="'translate(' + panX + 'px, ' + panY + 'px) scale(' + zoomScale + ')'">
+        
+        <!-- Canvas grid background -->
+        <div class="canvas-background canvas-grid"></div>
+
+        <!-- SVG overlay for rendering bezier transition lines -->
+        <svg class="canvas-svg-overlay">
+          <defs>
+            <!-- Normal arrow marker -->
+            <marker 
+              id="arrow" 
+              viewBox="0 0 10 10" 
+              refX="6" 
+              refY="5" 
+              markerWidth="6" 
+              markerHeight="6" 
+              orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#8892b0"/>
+            </marker>
+            <!-- Selected arrow marker -->
+            <marker 
+              id="arrow-selected" 
+              viewBox="0 0 10 10" 
+              refX="6" 
+              refY="5" 
+              markerWidth="6" 
+              markerHeight="6" 
+              orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981"/>
+            </marker>
+          </defs>
+
+          <!-- Standard transitions -->
+          <g class="edges-group">
+            <path 
+              *ngFor="let edge of transitions"
+              [attr.d]="getEdgePath(edge)"
+              class="transition-edge-path"
+              [class.selected]="selectedEdge?.id === edge.id"
+              (click)="selectEdge(edge, $event)"
+              marker-end="url(#arrow)"/>
+            
+            <!-- Highlight/Select path backing for easier clicking -->
+            <path 
+              *ngFor="let edge of transitions"
+              [attr.d]="getEdgePath(edge)"
+              class="transition-edge-click-catcher"
+              (click)="selectEdge(edge, $event)"
+              [class.selected]="selectedEdge?.id === edge.id"/>
+
+            <!-- Connecting visual line -->
+            <path 
+              *ngIf="isConnecting"
+              [attr.d]="getTempEdgePath()"
+              class="transition-edge-path temp-connection"
+              marker-end="url(#arrow)"/>
+          </g>
+        </svg>
+
+        <!-- HTML Node Cards absolute positioned -->
+        <div 
+          *ngFor="let node of activeNodes"
+          class="canvas-node-card"
+          [class.selected]="selectedNode?.id === node.id"
+          [style.left.px]="node.x"
+          [style.top.px]="node.y"
+          [style.border-top-color]="node.colorCode"
+          (mousedown)="onNodeMouseDown(node, $event)"
+          (click)="selectNode(node, $event)">
+          
+          <div class="node-inner-content">
+            <span class="node-phase">{{ node.phaseCode }}</span>
+            <h4 class="node-title">{{ node.name }}</h4>
+            <span class="node-code">{{ node.code }}</span>
+          </div>
+
+          <!-- Connecting handles -->
+          <div class="node-handle target-handle" title="Connect to here"></div>
+          <div 
+            class="node-handle source-handle" 
+            (mousedown)="onStartConnection(node, $event)" 
+            (click)="$event.stopPropagation()"
+            title="Drag to connect">
+            ➜
+          </div>
+
+          <!-- Delete status node button -->
+          <button class="node-delete-btn" (click)="deleteNode(node, $event)" title="Remove node">&times;</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL: PROPERTIES EDITOR -->
+    <div class="designer-properties-wrapper" [class.collapsed]="isPropertiesCollapsed">
+      <button 
+        type="button"
+        class="properties-toggle-handle" 
+        (click)="togglePropertiesPanel()" 
+        [title]="isPropertiesCollapsed ? 'Expand Properties Panel' : 'Collapse Properties Panel'">
+        {{ isPropertiesCollapsed ? '◀' : '▶' }}
+      </button>
+
+      <div class="designer-properties">
+        <div class="panel-header">
+          <h3>PROPERTIES EDITOR</h3>
+          <p *ngIf="!selectedNode && !selectedEdge">Select a node or transition to configure</p>
+        </div>
+
+        <div class="properties-editor-body" *ngIf="selectedNode || selectedEdge">
+          
+          <!-- NODE PROPERTIES (READ ONLY) -->
+          <div class="property-section" *ngIf="selectedNode">
+            <div class="section-title">
+              <span class="badge" [style.background-color]="selectedNode.colorCode">Node</span>
+              <h4>Status Properties</h4>
+            </div>
+
+            <app-form-input
+              label="Status Name"
+              [value]="selectedNode.name"
+              [disabled]="true">
+            </app-form-input>
+
+            <app-form-input
+              label="Status Code"
+              [value]="selectedNode.code"
+              [disabled]="true">
+            </app-form-input>
+
+            <app-form-input
+              label="Move Phase"
+              [value]="selectedNode.phaseCode"
+              [disabled]="true">
+            </app-form-input>
+
+            <div class="read-only-row">
+              <span class="label">Customer Visible:</span>
+              <app-status-badge 
+                [status]="selectedNode.customerVisible ? 'active' : 'inactive'" 
+                [label]="selectedNode.customerVisible ? 'Visible' : 'Hidden'">
+              </app-status-badge>
+            </div>
+
+            <div class="read-only-row">
+              <span class="label">Internal Only:</span>
+              <app-status-badge 
+                [status]="selectedNode.internalOnly ? 'warning' : 'inactive'" 
+                [label]="selectedNode.internalOnly ? 'Yes' : 'No'">
+              </app-status-badge>
+            </div>
+          </div>
+
+          <!-- EDGE PROPERTIES (EDITABLE) -->
+          <div class="property-section" *ngIf="selectedEdge">
+            <div class="section-title">
+              <span class="badge edge-badge">Transition</span>
+              <h4>Transition Properties</h4>
+            </div>
+
+            <app-form-input
+              label="Transition Name"
+              [(value)]="selectedEdge.transitionName"
+              (valueChange)="saveEdgeChanges()">
+            </app-form-input>
+
+            <div class="form-group-select">
+              <label class="select-label">Allowed Role</label>
+              <select 
+                class="premium-dropdown"
+                [(ngModel)]="selectedEdge.allowedRoleId"
+                (change)="saveEdgeChanges()">
+                <option [value]="null">All Roles (Public)</option>
+                <option *ngFor="let role of roles" [value]="role.id">
+                  {{ role.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="toggle-control-item">
+              <span class="toggle-desc">Requires Approval</span>
+              <app-form-toggle 
+                [(checked)]="selectedEdge.requiresApproval"
+                (checkedChange)="saveEdgeChanges()">
+              </app-form-toggle>
+            </div>
+
+            <div class="toggle-control-item">
+              <span class="toggle-desc">Customer Visible</span>
+              <app-form-toggle 
+                [(checked)]="selectedEdge.customerVisible"
+                (checkedChange)="saveEdgeChanges()">
+              </app-form-toggle>
+            </div>
+
+            <div class="toggle-control-item">
+              <span class="toggle-desc">Active Transition</span>
+              <app-form-toggle 
+                [(checked)]="selectedEdge.active"
+                (checkedChange)="saveEdgeChanges()">
+              </app-form-toggle>
+            </div>
+
+            <app-divider></app-divider>
+
+            <app-button 
+              variant="danger" 
+              size="md" 
+              class="delete-edge-btn-wrapper"
+              (btnClick)="deleteEdge(selectedEdge)">
+              Delete Transition
+            </app-button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

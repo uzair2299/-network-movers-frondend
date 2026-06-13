@@ -5,7 +5,7 @@ import { Permission } from '../../models/rbac.models';
 @Component({
   selector: 'app-permission-detail-dialog',
   templateUrl: './permission-detail-dialog.component.html',
-  styleUrls: []
+  styleUrls: ['./permission-detail-dialog.component.css']
 })
 export class PermissionDetailDialogComponent {
   constructor(

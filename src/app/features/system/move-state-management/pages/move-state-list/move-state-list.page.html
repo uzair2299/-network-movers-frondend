@@ -4,7 +4,22 @@
     description="Configure master phases and their child statuses">
   </app-page-header>
 
-  <div class="master-detail-layout">
+  <div class="tabs-container">
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'list'" 
+      (click)="activeTab = 'list'">
+      🗂️ Phase & Status Configuration
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'designer'" 
+      (click)="activeTab = 'designer'">
+      🎨 Visual Workflow Designer
+    </button>
+  </div>
+
+  <div class="master-detail-layout" *ngIf="activeTab === 'list'">
     
     <!-- LEFT COLUMN: PARENTS (PHASES) -->
     <div class="column-card">
@@ -101,4 +116,6 @@
     </div>
     
   </div>
+
+  <app-workflow-designer *ngIf="activeTab === 'designer'"></app-workflow-designer>
 </div>

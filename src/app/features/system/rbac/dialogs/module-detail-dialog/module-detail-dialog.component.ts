@@ -5,7 +5,7 @@ import { Module } from '../../models/rbac.models';
 @Component({
   selector: 'app-module-detail-dialog',
   templateUrl: './module-detail-dialog.component.html',
-  styleUrls: []
+  styleUrls: ['./module-detail-dialog.component.css']
 })
 export class ModuleDetailDialogComponent {
   constructor(
