@@ -46,7 +46,7 @@ export class UsersService {
   }
 
   updateUserRoles(userId: string, roleIds: string[]): Observable<any> {
-    return this.api.post<any>('/admin/rbac/user-roles/bulk', {
+    return this.api.put<any>('/admin/rbac/user-roles/bulk', {
       userId,
       roleIds
     }).pipe(

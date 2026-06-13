@@ -170,7 +170,7 @@ export class RbacService {
   }
 
   assignUserRolesBulk(userId: string, roleIds: string[]): Observable<UserRole[]> {
-    return this.api.post<UserRole[]>('/admin/rbac/user-roles/bulk', { userId, roleIds }).pipe(
+    return this.api.put<UserRole[]>('/admin/rbac/user-roles/bulk', { userId, roleIds }).pipe(
       map(res => res instanceof HttpResponse ? res.body as UserRole[] : res as UserRole[])
     );
   }
