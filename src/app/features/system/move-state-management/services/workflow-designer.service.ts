@@ -27,21 +27,4 @@ export class WorkflowDesignerService {
     return this.http.post<any>(`${this.baseUrl}/move-status-transitions`, payload);
   }
 
-  createTransition(payload: Partial<MoveStatusTransition>): Observable<MoveStatusTransition> {
-    const newTransition: MoveStatusTransition = {
-      id: payload.id || Math.random().toString(36).substring(2, 9),
-      fromStatusId: payload.fromStatusId!,
-      toStatusId: payload.toStatusId!,
-      transitionName: payload.transitionName || '',
-      allowedRoleId: payload.allowedRoleId,
-      requiresApproval: payload.requiresApproval || false,
-      customerVisible: payload.customerVisible ?? true,
-      active: payload.active ?? true
-    };
-    return of(newTransition);
-  }
-
-  deleteTransition(id: string): Observable<void> {
-    return of(undefined);
-  }
 }

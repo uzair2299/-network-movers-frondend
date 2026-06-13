@@ -4,7 +4,7 @@ import { VehiclesService } from '../services/vehicles.service';
 import { Vehicle } from '../models/vehicle.model';
 import { TableColumn } from '../../../../../shared/components/dynamic-table/dynamic-table.component';
 import { VehicleDialogComponent } from '../dialogs/vehicle-dialog/vehicle-dialog.component';
-import { VehicleDetailDialogComponent } from '../dialogs/vehicle-detail-dialog/vehicle-detail-dialog.component';
+import { Router } from '@angular/router';
 import { ToastService } from '../../../../../shared/services/toast.service';
 import { ConfirmDialogComponent } from '../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
@@ -55,7 +55,8 @@ export class VehiclesListPage implements OnInit {
   constructor(
     private vehiclesService: VehiclesService,
     private dialog: MatDialog,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -156,15 +157,7 @@ export class VehiclesListPage implements OnInit {
     
     switch (event.action) {
       case 'view':
-        this.dialog.open(VehicleDetailDialogComponent, {
-          width: '600px',
-          maxWidth: '95vw',
-          disableClose: false,
-          hasBackdrop: true,
-          data: vehicle,
-          panelClass: 'premium-dark-dialog',
-          backdropClass: 'premium-backdrop'
-        });
+        this.router.navigate(['/resources/fleet/vehicles', vehicle.id]);
         break;
       case 'edit':
         const editRef = this.dialog.open(VehicleDialogComponent, {

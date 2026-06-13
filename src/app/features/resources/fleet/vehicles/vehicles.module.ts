@@ -7,13 +7,13 @@ import { VehiclesRoutingModule } from './vehicles-routing.module';
 import { SharedModule } from '../../../../shared/shared.module';
 import { VehiclesListPage } from './pages/vehicles-list.page';
 import { VehicleDialogComponent } from './dialogs/vehicle-dialog/vehicle-dialog.component';
-import { VehicleDetailDialogComponent } from './dialogs/vehicle-detail-dialog/vehicle-detail-dialog.component';
+import { VehicleDetailsPage } from './pages/vehicle-details/vehicle-details.page';
 
 @NgModule({
   declarations: [
     VehiclesListPage,
     VehicleDialogComponent,
-    VehicleDetailDialogComponent
+    VehicleDetailsPage
   ],
   imports: [
     CommonModule,

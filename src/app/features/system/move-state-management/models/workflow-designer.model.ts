@@ -11,7 +11,7 @@ export interface MoveStatus {
 }
 
 export interface MoveStatusTransition {
-  id: string;
+  id?: string;
   fromStatusId: string;
   toStatusId: string;
   transitionName: string;

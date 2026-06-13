@@ -131,21 +131,23 @@ export class WorkflowDesignerComponent implements OnInit, OnDestroy {
               // Map loaded workflow nodes and assign default coordinates if they don't have them
               const allBackendStatuses = statusesList.reduce((acc, current) => acc.concat(current), []);
               
-              // We construct activeNodes from backend statuses matched with saved coordinates
-              this.activeNodes = workflowNodes.map((wNode: any) => {
-                const matchedStatus = allBackendStatuses.find(s => s.id === wNode.id);
-                return {
-                  id: wNode.id,
-                  code: matchedStatus?.code || wNode.code || 'UNKNOWN',
-                  name: matchedStatus?.name || wNode.name || 'Unknown',
-                  phaseCode: matchedStatus?.phase?.code || wNode.phaseCode || 'UNKNOWN',
-                  colorCode: matchedStatus?.colorCode || wNode.colorCode || '#8892b0',
-                  customerVisible: matchedStatus?.customerVisible ?? wNode.customerVisible ?? true,
-                  internalOnly: matchedStatus?.internalOnly ?? wNode.internalOnly ?? false,
-                  x: wNode.x,
-                  y: wNode.y
-                };
-              });
+              // We construct activeNodes from backend statuses matched with saved coordinates, filtering out nodes without saved coordinates
+              this.activeNodes = workflowNodes
+                .filter((wNode: any) => wNode.x !== null && wNode.x !== undefined)
+                .map((wNode: any) => {
+                  const matchedStatus = allBackendStatuses.find(s => s.id === wNode.id);
+                  return {
+                    id: wNode.id,
+                    code: matchedStatus?.code || wNode.code || 'UNKNOWN',
+                    name: matchedStatus?.name || wNode.name || 'Unknown',
+                    phaseCode: matchedStatus?.phase?.code || wNode.phaseCode || 'UNKNOWN',
+                    colorCode: matchedStatus?.colorCode || wNode.colorCode || '#8892b0',
+                    customerVisible: matchedStatus?.customerVisible ?? wNode.customerVisible ?? true,
+                    internalOnly: matchedStatus?.internalOnly ?? wNode.internalOnly ?? false,
+                    x: wNode.x,
+                    y: wNode.y
+                  };
+                });
 
               // Add any missing backend statuses that are already present in transitions just in case
               this.transitions.forEach(trans => {
@@ -169,7 +171,8 @@ export class WorkflowDesignerComponent implements OnInit, OnDestroy {
                 });
               });
 
-              this.autoLayoutMissingCoordinates();
+              // On load, we want the designer to be clean/empty unless explicitly placed/saved
+              // So we skip autoLayoutMissingCoordinates()
               this.isLoading = false;
               this.cdr.detectChanges();
             },
@@ -354,23 +357,7 @@ export class WorkflowDesignerComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     this.activeNodes = this.activeNodes.filter(n => n.id !== node.id);
     
-    // Also remove any transitions associated with this node
-    const relatedTransitions = this.transitions.filter(t => t.fromStatusId === node.id || t.toStatusId === node.id);
-    
-    // Call delete API for each transition before filtering locally
-    const deleteObservables = relatedTransitions
-      .filter(t => t.id)
-      .map(t => this.workflowService.deleteTransition(t.id));
-
-    if (deleteObservables.length > 0) {
-      forkJoin(deleteObservables).subscribe({
-        next: () => {
-          this.transitions = this.transitions.filter(t => t.fromStatusId !== node.id && t.toStatusId !== node.id);
-        }
-      });
-    } else {
-      this.transitions = this.transitions.filter(t => t.fromStatusId !== node.id && t.toStatusId !== node.id);
-    }
+    this.transitions = this.transitions.filter(t => t.fromStatusId !== node.id && t.toStatusId !== node.id);
 
     if (this.selectedNode?.id === node.id) {
       this.selectedNode = null;
@@ -444,28 +431,12 @@ export class WorkflowDesignerComponent implements OnInit, OnDestroy {
   }
 
   deleteEdge(edge: MoveStatusTransition): void {
-    if (edge.id) {
-      this.workflowService.deleteTransition(edge.id).subscribe({
-        next: () => {
-          this.transitions = this.transitions.filter(t => t.id !== edge.id);
-          if (this.selectedEdge?.id === edge.id) {
-            this.selectedEdge = null;
-          }
-          this.toastService.showSuccess('Transition deleted.');
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error('Error deleting transition:', err);
-          this.toastService.showError('Failed to delete transition.');
-        }
-      });
-    } else {
-      // Local-only edge
-      this.transitions = this.transitions.filter(t => t.id !== edge.id);
-      if (this.selectedEdge?.id === edge.id) {
-        this.selectedEdge = null;
-      }
+    this.transitions = this.transitions.filter(t => t !== edge);
+    if (this.selectedEdge === edge) {
+      this.selectedEdge = null;
     }
+    this.toastService.showSuccess('Transition deleted locally. Click Save to apply.');
+    this.cdr.detectChanges();
   }
 
   saveEdgeChanges(): void {
@@ -569,7 +540,7 @@ export class WorkflowDesignerComponent implements OnInit, OnDestroy {
   createNewTransition(fromNode: MoveStatus, toNode: MoveStatus): void {
     const exists = this.transitions.some(t => t.fromStatusId === fromNode.id && t.toStatusId === toNode.id);
     if (!exists) {
-      const newTransition: Partial<MoveStatusTransition> = {
+      const newTransition: MoveStatusTransition = {
         fromStatusId: fromNode.id,
         toStatusId: toNode.id,
         transitionName: `${fromNode.code} → ${toNode.code}`,
@@ -578,20 +549,12 @@ export class WorkflowDesignerComponent implements OnInit, OnDestroy {
         active: true
       };
 
-      this.workflowService.createTransition(newTransition).subscribe({
-        next: (saved) => {
-          this.transitions.push(saved);
-          this.selectedEdge = saved;
-          this.selectedNode = null;
-          this.isPropertiesCollapsed = false;
-          this.toastService.showSuccess(`Transition created from ${fromNode.name} to ${toNode.name}.`);
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error('Error creating transition:', err);
-          this.toastService.showError('Failed to create transition.');
-        }
-      });
+      this.transitions.push(newTransition);
+      this.selectedEdge = newTransition;
+      this.selectedNode = null;
+      this.isPropertiesCollapsed = false;
+      this.toastService.showSuccess(`Transition created from ${fromNode.name} to ${toNode.name}.`);
+      this.cdr.detectChanges();
     } else {
       this.toastService.showWarning('Transition already exists.');
     }

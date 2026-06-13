@@ -1,0 +1,95 @@
+<div class="page-container">
+  <!-- Page Header with Back Button -->
+  <app-page-header
+    [title]="vehicle ? 'Vehicle: ' + vehicle.vehicleCode : 'Vehicle Details'"
+    description="View detailed information about this physical vehicle.">
+    <app-button variant="outline" (btnClick)="goBack()" header-actions>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>
+      Back to List
+    </app-button>
+  </app-page-header>
+
+  <app-loading-spinner *ngIf="isLoading" message="Loading vehicle details..."></app-loading-spinner>
+
+  <div *ngIf="!isLoading && vehicle" class="modern-list-card detail-card">
+    
+    <div class="card-header">
+      <div class="header-content">
+        <h3>{{ vehicle.registrationNo }}</h3>
+        <span class="subtitle">{{ vehicle.vehicleModel?.name }} ({{ vehicle.vehicleModel?.code }})</span>
+      </div>
+      <div class="header-badges">
+        <app-status-badge [status]="vehicle.status"></app-status-badge>
+        <span class="boolean-badge" [ngClass]="vehicle.active ? 'badge-true' : 'badge-false'">
+          {{ vehicle.active ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+    </div>
+
+    <app-divider></app-divider>
+
+    <div class="detail-grid">
+      <!-- Ownership & Basic Details -->
+      <div class="detail-group sleek-card">
+        <h4>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="section-icon text-primary"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          Basic Information
+        </h4>
+        <div class="info-list">
+          <div class="info-item">
+            <span class="label">Vehicle Code</span>
+            <span class="value code-text">{{ vehicle.vehicleCode }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Ownership Type</span>
+            <span class="value badge-neutral">{{ vehicle.ownershipType }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Manufacture Year</span>
+            <span class="value">{{ vehicle.manufactureYear || 'N/A' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Acquisition Date</span>
+            <span class="value">{{ (vehicle.acquisitionDate | date) || 'N/A' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maintenance & Status -->
+      <div class="detail-group sleek-card">
+        <h4>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="section-icon text-warning"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+          Maintenance & Status
+        </h4>
+        <div class="info-list">
+          <div class="info-item">
+            <span class="label">Odometer</span>
+            <span class="value highlight-text">{{ vehicle.currentOdometerKm || '0' }} km</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Insurance Expiry</span>
+            <span class="value" [class.warning-text]="!vehicle.insuranceExpiryDate">{{ (vehicle.insuranceExpiryDate | date) || 'N/A' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fitness Expiry</span>
+            <span class="value" [class.warning-text]="!vehicle.fitnessExpiryDate">{{ (vehicle.fitnessExpiryDate | date) || 'N/A' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-divider *ngIf="vehicle.remarks"></app-divider>
+
+    <!-- Remarks Section -->
+    <div class="remarks-section sleek-card" *ngIf="vehicle.remarks">
+      <h4>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="section-icon"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        Remarks
+      </h4>
+      <div class="remarks-box">
+        {{ vehicle.remarks }}
+      </div>
+    </div>
+
+  </div>
+</div>
