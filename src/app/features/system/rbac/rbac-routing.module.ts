@@ -6,6 +6,7 @@ import { PermissionsListPage } from './pages/permissions/permissions-list.page';
 import { RolesListPage } from './pages/roles/roles-list.page';
 import { UserRolesListPage } from './pages/user-roles/user-roles-list.page';
 import { RolePermissionsListPage } from './pages/role-permissions/role-permissions-list.page';
+import { RolePermissionAssignPage } from './pages/role-permissions/role-permission-assign.page';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'role-permissions',
     component: RolePermissionsListPage
+  },
+  {
+    path: 'role-permissions/assign',
+    component: RolePermissionAssignPage
   },
   {
     path: 'user-roles',

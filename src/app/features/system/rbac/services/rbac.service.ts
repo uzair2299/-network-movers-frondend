@@ -203,6 +203,12 @@ export class RbacService {
     );
   }
 
+  assignRolePermissionsBulk(roleId: string, permissionIds: string[]): Observable<RolePermission[]> {
+    return this.api.post<RolePermission[]>('/admin/rbac/role-permissions/bulk', { roleId, permissionIds }).pipe(
+      map(res => res instanceof HttpResponse ? res.body as RolePermission[] : res as RolePermission[])
+    );
+  }
+
   revokeRolePermission(id: string): Observable<void> {
     return this.api.delete<void>(`/admin/rbac/role-permissions/${id}`).pipe(
       map(res => res instanceof HttpResponse ? res.body as void : res as void)

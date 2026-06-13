@@ -12,6 +12,7 @@ import { PermissionsListPage } from './pages/permissions/permissions-list.page';
 import { RolesListPage } from './pages/roles/roles-list.page';
 import { UserRolesListPage } from './pages/user-roles/user-roles-list.page';
 import { RolePermissionsListPage } from './pages/role-permissions/role-permissions-list.page';
+import { RolePermissionAssignPage } from './pages/role-permissions/role-permission-assign.page';
 
 // Dialogs
 import { ModuleDialogComponent } from './dialogs/module-dialog/module-dialog.component';
@@ -33,6 +34,7 @@ import { RolePermissionDialogComponent } from './dialogs/role-permission-dialog/
     RolesListPage,
     UserRolesListPage,
     RolePermissionsListPage,
+    RolePermissionAssignPage,
     ModuleDialogComponent,
     ModuleDetailDialogComponent,
     ResourceDialogComponent,

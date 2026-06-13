@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { finalize, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -59,7 +60,9 @@ export class RolePermissionsListPage implements OnInit, OnDestroy {
   constructor(
     private rbacService: RbacService,
     private dialog: MatDialog,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -122,35 +125,7 @@ export class RolePermissionsListPage implements OnInit, OnDestroy {
   }
 
   assignPermission(): void {
-    const dialogRef = this.dialog.open(RolePermissionDialogComponent, {
-      width: '600px',
-      maxWidth: '95vw',
-      disableClose: false,
-      hasBackdrop: true,
-      data: {},
-      panelClass: 'premium-dark-dialog',
-      backdropClass: 'premium-backdrop'
-    });
-
-    dialogRef.afterClosed().subscribe((result: { roleId: string; permissionId: string } | null) => {
-      if (result) {
-        this.isLoading = true;
-        this.rbacService.assignRolePermission(result.roleId, result.permissionId).subscribe({
-          next: () => {
-            this.toastService.showSuccess('Permission assigned to role successfully.', 'Success');
-            this.loadRolePermissions();
-          },
-          error: (err) => {
-            console.error('Error assigning permission', err);
-            this.toastService.showError(
-              err?.error?.message || 'Failed to assign permission to role.',
-              'Error'
-            );
-            this.isLoading = false;
-          }
-        });
-      }
-    });
+    this.router.navigate(['assign'], { relativeTo: this.route });
   }
 
   handleMoreAction(actionId: string): void {

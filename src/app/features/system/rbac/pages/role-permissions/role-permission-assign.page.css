@@ -1,0 +1,230 @@
+.selection-toolbar {
+  padding: 1.25rem 1.5rem 0.5rem 1.5rem;
+}
+
+.selector-wrapper {
+  max-width: 400px;
+  width: 100%;
+}
+
+.card-body-content {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+/* Placeholder State */
+.no-role-selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: radial-gradient(circle at top, rgba(245, 166, 35, 0.03) 0%, rgba(22, 27, 34, 0.5) 100%);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  text-align: center;
+  color: #8b949e;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.placeholder-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 8px rgba(245, 166, 35, 0.2));
+  animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px rgba(245, 166, 35, 0.15));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(245, 166, 35, 0.35));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px rgba(245, 166, 35, 0.15));
+  }
+}
+
+.no-role-selected h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.no-role-selected p {
+  margin: 8px 0 0 0;
+  font-size: 0.9rem;
+  color: #8b949e;
+  max-width: 350px;
+  line-height: 1.4;
+}
+
+/* Grid details layout */
+.permissions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.permissions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.resource-card {
+  background: rgba(22, 27, 34, 0.4);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.resource-card:hover {
+  border-color: rgba(245, 166, 35, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 0 10px rgba(245, 166, 35, 0.03);
+  transform: translateY(-1px);
+}
+
+.resource-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.resource-header h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.1px;
+  background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-toggles {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toggle-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #8b949e;
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 10px;
+  transition: all 0.15s ease;
+}
+
+.toggle-btn:hover {
+  color: #ffffff;
+  background-color: rgba(245, 166, 35, 0.15);
+  border-color: rgba(245, 166, 35, 0.3);
+}
+
+.divider-dot {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.1);
+  margin: 0 1px;
+}
+
+/* Checkbox List layout */
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.checkbox-item {
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  border-left: 2px solid transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.checkbox-item:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
+  transform: translateX(1px);
+}
+
+.checkbox-item.checked {
+  background-color: rgba(245, 166, 35, 0.02);
+  border-color: rgba(245, 166, 35, 0.12);
+  border-left: 2px solid #f5a623;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Deep resets for shared form-checkbox styles */
+.checkbox-item ::ng-deep .form-group.checkbox-group {
+  gap: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.checkbox-item ::ng-deep .checkbox-label {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.checkbox-item ::ng-deep .premium-checkbox {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.checkbox-item ::ng-deep .label-text {
+  font-size: 0.88rem !important;
+  line-height: 1.2 !important;
+}
+
+.checkbox-item.checked ::ng-deep .label-text {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.checkbox-item ::ng-deep .description-text {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+  font-size: 0.68rem !important;
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+  margin-left: 28px !important;
+  line-height: 1.2 !important;
+  color: #6e7681 !important;
+  letter-spacing: -0.2px !important;
+  display: block !important;
+}
+
+.checkbox-item.checked ::ng-deep .description-text {
+  color: rgba(245, 166, 35, 0.55) !important;
+}
+
+/* Actions Footer */
+.actions-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(22, 27, 34, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
