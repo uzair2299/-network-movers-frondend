@@ -1,91 +1,67 @@
 <div class="page-container">
-  
-  <app-page-header
-    title="Assign Permissions to Role"
+
+  <app-page-header title="Assign Permissions to Role"
     description="Select a role to configure and sync associated permissions in bulk.">
   </app-page-header>
 
   <app-loading-spinner *ngIf="isLoading" message="Loading role permissions details..."></app-loading-spinner>
 
-  <div class="modern-list-card" *ngIf="!isLoading">
-    
-    <!-- Role selector toolbar -->
-    <div class="selection-toolbar">
-      <div class="selector-wrapper">
-        <app-form-select
-          label="Select Role to Configure"
-          placeholder="-- Choose a Role --"
-          [options]="roleOptions"
-          [control]="roleControl">
-        </app-form-select>
-      </div>
+  <div class="assign-layout" *ngIf="!isLoading">
+
+    <!-- Role selector card -->
+    <div class="modern-list-card selector-card">
+      <app-form-select label="Select Role to Configure" placeholder="-- Choose a Role --" [options]="roleOptions"
+        [control]="roleControl">
+      </app-form-select>
     </div>
 
-    <div class="toolbar-divider"></div>
+    <!-- No role selected placeholder -->
+    <div class="no-role-selected" *ngIf="!selectedRoleId">
+      <div class="placeholder-icon">🔑</div>
+      <h3>Select a Role</h3>
+      <p>Please select a role from the dropdown above to view and assign permissions.</p>
+    </div>
 
-    <div class="card-body-content">
-      <!-- No role selected placeholder -->
-      <div class="no-role-selected" *ngIf="!selectedRoleId">
-        <div class="placeholder-icon">🔑</div>
-        <h3>Select a Role</h3>
-        <p>Please select a role from the dropdown above to view and assign permissions.</p>
-      </div>
+    <!-- Grouped permissions checkbox layout -->
+    <div class="permissions-container" *ngIf="selectedRoleId">
+      <div class="permissions-grid">
+        <div class="resource-card" *ngFor="let group of groupedPermissions">
+          <div class="resource-header">
+            <h4>{{ group.resourceName }}</h4>
 
-      <!-- Grouped permissions checkbox layout -->
-      <div class="permissions-container" *ngIf="selectedRoleId">
-        <div class="permissions-grid">
-          <div class="resource-card" *ngFor="let group of groupedPermissions">
-            <div class="resource-header">
-              <h4>{{ group.resourceName }}</h4>
-              
-              <!-- Quick Select All Toggles -->
-              <div class="header-toggles">
-                <button 
-                  type="button" 
-                  class="toggle-btn" 
-                  (click)="toggleGroup(group, true)"
-                  title="Select All">
-                  Select All
-                </button>
-                <span class="divider-dot">|</span>
-                <button 
-                  type="button" 
-                  class="toggle-btn" 
-                  (click)="toggleGroup(group, false)"
-                  title="Deselect All">
-                  Clear All
-                </button>
-              </div>
+            <!-- Quick Select All Toggles -->
+            <div class="header-toggles">
+              <button type="button" class="toggle-btn" (click)="toggleGroup(group, true)" title="Select All">
+                Select All
+              </button>
+              <span class="divider-dot">|</span>
+              <button type="button" class="toggle-btn" (click)="toggleGroup(group, false)" title="Deselect All">
+                Clear All
+              </button>
             </div>
-            <app-divider margin="0 0 0.75rem 0"></app-divider>
+          </div>
+          <app-divider margin="0 0 0.75rem 0"></app-divider>
 
-            <div class="checkbox-list">
-              <div class="checkbox-item" *ngFor="let permWrapper of group.permissions" [class.checked]="permWrapper.control.value">
-                <app-form-checkbox
-                  [label]="permWrapper.permission.name"
-                  [description]="permWrapper.permission.code"
-                  [control]="permWrapper.control">
-                </app-form-checkbox>
-              </div>
+          <div class="checkbox-list">
+            <div class="checkbox-item" *ngFor="let permWrapper of group.permissions"
+              [class.checked]="permWrapper.control.value">
+              <app-form-checkbox [label]="permWrapper.permission.name" [description]="permWrapper.permission.code"
+                [control]="permWrapper.control">
+              </app-form-checkbox>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Action Footer inside the card -->
-    <div class="actions-footer" *ngIf="selectedRoleId">
-      <app-button 
-        variant="secondary" 
-        (btnClick)="cancel()">
-        Cancel
-      </app-button>
-      <app-button 
-        variant="primary" 
-        [disabled]="isSaving"
-        (btnClick)="saveAssignments()">
-        {{ isSaving ? 'Saving...' : 'Save Assignments' }}
-      </app-button>
+      <!-- Action Footer -->
+      <div class="actions-footer">
+        <app-button variant="secondary" (btnClick)="cancel()">
+          Cancel
+        </app-button>
+        <app-button variant="primary" [disabled]="isSaving" (btnClick)="saveAssignments()">
+          {{ isSaving ? 'Saving...' : 'Save Assignments' }}
+        </app-button>
+      </div>
     </div>
   </div>
 </div>
