@@ -6,6 +6,7 @@ import { UsersService } from '../../services/users.service';
 import { Role, UserRole } from '../../../rbac/models/rbac.models';
 import { switchMap } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
+import { ToastService } from '../../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-assign-roles',
@@ -28,6 +29,7 @@ export class AssignRolesPage implements OnInit {
     private router: Router,
     private rbacService: RbacService,
     private usersService: UsersService,
+    private toastService: ToastService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -139,6 +141,7 @@ export class AssignRolesPage implements OnInit {
     if (!this.user) return;
     
     this.isSaving = true;
+    this.error = null;
     
     // Map selected role codes to their corresponding role IDs from availableRoles
     const selectedRoleIds = this.availableRoles
@@ -148,12 +151,15 @@ export class AssignRolesPage implements OnInit {
     this.usersService.updateUserRoles(this.user.id, selectedRoleIds).subscribe({
       next: () => {
         this.isSaving = false;
-        this.router.navigate(['/system/users']);
+        this.toastService.showSuccess('User roles updated successfully.');
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Failed to save roles', err);
         this.error = "Failed to save roles. Please try again.";
+        this.toastService.showError('Failed to update user roles. Please try again.');
         this.isSaving = false;
+        this.cdr.detectChanges();
       }
     });
   }
